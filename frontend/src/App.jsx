@@ -1,9 +1,20 @@
-import { Button } from "./components/ui/button"
+import { lazy, Suspense } from "react"
+import { BrowserRouter, Route ,Routes} from "react-router-dom"
+const Auth = lazy(()=>import("./pages/auth/Auth"));
+const Chat = lazy(()=>import("./pages/chat/Chat"));
+const Profile = lazy(()=>import("./pages/profile/Profile"));
 function App() {
   
 
   return (
-    <Button>Click me</Button>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Suspense><Auth></Auth></Suspense>}></Route>
+      <Route path="/chat" element={<Suspense><Chat></Chat></Suspense>}></Route>
+      <Route path="/profile" element={<Suspense><Profile></Profile></Suspense>}></Route>
+
+    </Routes>
+    </BrowserRouter>
   )
 }
 
