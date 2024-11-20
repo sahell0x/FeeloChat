@@ -1,4 +1,4 @@
-import SignUp from "@/components/ui/SignUp"
+import SignUp from "@/components/ui/AuthContainer"
 
 function Auth() {
   return (
