@@ -1,9 +1,8 @@
 import Modal from "@/util/Modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import feeloChatLogo from "../../assets/FeeloChatLogo.png";
-
-import { Button } from "./button";
 import SignUpTabContent from "./SignUpTabContent";
+import SignInTabContent from "./SignInTabContent";
 
 function SignUp() {
   return (
@@ -23,7 +22,7 @@ function SignUp() {
                 <SignUpTabContent></SignUpTabContent>
             </TabsContent >
             <TabsContent value="signin" className="w-[300px]">
-              Change your password here.
+              <SignInTabContent></SignInTabContent>
             </TabsContent>
           </Tabs>
         </div>
