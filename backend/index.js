@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import {StatusCode} from "status-code-enum";
-import User from "./models/userModel.js";
-
 dotenv.config();
 
 const app = express();
