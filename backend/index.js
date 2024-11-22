@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import {StatusCode} from "status-code-enum";
 import User from "./models/userModel.js";
 
 dotenv.config();
@@ -20,9 +21,16 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
+app.use((err,req,res,next)=>{   // global catch function
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+      });
+})
+
 app.listen(port,()=>{
     console.log(`server is runnig at http://localhost:${port}`);
 });
+
 
 mongoose.connect(dbUrl).then(()=>{
     console.log("connected successfully");
