@@ -30,13 +30,13 @@ function SignUpTabContent() {
       ></Input>
 
       <Button
-        style={{ backgroundColor: "#1e2864" }}
+        
         className="w-[100%] mb-2 rounded-full"
       >
         Sign up
       </Button>
-      <Button
-        style={{ backgroundColor: "#e5b238" }}
+      <Button variant="premium"
+        
         className="w-[100%] rounded-full"
       >
         Try as Guest
