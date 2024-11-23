@@ -3,12 +3,29 @@ import { Button } from "./button";
 import { useState } from "react";
 import { PasswordInput } from "./PasswordInput";
 import { useToast } from "@/hooks/use-toast";
+import {emailValidator,passwordValidator,confirmPasswordChecker} from "@/util/validator.js";
 
 function SignUpTabContent() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
+
+  const signUpHandler = ()=>{
+    if(!emailValidator(email)){
+      toast({variant: "destructive",
+        title: "Please enter valid Email address.",});
+    }else if(!passwordValidator(password)){
+      toast({variant: "destructive",
+        title: "Password must minimum 8 characters long and should contain lowercase uppercase and special characters.",});
+    }else if(!confirmPasswordChecker(password,confirmPassword)){
+      toast({variant: "destructive",
+        title: "Passwords do not match. Please try again.",});
+    }
+
+    
+  }
 
   return (
     <div>
@@ -36,11 +53,8 @@ function SignUpTabContent() {
       ></PasswordInput>
 
       <Button
-        onClick={() => {
-          toast({
-            title: "Scheduled: Catch up",
-            
-          });
+        onClick={()=>{
+          signUpHandler();
         }}
         className="w-[100%] mb-2 rounded-full"
       >
