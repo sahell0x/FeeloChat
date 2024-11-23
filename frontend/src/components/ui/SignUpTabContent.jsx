@@ -1,44 +1,52 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "./button";
 import { useState } from "react";
+import { PasswordInput } from "./PasswordInput";
+import { useToast } from "@/hooks/use-toast";
 
 function SignUpTabContent() {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { toast } = useToast();
 
   return (
     <div>
       <Input
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        placeholder="Username"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
         className="mb-2"
       ></Input>
 
-      <Input
+      <PasswordInput
+        autoComplete="new-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         className="mb-2"
-      ></Input>
-      <Input
+      ></PasswordInput>
+      <PasswordInput
+        autoComplete="new-password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirm Password"
         className="mb-5"
-      ></Input>
+      ></PasswordInput>
 
       <Button
-        
+        onClick={() => {
+          toast({
+            title: "Scheduled: Catch up",
+            
+          });
+        }}
         className="w-[100%] mb-2 rounded-full"
       >
         Sign up
       </Button>
-      <Button variant="premium"
-        
-        className="w-[100%] rounded-full"
-      >
+      <Button variant="premium" className="w-[100%] rounded-full">
         Try as Guest
       </Button>
     </div>

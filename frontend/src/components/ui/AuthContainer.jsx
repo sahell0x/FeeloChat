@@ -1,4 +1,4 @@
-import Modal from "@/util/Modal";
+import Modal from "@/components/ui/Modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import feeloChatLogo from "../../assets/FeeloChatLogo.png";
 import SignUpTabContent from "./SignUpTabContent";

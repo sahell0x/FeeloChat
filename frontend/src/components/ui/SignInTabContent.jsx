@@ -1,24 +1,25 @@
 import { Input } from "./input";
 import { Button } from "./button";
 import { useState } from "react";
-
+import { PasswordInput } from "./PasswordInput";
 function SignInTabContent() {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
     <div>
       <Input
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        placeholder="Username"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email" 
         className="mb-2"
       ></Input>
-      <Input
+      <PasswordInput
+        
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
-        className="mb-5"
-      ></Input>
+        className="mb-2"
+      ></PasswordInput>
       <Button
         
         className="w-[100%] mb-2 rounded-full"
