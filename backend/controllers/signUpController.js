@@ -1,11 +1,15 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 import {StatusCode} from "status-code-enum";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
 
 const secrete = process.env.SECRETE;
+console.log(secrete);
 
 const signUpController = async (req,res)=>{
+    console.log("inside signup");
     const body = req.body;
     body.password = await bcrypt.hash(body.password,13);
     try{
