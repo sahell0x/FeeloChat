@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import {emailValidator,passwordValidator,confirmPasswordChecker} from "@/util/validator.js";
 import apiClient from "@/lib/api-client";
 import { SIGNUP_ROUTE } from "@/util/constants";
+import { useNavigate } from "react-router-dom";
 
 function SignUpTabContent() {
 
@@ -13,6 +14,7 @@ function SignUpTabContent() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const signUpHandler = async ()=>{
     if(!emailValidator(email)){
@@ -26,7 +28,10 @@ function SignUpTabContent() {
         title: "Passwords do not match. Please try again.",});
     }else{
       const response = await apiClient.post(SIGNUP_ROUTE,{email,password},{withCredentials:true});
-      console.log(response);
+      
+      if(response.status===201){
+         navigate("/profile");
+      }
     }
 
     
