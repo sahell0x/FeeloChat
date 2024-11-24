@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const secrete = process.env.SECRETE;
-console.log(secrete);
 
 const signUpController = async (req,res)=>{
     console.log("inside signup");
@@ -15,11 +14,18 @@ const signUpController = async (req,res)=>{
     try{
         const user = await User.create(body);
         const token = jwt.sign({email:user.email,id:user._id},secrete);
+
+        res.cookie('token', token, {     //set cookie
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000,   // 7 days max age;
+          });
+
         return res.status(StatusCode.SuccessOK).json({
             message:"User created successfully",
             email:user.email,
             id:user._id,
-            token:token
+           
         });
 
     }catch(e){
