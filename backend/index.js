@@ -10,12 +10,13 @@ const app = express();
 const port = process.env.PORT;
 const dbUrl = process.env.DB_URL;
 
-// app.use(cors({
-//     origin:[process.env.ORIGIN],
-//     methods:["GET","POST","PUT","PATCH","DELETE"],
-//     credentials:true,
-// }));
-app.use(cors({ origin: '*' }));
+app.use(cors({
+    origin:process.env.ORIGIN,
+    methods:["GET","POST","PUT","PATCH","DELETE"],
+    credentials: true,
+}));
+
+// app.use(cors({ origin: '*' }));
 
 app.use(cookieParser());
 app.use(express.json());
