@@ -14,7 +14,7 @@ const signInController = async (req,res)=>{
     try{
         const user = await User.findOne({email});
 
-        if(user){
+        if(!user){
 
             return res.status(StatusCode.ClientErrorBadRequest).json({message:"Wrong email and password"});
         }
@@ -38,7 +38,9 @@ const signInController = async (req,res)=>{
             message:"sign in successfully",
             email:user.email,
             id:user._id,
-           
+            firstName:user.firstName,
+            lastName:user.lastName,
+            img:user.img
         });
 
     }catch(e){
