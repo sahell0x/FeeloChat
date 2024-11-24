@@ -22,7 +22,7 @@ const signUpController = async (req,res)=>{
             maxAge: 7 * 24 * 60 * 60 * 1000,   // 7 days max age;
           });
 
-        return res.status(StatusCode.SuccessOK).json({
+        return res.status(StatusCode.SuccessCreated).json({
             message:"User created successfully",
             email:user.email,
             id:user._id,
