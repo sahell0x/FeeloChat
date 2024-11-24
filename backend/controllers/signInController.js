@@ -1,18 +1,30 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import {StatusCode} from "status-code-enum";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { compare } from "bcrypt";
 dotenv.config();
 
 const secrete = process.env.SECRETE;
 
-const signUpController = async (req,res)=>{
-    console.log("inside signup");
-    const body = req.body;
-    body.password = await bcrypt.hash(body.password,13);
+const signInController = async (req,res)=>{
+    console.log("inside signIn");
+    const {email , password} = req.body;
+
     try{
-        const user = await User.create(body);
+        const user = await User.findOne({email});
+
+        if(user){
+
+            return res.status(StatusCode.ClientErrorBadRequest).json({message:"Wrong email and password"});
+        }
+
+        const isMatch = await compare(password, user.password);
+
+        if(!isMatch){
+            return res.status(StatusCode.ClientErrorBadRequest).json({message:"incorrect password"});
+        }
+
         const token = jwt.sign({email:user.email,id:user._id},secrete);
 
         res.cookie('token', token, {     //set cookie
@@ -23,7 +35,7 @@ const signUpController = async (req,res)=>{
           });
 
         return res.status(StatusCode.SuccessOK).json({
-            message:"User created successfully",
+            message:"sign in successfully",
             email:user.email,
             id:user._id,
            
@@ -37,4 +49,4 @@ const signUpController = async (req,res)=>{
     }
 }
 
-export default signUpController;
+export default signInController;
