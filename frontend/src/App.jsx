@@ -11,6 +11,7 @@ function App() {
     <RecoilRoot>
     <BrowserRouter>
     <Routes>
+      
       <Route path="/auth" element={<Suspense><Auth></Auth></Suspense>}></Route>
       <Route path="/chat" element={<Suspense><Chat></Chat></Suspense>}></Route>
       <Route path="/profile" element={<Suspense><Profile></Profile></Suspense>}></Route>

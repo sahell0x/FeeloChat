@@ -7,6 +7,8 @@ import { useToast } from "@/hooks/use-toast";
 import apiClient from "@/lib/api-client";
 import { SIGNIN_ROUTE } from "@/util/constants";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import userInfoAtom from "@/stores/userInfoAtom";
 
 
 function SignInTabContent() {
@@ -14,6 +16,7 @@ function SignInTabContent() {
   const [password, setPassword] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
+  const setUserInfo = useSetRecoilState(userInfoAtom);
 
   const handleSignIn = async ()=>{
     if(!emailValidator(email)){
@@ -26,6 +29,8 @@ function SignInTabContent() {
       const response = await apiClient.post(SIGNIN_ROUTE,{email,password},{withCredentials:true});
 
       if(response.status===200){
+        setUserInfo({...response.data});  ///set user data to the atom
+
         if(!response.data.profileSetup){
           navigate("/profile");
         }else{
