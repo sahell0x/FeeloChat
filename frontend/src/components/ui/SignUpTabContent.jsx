@@ -24,10 +24,12 @@ function SignUpTabContent() {
     }else if(!confirmPasswordChecker(password,confirmPassword)){
       toast({variant: "destructive",
         title: "Passwords do not match. Please try again.",});
+    }else{
+      const response = await apiClient.post(SIGNUP_ROUTE,{email,password});
+      console.log(response);
     }
 
-    const response = await apiClient.post(SIGNUP_ROUTE,{email,password});
-    console.log(response);
+    
 
 
   }
