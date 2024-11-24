@@ -4,6 +4,8 @@ import { useState } from "react";
 import { PasswordInput } from "./PasswordInput";
 import { useToast } from "@/hooks/use-toast";
 import {emailValidator,passwordValidator,confirmPasswordChecker} from "@/util/validator.js";
+import apiClient from "@/lib/api-client";
+import { SIGNUP_ROUTE } from "@/util/constants";
 
 function SignUpTabContent() {
 
@@ -12,7 +14,7 @@ function SignUpTabContent() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
 
-  const signUpHandler = ()=>{
+  const signUpHandler = async ()=>{
     if(!emailValidator(email)){
       toast({variant: "destructive",
         title: "Please enter valid Email address.",});
@@ -24,7 +26,10 @@ function SignUpTabContent() {
         title: "Passwords do not match. Please try again.",});
     }
 
-    
+    const response = await apiClient.post(SIGNUP_ROUTE,{email,password});
+    console.log(response);
+
+
   }
 
   return (
