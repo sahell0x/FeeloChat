@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Suspense><Auth></Auth></Suspense>}></Route>
+      <Route path="/auth" element={<Suspense><Auth></Auth></Suspense>}></Route>
       <Route path="/chat" element={<Suspense><Chat></Chat></Suspense>}></Route>
       <Route path="/profile" element={<Suspense><Profile></Profile></Suspense>}></Route>
 

@@ -1,11 +1,11 @@
-import SignUp from "@/components/ui/AuthContainer"
+import AuthContainer from "@/components/ui/AuthContainer"
 
 function Auth() {
   return (
-        <SignUp>
+        <AuthContainer>
             
-        </SignUp>
+        </AuthContainer>
   )
 }
 
-export default Auth
+export default Auth;
