@@ -6,12 +6,14 @@ import {emailValidator} from "@/util/validator.js";
 import { useToast } from "@/hooks/use-toast";
 import apiClient from "@/lib/api-client";
 import { SIGNIN_ROUTE } from "@/util/constants";
+import { useNavigate } from "react-router-dom";
 
 
 function SignInTabContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSignIn = async ()=>{
     if(!emailValidator(email)){
@@ -23,7 +25,14 @@ function SignInTabContent() {
     }else{
       const response = await apiClient.post(SIGNIN_ROUTE,{email,password},{withCredentials:true});
 
-      console.log(response);
+      if(response.status===200){
+        if(!response.data.profileSetup){
+          navigate("/profile");
+        }else{
+          navigate("/chat");
+        }
+      }
+      
     }
   }
   return (
