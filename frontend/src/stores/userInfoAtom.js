@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 const userInfoAtom = atom({
     key:"userInfoAtom",
-    default:{},
+    default:null,
 })
 
 export default userInfoAtom;
