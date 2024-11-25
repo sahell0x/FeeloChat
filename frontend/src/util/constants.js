@@ -5,3 +5,5 @@ export const AUTH_ROUTES = "api/auth";
 export const SIGNUP_ROUTE = `${AUTH_ROUTES}/signup`;
 
 export const SIGNIN_ROUTE = `${AUTH_ROUTES}/signin`;
+
+export const USERINFO_ROUTE = `${AUTH_ROUTES}/user`;
