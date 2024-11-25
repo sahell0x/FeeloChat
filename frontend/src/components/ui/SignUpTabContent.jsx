@@ -7,6 +7,8 @@ import {emailValidator,passwordValidator,confirmPasswordChecker} from "@/util/va
 import apiClient from "@/lib/api-client";
 import { SIGNUP_ROUTE } from "@/util/constants";
 import { useNavigate } from "react-router-dom";
+import userInfoAtom from "@/stores/userInfoAtom";
+import { useSetRecoilState } from "recoil";
 
 function SignUpTabContent() {
 
@@ -15,6 +17,7 @@ function SignUpTabContent() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
+  const setUserInfo = useSetRecoilState(userInfoAtom);
 
   const signUpHandler = async ()=>{
     if(!emailValidator(email)){
@@ -30,6 +33,7 @@ function SignUpTabContent() {
       const response = await apiClient.post(SIGNUP_ROUTE,{email,password},{withCredentials:true});
       
       if(response.status===201){
+        setUserInfo({...response.data});
          navigate("/profile");
       }
     }
