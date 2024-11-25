@@ -20,4 +20,6 @@ const getUserInfoSelector = selector({
             return null;
         }
     }
-})
+});
+
+export default getUserInfoSelector;
