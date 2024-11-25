@@ -5,6 +5,7 @@ const Auth = lazy(() => import("./pages/auth/Auth"));
 const Chat = lazy(() => import("./pages/chat/Chat"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
 import PrivateRoute from "./pages/route controllers/PrivateRoute";
+import AuthRoute from "./pages/route controllers/AuthRoute";
 function App() {
   return (
     <RecoilRoot>
@@ -13,17 +14,21 @@ function App() {
           <Route
             path="/auth"
             element={
+              <AuthRoute>
               <Suspense>
                 <Auth></Auth>
               </Suspense>
+              </AuthRoute>
             }
           ></Route>
           <Route
             path="/chat"
             element={
+              <PrivateRoute>
               <Suspense>
                 <Chat></Chat>
               </Suspense>
+              </PrivateRoute>
             }
           ></Route>
           <Route
