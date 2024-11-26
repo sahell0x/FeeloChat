@@ -12,7 +12,7 @@ authRoutes.post("/signup",signUpMiddleware,signUpController);
 
 authRoutes.post("/signin",signInMiddleware,signInController);
 
-authRoutes.get("/user",authMiddleware);
+authRoutes.get("/user",authMiddleware,);
 
 
 export default authRoutes;
