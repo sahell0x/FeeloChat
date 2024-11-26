@@ -6,7 +6,6 @@ const getUserInfoController = async (req,res)=>{
         const userId = req.userId;
 
         const userInfo = await User.findOne({_id:userId});
-        console.log(userInfo);
         if(!userInfo){
             return res.status(StatusCode.ClientErrorNotFound).json({
                 message:"bad request user info not found",
