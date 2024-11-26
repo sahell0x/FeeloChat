@@ -1,5 +1,5 @@
 import {StatusCode} from "status-code-enum";
-import User from "../models/userModel";
+import User from "../models/userModel.js";
 
 const getUserInfoController = async (req,res)=>{
     try{
@@ -13,7 +13,13 @@ const getUserInfoController = async (req,res)=>{
             }); 
         }
 
-        res.send(userInfo);
+        return res.status(StatusCode.SuccessOK).json({
+            id:userInfo._id,
+            email:userInfo.email,
+            firstName:userInfo.firstName,
+            lastName:userInfo.lastName,
+            profileSetup:userInfo.profileSetup
+        });
 
     }catch{
         return res.status(StatusCode.ClientErrorNotFound).json({
