@@ -17,6 +17,7 @@ const getUserInfoController = async (req,res)=>{
             email:userInfo.email,
             firstName:userInfo.firstName,
             lastName:userInfo.lastName,
+            img:userInfo.img,
             profileSetup:userInfo.profileSetup
         });
 
