@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import feeloChatLogo from "../../assets/FeeloChatLogo.png";
 import SignUpTabContent from "./SignUpTabContent";
 import SignInTabContent from "./SignInTabContent";
+import Logo from "../logo/Logo";
 
 function SignUp() {
   return (
@@ -11,7 +12,8 @@ function SignUp() {
         <div className="flex justify-center items-center flex-col">
           <div className="flex flex-col justify-center items-center mb-5">
 
-            <img className="w-[60%] h-[60%] sm:w-[35%] h-[35%]" src={feeloChatLogo} alt="feeloChat Logo" />
+            
+            <Logo></Logo>
           </div>
           <Tabs defaultValue="signup" className="w-[50vw] flex justify-center flex-col items-center">
             <TabsList className="w-[300px] flex justify-around">
