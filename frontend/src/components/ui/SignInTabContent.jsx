@@ -55,13 +55,13 @@ function SignInTabContent() {
         placeholder="Password"
         className="mb-2"
       ></PasswordInput>
-      <Button
+      <Button 
 
         onClick={()=>{
           handleSignIn();
         }}
         
-        className="w-[100%] mb-2 rounded-full"
+        className="w-[100%] mb-2 mt-4"
       >
         Sign in
       </Button>

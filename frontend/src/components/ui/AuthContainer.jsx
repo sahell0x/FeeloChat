@@ -15,8 +15,8 @@ function SignUp() {
             
             <Logo></Logo>
           </div>
-          <Tabs defaultValue="signup" className="w-[50vw] flex justify-center flex-col items-center">
-            <TabsList className="w-[300px] flex justify-around">
+          <Tabs defaultValue="signup" className="w-[50vw] flex justify-center flex-col items-center ">
+            <TabsList className="w-[300px] flex justify-around mb-2">
               <TabsTrigger value="signup" className="w-[50%]">Sign up</TabsTrigger>
               <TabsTrigger value="signin" className="w-[50%]">Sign in</TabsTrigger>
             </TabsList>
