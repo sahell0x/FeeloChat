@@ -6,12 +6,12 @@ import { USERINFO_ROUTE } from "@/util/constants";
 const getUserInfoSelector = selector({
     key:"getUserInfoSelector",
     get: async ({get})=>{
-        const userInfo = useRecoilValue(userInfoAtom);
+        const userInfo = get(userInfoAtom);
         if(userInfo) return userInfo;
 
         try{
             
-            const response = await apiClient.get(USERINFO_ROUTE);
+            const response = await apiClient.get(USERINFO_ROUTE,{withCredentials:true});
             if(response.status===200) return response.data;
             return null;
 
