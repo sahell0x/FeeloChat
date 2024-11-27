@@ -72,7 +72,7 @@ function SignUpTabContent() {
         onClick={()=>{
           signUpHandler();
         }}
-        className="w-[100%] mb-2 rounded-full"
+        className="w-[100%] mb-2 "
       >
         Sign up
       </Button>
@@ -84,7 +84,7 @@ function SignUpTabContent() {
                   <span className="px-2 bg-white text-gray-500">or</span>
                 </div>
               </div>
-      <Button variant="premium" className="w-[100%] rounded-full">
+      <Button variant="outline" className="w-[100%]  mt-2">
         Try as Guest
       </Button>
     </div>
