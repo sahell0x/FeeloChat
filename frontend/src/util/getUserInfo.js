@@ -11,7 +11,7 @@ const getUserInfo = async()=>{
 
 
         }catch{
-            return null;
+            throw new Error();
         }
     }
 

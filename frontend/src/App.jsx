@@ -7,24 +7,27 @@ const Profile = lazy(() => import("./pages/profile/Profile"));
 import PrivateRoute from "./pages/route controllers/PrivateRoute";
 import AuthRoute from "./pages/route controllers/AuthRoute";
 import userInfoAtom from "./stores/userInfoAtom";
-import getUserInfoSelector from "./util/getUserIn.js";
-
+import getUserInfo from "./util/getUserInfo";
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
-  const [isError,setIsError] = useState(false);
 
 
   useEffect(()=>{
     if(!userInfo){
+      getUserInfo().then((data)=>{
 
-      const fetchedUserInfo = useRecoilValueLoadable(getUserInfoSelector);
-      console.log(fetchedUserInfo);
-      
+         console.log(data);
+         
+      }).catch(()=>{
+
+         console.log("error");
+
+      });
     }else{
       setIsLoading(false);
     }
-  },[])
+  },[userInfo,setUserInfo]);
   
 
   return (
