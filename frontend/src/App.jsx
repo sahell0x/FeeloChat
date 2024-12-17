@@ -7,7 +7,7 @@ const Profile = lazy(() => import("./pages/profile/Profile"));
 import PrivateRoute from "./pages/route controllers/PrivateRoute";
 import AuthRoute from "./pages/route controllers/AuthRoute";
 import userInfoAtom from "./stores/userInfoAtom";
-import getUserInfoSelector from "./stores/getUserInforSelector.js";
+import getUserInfoSelector from "./util/getUserIn.js";
 
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
