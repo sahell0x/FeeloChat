@@ -2,6 +2,8 @@ import apiClient from "@/lib/api-client";
 import { USERINFO_ROUTE } from "@/util/constants";
 
 const getUserInfo = async()=>{
+
+    console.log("request is going out");
    
         try{
             
@@ -11,7 +13,9 @@ const getUserInfo = async()=>{
 
 
         }catch{
+
             throw new Error();
+            return null;
         }
     }
 

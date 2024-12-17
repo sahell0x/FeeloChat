@@ -11,24 +11,33 @@ import getUserInfo from "./util/getUserInfo";
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
+  const [hasError,setHasError] = useState(false);
+
 
 
   useEffect(()=>{
+
     if(!userInfo){
       getUserInfo().then((data)=>{
+        
+        setUserInfo(data);
+        setIsLoading(false);
 
-         console.log(data);
-         
       }).catch(()=>{
-
-         console.log("error");
-
+         setHasError(true);
+         setIsLoading(false);
       });
     }else{
       setIsLoading(false);
     }
   },[userInfo,setUserInfo]);
-  
+  console.log("rerender");
+  if(hasError){
+    return <div>Error while loading</div>
+  }else if(isLoading){
+
+    return <div>Loading...</div>
+  }
 
   return (
       <BrowserRouter>
