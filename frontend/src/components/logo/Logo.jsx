@@ -14,7 +14,7 @@ const Logo = () => {
             chat
           </span>
         </h1>
-        <p className="text-sm text-gray-500 mt-1">express yourself</p>
+        <p className="text-sm text-gray-500 mt-1">Let your expressions talk</p>
       </div>
     </div>
   );

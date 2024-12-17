@@ -1,14 +1,8 @@
-import { selector, useRecoilValue } from "recoil";
-import userInfoAtom from "./userInfoAtom";
 import apiClient from "@/lib/api-client";
 import { USERINFO_ROUTE } from "@/util/constants";
 
-const getUserInfoSelector = selector({
-    key:"getUserInfoSelector",
-    get: async ({get})=>{
-        const userInfo = get(userInfoAtom);
-        if(userInfo) return userInfo;
-
+const getUserInfo = async()=>{
+   
         try{
             
             const response = await apiClient.get(USERINFO_ROUTE,{withCredentials:true});
@@ -20,6 +14,5 @@ const getUserInfoSelector = selector({
             return null;
         }
     }
-});
 
-export default getUserInfoSelector;
+export default getUserInfo;

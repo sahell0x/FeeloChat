@@ -1,6 +1,6 @@
-import { lazy, Suspense,useEffect } from "react";
+import { lazy, Suspense,useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RecoilRoot, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 const Auth = lazy(() => import("./pages/auth/Auth"));
 const Chat = lazy(() => import("./pages/chat/Chat"));
 const Profile = lazy(() => import("./pages/profile/Profile"));
@@ -10,25 +10,22 @@ import userInfoAtom from "./stores/userInfoAtom";
 import getUserInfoSelector from "./stores/getUserInforSelector.js";
 
 function App() {
-  // const setUserInfo = useSetRecoilState(userInfoAtom);
+  const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
+  const [isLoading,setIsLoading] = useState(true);
+  const [isError,setIsError] = useState(false);
 
-  // const getUserInfoState = useRecoilValueLoadable(getUserInfoSelector);
+
+  useEffect(()=>{
+    if(!userInfo){
+
+      const fetchedUserInfo = useRecoilValueLoadable(getUserInfoSelector);
+      console.log(fetchedUserInfo);
+      
+    }else{
+      setIsLoading(false);
+    }
+  },[])
   
-  // useEffect(() => {
-  //   if (getUserInfoState.state === "hasValue") {
-  //     setUserInfo({ ...getUserInfoState.contents });
-  //   }
-  // }, [getUserInfoState, setUserInfo]);
-
-  // if (getUserInfoState.state === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (getUserInfoState.state === "hasError") {
-  //   return <div>Error while fetching data</div>;
-  // }
-
-
 
   return (
       <BrowserRouter>

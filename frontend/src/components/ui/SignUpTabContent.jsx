@@ -65,7 +65,7 @@ function SignUpTabContent() {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirm Password"
-        className="mb-5"
+        className="mb-4"
       ></PasswordInput>
 
       <Button
