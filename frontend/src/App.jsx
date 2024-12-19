@@ -11,7 +11,6 @@ import getUserInfo from "./util/getUserInfo";
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
-  const [hasError,setHasError] = useState(false);
 
 
 
@@ -23,8 +22,8 @@ function App() {
         setUserInfo(data);
         setIsLoading(false);
 
-      }).catch(()=>{
-         setHasError(true);
+      }).catch((e)=>{
+        console.log(e);
          setIsLoading(false);
       });
     }else{
@@ -32,9 +31,8 @@ function App() {
     }
   },[userInfo,setUserInfo]);
   console.log("rerender");
-  if(hasError){
-    return <div>Error while loading</div>
-  }else if(isLoading){
+
+  if(isLoading){
 
     return <div>Loading...</div>
   }

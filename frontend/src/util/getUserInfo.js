@@ -12,7 +12,7 @@ const getUserInfo = async()=>{
             return null;
 
 
-        }catch{
+        }catch(e){
 
             throw new Error();
             return null;
