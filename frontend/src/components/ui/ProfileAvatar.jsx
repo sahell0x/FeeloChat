@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRecoilValue } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
+import getFirstLetter from "@/util/getFirstLetter";
 
 export default function ProfileAvatar({image}) {
   const userInfo = useRecoilValue(userInfoAtom);
@@ -17,9 +18,9 @@ export default function ProfileAvatar({image}) {
         
       <Avatar className="size-40" >
 
-        {image ? <AvatarImage src="https://github.com/shadcn.pngS" /> : <AvatarFallback  className="text-6xl">
+        {image ? <AvatarImage src="https://github.com/shadcn.png" /> : <AvatarFallback  className="text-6xl">
           {
-            userInfo.firstName ? 
+            userInfo.firstName ? getFirstLetter(userInfo.firstName) : getFirstLetter(userInfo.email)
           }
           </AvatarFallback>}
       </Avatar>
