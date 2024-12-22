@@ -1,11 +1,17 @@
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import userInfoAtom from "@/stores/userInfoAtom"
+import { useState } from "react";
 
 function Profile() {
-  const userInfo = useRecoilValue(userInfoAtom);
+  const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
+  const [firstName,setFirstName] = useState("");
+  const [lastName,setLastName] = useState("");
+  const [email,setEmail] = useState("");
+  
+
   return (
     <div>
-      {userInfo.email}
+      
     </div>
   )
 }
