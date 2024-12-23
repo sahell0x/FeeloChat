@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import userInfoAtom from "@/stores/userInfoAtom"
 import { useState } from "react";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
+import Modal from "@/components/ui/Modal";
 
 function Profile() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
@@ -13,8 +14,9 @@ function Profile() {
   return (
     <div className="h-[100vh] flex items-center justify-center flex-col gap-5">
 
-      hi there
+      <Modal>
       <ProfileAvatar/>
+      </Modal>
       
     </div>
   )
