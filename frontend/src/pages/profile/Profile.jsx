@@ -19,11 +19,11 @@ function Profile() {
       <Modal>
         <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
       <ProfileAvatar profileImage={profileImage}/>
-      <div className="flex items-center justify-center flex-col gap-3">
-      <Input value={userInfo.email} disabled className="flex items-center justify-center text-center" type="email"></Input>
-      <Input onChange={(e)=>{setFirstName(e.target.value)}} value={firstName}  className="flex items-center justify-center text-center" type="text" placeholder="First name"></Input>
+      <div className="flex items-center justify-center flex-col gap-4">
+      <Input value={userInfo.email} disabled className="flex items-center justify-center text-center" type="email" style={{fontSize:"17px"}}></Input>
+      <Input onChange={(e)=>{setFirstName(e.target.value)}} value={firstName}  className="flex items-center justify-center text-center" type="text" placeholder="First name" style={{fontSize:"17px"}}></Input>
 
-      <Input onChange={(e)=>{setLastName(e.target.value)}} value={lastName}  className="flex items-center justify-center text-center" type="text" placeholder="Last name"></Input>
+      <Input onChange={(e)=>{setLastName(e.target.value)}} value={lastName}  className="flex items-center justify-center text-center" type="text" placeholder="Last name" style={{fontSize:"17px"}}></Input>
 
       </div>
       </div>
