@@ -13,7 +13,7 @@ function Chat() {
 
     if(!userInfo.profileSetup){
       toast({variant: "destructive",
-        title: "Please setup Profile first to sign Up",});
+        title: "Please setup Profile first",});
         navigate("/profile");
     }
 
