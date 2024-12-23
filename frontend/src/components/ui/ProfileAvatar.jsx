@@ -24,7 +24,7 @@ export default function ProfileAvatar({profileImage}) {
             userInfo.firstName ? getFirstLetter(userInfo.firstName) : getFirstLetter(userInfo.email)
           }
           </AvatarFallback>}
-          {isHoverd && (<div className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42">{ profileImage ? <FaTrashAlt className="text-gray-200 text-3xl cursor-pointer"/> : <FaPlus className="text-gray-200 text-3xl cursor-pointer" />
+          {isHoverd && (<div className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42">{ profileImage ? <FaTrashAlt className="text-gray-200 text-3xl cursor-pointer hover:text-white"/> : <FaPlus className="text-gray-200 text-3xl cursor-pointer hover:text-white" />
 
 }</div>)}
       </Avatar>

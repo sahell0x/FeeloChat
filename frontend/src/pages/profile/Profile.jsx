@@ -9,7 +9,7 @@ function Profile() {
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
   const [email,setEmail] = useState("");
-  const [profileImage,setProfileImage] = useState("https://picsum.photos/200/300");
+  const [profileImage,setProfileImage] = useState("");
 
 
   return (
