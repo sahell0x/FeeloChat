@@ -9,13 +9,14 @@ function Profile() {
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
   const [email,setEmail] = useState("");
+  const [profileImage,setProfileImage] = useState("https://picsum.photos/200/300");
 
 
   return (
     <div className="h-[100vh] flex items-center justify-center flex-col gap-5">
 
       <Modal>
-      <ProfileAvatar/>
+      <ProfileAvatar profileImage={profileImage}/>
       </Modal>
       
     </div>
