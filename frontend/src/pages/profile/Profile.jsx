@@ -3,6 +3,7 @@ import userInfoAtom from "@/stores/userInfoAtom"
 import { useState } from "react";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
+import { Input } from "@/components/ui/input";
 
 function Profile() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
@@ -13,13 +14,21 @@ function Profile() {
 
 
   return (
-    <div className="h-[100vh] flex items-center justify-center flex-col gap-5">
+    
 
       <Modal>
+        <div className="h-[100vh] flex items-center justify-center flex-col gap-5">
       <ProfileAvatar profileImage={profileImage}/>
+      <div className="flex items-center justify-center flex-col gap-5">
+      <Input value={userInfo.email} disabled className="flex items-center justify-center text-center" type="email"></Input>
+      <Input onChange={(e)=>{setFirstName(e.target.value)}} value={firstName}  className="flex items-center justify-center text-center" type="text"></Input>
+
+      <Input onChange={(e)=>{setLastName(e.target.value)}} value={lastName}  className="flex items-center justify-center text-center text-6xl p-0 font-medium" type="text"></Input>
+
+      </div>
+      </div>
       </Modal>
       
-    </div>
   )
 }
 
