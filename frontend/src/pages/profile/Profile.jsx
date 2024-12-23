@@ -4,6 +4,7 @@ import { useState } from "react";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -45,6 +46,8 @@ function Profile() {
             placeholder="Last name"
             style={{ fontSize: "17px" }}
           ></Input>
+
+          <Button className="w-40 mt-3">Save changes</Button>
         </div>
       </div>
     </Modal>
