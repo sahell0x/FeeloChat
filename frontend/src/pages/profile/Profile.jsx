@@ -1,35 +1,54 @@
-import { useRecoilState, useRecoilValue } from "recoil"
-import userInfoAtom from "@/stores/userInfoAtom"
+import { useRecoilState, useRecoilValue } from "recoil";
+import userInfoAtom from "@/stores/userInfoAtom";
 import { useState } from "react";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
 import { Input } from "@/components/ui/input";
 
 function Profile() {
-  const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
-  const [firstName,setFirstName] = useState("");
-  const [lastName,setLastName] = useState("");
-  const [email,setEmail] = useState("");
-  const [profileImage,setProfileImage] = useState("");
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profileImage, setProfileImage] = useState("");
 
   return (
-    
+    <Modal>
+      <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
+        <ProfileAvatar profileImage={profileImage} />
+        <div className="flex items-center justify-center flex-col gap-4">
+          <Input
+            value={userInfo.email}
+            disabled
+            className="flex items-center justify-center text-center"
+            type="email"
+            style={{ fontSize: "17px" }}
+          ></Input>
+          <Input
+            onChange={(e) => {
+              setFirstName(e.target.value);
+            }}
+            value={firstName}
+            className="flex items-center justify-center text-center"
+            type="text"
+            placeholder="First name"
+            style={{ fontSize: "17px" }}
+          ></Input>
 
-      <Modal>
-        <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
-      <ProfileAvatar profileImage={profileImage}/>
-      <div className="flex items-center justify-center flex-col gap-4">
-      <Input value={userInfo.email} disabled className="flex items-center justify-center text-center" type="email" style={{fontSize:"17px"}}></Input>
-      <Input onChange={(e)=>{setFirstName(e.target.value)}} value={firstName}  className="flex items-center justify-center text-center" type="text" placeholder="First name" style={{fontSize:"17px"}}></Input>
-
-      <Input onChange={(e)=>{setLastName(e.target.value)}} value={lastName}  className="flex items-center justify-center text-center" type="text" placeholder="Last name" style={{fontSize:"17px"}}></Input>
-
+          <Input
+            onChange={(e) => {
+              setLastName(e.target.value);
+            }}
+            value={lastName}
+            className="flex items-center justify-center text-center"
+            type="text"
+            placeholder="Last name"
+            style={{ fontSize: "17px" }}
+          ></Input>
+        </div>
       </div>
-      </div>
-      </Modal>
-      
-  )
+    </Modal>
+  );
 }
 
-export default Profile
+export default Profile;
