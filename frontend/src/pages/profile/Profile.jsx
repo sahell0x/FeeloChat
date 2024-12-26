@@ -5,8 +5,12 @@ import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import updateProfile from "@/util/updateProfile";
+
 
 function Profile() {
+  const toast = useToast();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -47,7 +51,8 @@ function Profile() {
             style={{ fontSize: "17px" }}
           ></Input>
 
-          <Button className="w-40 mt-3">Save changes</Button>
+          <Button onClick = {()=>{updateProfile(toast)}}
+          className="w-40 mt-3">Save changes</Button>
         </div>
       </div>
     </Modal>
