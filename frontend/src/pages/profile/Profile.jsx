@@ -52,7 +52,7 @@ function Profile() {
           ></Input>
 
           <Button
-                    onClick={()=>{updateProfile(toast)}}
+                    onClick={()=>{updateProfile(toast,firstName,lastName)}}
 
           className="w-40 mt-3">Save changes</Button>
         </div>
