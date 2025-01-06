@@ -7,13 +7,16 @@ const updateProfile = async (toast,firstName,lastName) =>{
         toast({variant: "destructive",
             title: "First name and last name cannot be empty.",});
     }else if(!profileNameValidator(firstName) ||!profileNameValidator(lastName) ){
-        toast({variant: "destructive",
+        toast({variant: "",
             title: "Spcial characters are not allowed.",});
     }else{
         try{
             const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
 
-            return response;
+            if(response.status === 202){
+                toast({variant: "success",
+                    title: "Saved successfully.",});
+            }
 
             console.log(response);
         }catch(e){
