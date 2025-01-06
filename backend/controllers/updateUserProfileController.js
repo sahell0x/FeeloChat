@@ -3,6 +3,7 @@ import profileNameTypes from "../types/profileNameTypes.js";
 import User from "../models/userModel.js";
 
 const updateUserProfileController = async (req,res)=>{
+    console.log("i got called");
     try{
         const userId = req.userId;
     const userProfileData = req.body;
@@ -13,8 +14,10 @@ const updateUserProfileController = async (req,res)=>{
             message:"invalid inputs.",
         });
     }
-   
-    const response = await User.findByIdAndUpdate(userId,{...userProfileData,profileSetup:true});
+      console.log(userProfileData);
+    const response = await User.findOneAndUpdate({_id:userId},{...userProfileData,profileSetup:true},{new:true});
+
+    console.log(response);
 
     return res.status(StatusCode.SuccessAccepted).json({
         email : response.email,
