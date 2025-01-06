@@ -13,10 +13,13 @@ const updateProfile = async (toast,firstName,lastName) =>{
         try{
             const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
 
+            return response;
+
             console.log(response);
         }catch(e){
             toast({variant: "destructive",
                 title: "Unable to save changes try again. ",});
+                return null;
         }
     }
 }
