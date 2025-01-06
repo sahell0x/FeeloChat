@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import updateProfile from "@/util/updateProfile";
-
+import 
 
 function Profile() {
   const toast = useToast();
@@ -16,6 +16,15 @@ function Profile() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
+
+  const handleSavaChanges = async  () => {
+       if(!firstName.length() || !lastName.length()){
+
+        toast({variant: "destructive",
+          title: "Firstname and lastname cannot be empty.",});
+
+       }
+  }
 
   return (
     <Modal>
@@ -51,7 +60,7 @@ function Profile() {
             style={{ fontSize: "17px" }}
           ></Input>
 
-          <Button onClick = {()=>{updateProfile(toast)}}
+          <Button onClick = {handleSavaChanges}
           className="w-40 mt-3">Save changes</Button>
         </div>
       </div>
