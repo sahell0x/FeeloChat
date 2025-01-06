@@ -6,6 +6,8 @@ const getUserInfo = async()=>{
     console.log("request is going out");
    
         try{
+
+            console.log(USER_ROUTE);
             
             const response = await apiClient.get(USER_ROUTE,{withCredentials:true});
             if(response.status===200) return response.data;
