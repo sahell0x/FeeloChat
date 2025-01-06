@@ -11,11 +11,13 @@ const updateProfile = async (toast,firstName,lastName) =>{
             title: "Spcial characters are not allowed.",});
     }else{
         try{
+            console.log(firstName,lastName);
             const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
 
             if(response.status === 202){
                 toast({variant: "success",
                     title: "Saved successfully.",});
+                    console.log(response.data);
                     return response.data;
             }else{
                 toast({variant: "destructive",

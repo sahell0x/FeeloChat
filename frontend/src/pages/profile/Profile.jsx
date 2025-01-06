@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import updateProfile from "@/util/updateProfile";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const {toast} = useToast();
@@ -15,14 +16,14 @@ function Profile() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  
+  const navigate = useNavigate();
   const handleSaveChanges = ()=>{
     updateProfile(toast,firstName,lastName).then((data)=>{
         if(data){
           console.log(data);
           setUserInfo({...data});
-          setFirstName(data.firstName);
-          setLastName(data.lastName);
+         console.log(userInfo);
+          
         }
     }).catch((e)=>{
       console.log(e);
@@ -64,7 +65,7 @@ function Profile() {
           ></Input>
 
           <Button
-                    onClick={handleSaveChanges}
+            onClick={handleSaveChanges}
 
           className="w-40 mt-3">Save changes</Button>
         </div>
