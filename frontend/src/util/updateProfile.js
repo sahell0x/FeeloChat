@@ -16,14 +16,14 @@ const updateProfile = async (toast,firstName,lastName) =>{
             if(response.status === 202){
                 toast({variant: "success",
                     title: "Saved successfully.",});
-                    return response;
+                    return response.data;
             }else{
                 toast({variant: "destructive",
                     title: "Unable to save changes.",});
                     return null;
             }
 
-            console.log(response);
+            
         }catch(e){
             toast({variant: "destructive",
                 title: "Unable to save changes try again. ",});

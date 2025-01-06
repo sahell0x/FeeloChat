@@ -17,7 +17,11 @@ const updateUserProfileController = async (req,res)=>{
     const response = await User.findByIdAndUpdate(userId,{...userProfileData,profileSetup:true});
 
     return res.status(StatusCode.SuccessAccepted).json({
-        message:"user profile updated successfully",
+        email : response.email,
+       firstName: response.firstName,
+       lastName : response.lastName,
+       id : response._id,
+       profileSetup:response.profileSetup,
     });
 
     }catch(e){

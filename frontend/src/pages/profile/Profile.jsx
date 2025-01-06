@@ -16,7 +16,19 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
   
-  
+  const handleSaveChanges = ()=>{
+    updateProfile(toast,firstName,lastName).then((data)=>{
+        if(data){
+          console.log(data);
+          setUserInfo({...data});
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
+        }
+    }).catch((e)=>{
+      console.log(e);
+    });
+  }
+
   return (
     <Modal>
       <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
@@ -52,7 +64,7 @@ function Profile() {
           ></Input>
 
           <Button
-                    onClick={()=>{updateProfile(toast,firstName,lastName)}}
+                    onClick={handleSaveChanges}
 
           className="w-40 mt-3">Save changes</Button>
         </div>
