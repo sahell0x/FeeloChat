@@ -11,8 +11,9 @@ const updateProfile = async (toast,firstName,lastName) =>{
             title: "Spcial characters are not allowed.",});
     }else{
         try{
-            console.log(USER_ROUTE)
-            // const response = await apiClient.post(USER_ROUTE)
+            const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
+
+            console.log(response);
         }catch(e){
             toast({variant: "destructive",
                 title: "Unable to save changes try again. ",});
