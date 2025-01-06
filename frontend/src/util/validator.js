@@ -36,9 +36,6 @@ export const confirmPasswordChecker = (password,confirmPassword)=>{
 export const profileNameValidator = (input) =>{
     const letterOnlySchema = z.string().regex(/^[a-zA-Z]+$/); 
 
-   if(!input){
-    return false;
-}
 
 const {success} = letterOnlySchema.safeParse(input);
 
