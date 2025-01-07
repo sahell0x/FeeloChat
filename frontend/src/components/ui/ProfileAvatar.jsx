@@ -7,11 +7,12 @@ import getFirstLetter from "@/util/getFirstLetter";
 import apiClient from "@/lib/api-client";
 import { USER_PROFILE_ROUTE } from "@/util/constants";
 import fileToBase64Convertor from "@/util/fileToBase64Converter";
-
+import { useToast } from "@/hooks/use-toast";
 export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
+  const {toast} = useToast();
 
   const handleFileInputClick = () => {
     inputFileRef.current.click();
@@ -21,9 +22,19 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     console.dir(e.target.files[0]);
     const file = e.target.files[0];
     if(file){
-       const imageUrl = await fileToBase64Convertor(file);
-       console.log(imageUrl);
-       setProfileImage(imageUrl);
+      try{
+        const imageUrl = await fileToBase64Convertor(file);
+        const response = await apiClient.post(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
+        if(response.status===200){
+          setProfileImage(imageUrl);
+          toast({variant: "success",
+            title: "Profile image uploaded successfully.",});
+        }
+
+      }catch{
+        toast({variant: "destructive",
+          title: "Error while setting image.",});
+      }
     }
   };
 
