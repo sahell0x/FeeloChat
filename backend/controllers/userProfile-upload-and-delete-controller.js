@@ -1,7 +1,7 @@
 import {StatusCode} from "status-code-enum";
 import User from "../models/userModel.js";
 
-const uploadUserProfileController = async (req,res)=>{
+const userProfileUploadAndDeleteController = async (req,res)=>{
     try{
         const userId = req.userId;
     const userProfileImage = req.body;
@@ -11,7 +11,9 @@ const uploadUserProfileController = async (req,res)=>{
 
 
     return res.status(StatusCode.SuccessAccepted).json({
+        id:response._id,
        message:"image uploaded successfully.",
+
     });
 
     }catch(e){
@@ -19,4 +21,4 @@ const uploadUserProfileController = async (req,res)=>{
     }
 }
 
-export default uploadUserProfileController;
+export default userProfileUploadAndDeleteController;
