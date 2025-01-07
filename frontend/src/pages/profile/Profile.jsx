@@ -23,6 +23,7 @@ function Profile() {
     if (userInfo.profileSetup) {
       setFirstName(userInfo.firstName);
       setLastName(userInfo.lastName);
+      setProfileImage(userInfo.img);
     }
   }, [userInfo]);
 

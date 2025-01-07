@@ -24,8 +24,9 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     if(file){
       try{
         const imageUrl = await fileToBase64Convertor(file);
-        const response = await apiClient.post(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
-        if(response.status===200){
+        const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
+        if(response.status===202){
+          
           setProfileImage(imageUrl);
           toast({variant: "success",
             title: "Profile image uploaded successfully.",});
