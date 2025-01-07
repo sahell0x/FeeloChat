@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import updateProfile from "@/util/updateProfile";
 import { useNavigate } from "react-router-dom";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
 
 function Profile() {
-  const {toast} = useToast();
+  const { toast } = useToast();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -18,31 +20,33 @@ function Profile() {
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
-  useEffect(()=>{
-     if(userInfo.profileSetup){
-        setFirstName(userInfo.firstName);
-        setLastName(userInfo.lastName);
-     }
-  },[userInfo]);
-  const handleSaveChanges = ()=>{
-    updateProfile(toast,firstName,lastName).then((data)=>{
-        if(data){
+  useEffect(() => {
+    if (userInfo.profileSetup) {
+      setFirstName(userInfo.firstName);
+      setLastName(userInfo.lastName);
+    }
+  }, [userInfo]);
+  const handleSaveChanges = () => {
+    updateProfile(toast, firstName, lastName)
+      .then((data) => {
+        if (data) {
           console.log(data);
-          setUserInfo({...data});
+          setUserInfo({ ...data });
           navigate("/chat");
-         console.log(userInfo);
-          
+          console.log(userInfo);
         }
-    }).catch((e)=>{
-      console.log(e);
-    });
-  }
-    console.log("rendered from profole");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  console.log("rendered from profole");
   return (
     <Modal>
+                
       <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
         <ProfileAvatar profileImage={profileImage} />
-        <div className="flex items-center justify-center flex-col gap-4">
+        <div className="flex items-center justify-center flex-col gap-3">
           <Input
             value={userInfo.email}
             disabled
@@ -71,11 +75,17 @@ function Profile() {
             placeholder="Last name"
             style={{ fontSize: "17px" }}
           ></Input>
+          <div className="flex items-center justify-items-center flex-col">
+          <Button 
 
-          <Button
-            onClick={handleSaveChanges}
+          onClick={handleSaveChanges} className="w-40 mt-3">
+            Save changes
+          </Button>
 
-          className="w-40 mt-3">Save changes</Button>
+          <Button className="w-40 mt-3"
+          variant="outline"
+          ><IoMdArrowRoundBack/></Button>
+          </div>
         </div>
       </div>
     </Modal>
@@ -83,3 +93,4 @@ function Profile() {
 }
 
 export default Profile;
+
