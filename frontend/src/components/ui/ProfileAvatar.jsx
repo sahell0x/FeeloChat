@@ -6,6 +6,7 @@ import { FaTrashAlt, FaPlus } from "react-icons/fa";
 import getFirstLetter from "@/util/getFirstLetter";
 import apiClient from "@/lib/api-client";
 import { USER_PROFILE_ROUTE } from "@/util/constants";
+import fileToBase64Convertor from "@/util/fileToBase64Converter";
 
 export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
@@ -20,12 +21,9 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     console.dir(e.target.files[0]);
     const file = e.target.files[0];
     if(file){
-    //   const url = URL.createObjectURL(file);
-    // setProfileImage(url);
-    const formData = new FormData();
-    formData.append("profile-image",file);
-      const response = await apiClient.post(USER_PROFILE_ROUTE,formData,{withCredentials:true});
-    
+       const imageUrl = await fileToBase64Convertor(file);
+       console.log(imageUrl);
+       setProfileImage(imageUrl);
     }
   };
 
