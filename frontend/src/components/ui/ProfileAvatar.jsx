@@ -5,6 +5,7 @@ import userInfoAtom from "@/stores/userInfoAtom";
 import { FaTrashAlt, FaPlus } from "react-icons/fa";
 import getFirstLetter from "@/util/getFirstLetter";
 import apiClient from "@/lib/api-client";
+import { USER_PROFILE_ROUTE } from "@/util/constants";
 
 export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
@@ -23,7 +24,7 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     // setProfileImage(url);
     const formData = new FormData();
     formData.append("profile-image",file);
-      const response = await apiClient.post()
+      const response = await apiClient.post(USER_PROFILE_ROUTE,formData,{withCredentials:true});
     
     }
   };
