@@ -22,6 +22,8 @@ function Profile() {
         if(data){
           console.log(data);
           setUserInfo({...data});
+          setFirstName(data.firstName);
+          setLastName(data.lastName);
          console.log(userInfo);
           
         }
@@ -29,7 +31,7 @@ function Profile() {
       console.log(e);
     });
   }
-
+    console.log("rendered from profole");
   return (
     <Modal>
       <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
