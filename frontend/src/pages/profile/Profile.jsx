@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
 import { Input } from "@/components/ui/input";
@@ -17,13 +17,19 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(()=>{
+     if(userInfo.profileSetup){
+        setFirstName(userInfo.firstName);
+        setLastName(userInfo.lastName);
+     }
+  },[userInfo]);
   const handleSaveChanges = ()=>{
     updateProfile(toast,firstName,lastName).then((data)=>{
         if(data){
           console.log(data);
           setUserInfo({...data});
-          setFirstName(data.firstName);
-          setLastName(data.lastName);
+          navigate("/chat");
          console.log(userInfo);
           
         }
