@@ -10,17 +10,15 @@ export default function ProfileAvatar({ profileImage }) {
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
 
-  const handleFileInputClick = ()=>{
+  const handleFileInputClick = () => {
     inputFileRef.current.click();
-  }
+  };
 
-  const handleImageChange = (e)=>{
+  const handleImageChange = (e) => {
+    alert("image changed successfull");
+  };
 
-  }
-
-  const handleImageDelete = ()=>{
-
-  }
+  const handleImageDelete = () => {};
   return (
     <div
       className="  flex items-center justify-center flex-col"
@@ -38,9 +36,10 @@ export default function ProfileAvatar({ profileImage }) {
           </AvatarFallback>
         )}
         {isHoverd && (
-          <div 
-          onClick={profileImage ? handleImageDelete : handleFileInputClick}
-          className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42">
+          <div
+            onClick={profileImage ? handleImageDelete : handleFileInputClick}
+            className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42"
+          >
             {profileImage ? (
               <FaTrashAlt className="text-gray-200 text-3xl cursor-pointer hover:text-white" />
             ) : (
@@ -49,7 +48,14 @@ export default function ProfileAvatar({ profileImage }) {
           </div>
         )}
       </Avatar>
-      <input type="file" ref={inputFileRef} accept=".png, .jpg, .jpeg, .svg , .webp" />
+      <input
+        type="file"
+        ref={inputFileRef}
+        accept=".png, .jpg, .jpeg, .svg , .webp"
+        className="hidden"
+        onChange={handleImageChange}
+        name="profile-image"
+      />
     </div>
   );
 }
