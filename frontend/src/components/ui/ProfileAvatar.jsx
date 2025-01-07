@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRecoilValue } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
@@ -8,7 +8,19 @@ import getFirstLetter from "@/util/getFirstLetter";
 export default function ProfileAvatar({ profileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
+  const inputFileRef = useRef(null);
 
+  const handleFileInputClick = ()=>{
+    inputFileRef.current.click();
+  }
+
+  const handleImageChange = (e)=>{
+
+  }
+
+  const handleImageDelete = ()=>{
+
+  }
   return (
     <div
       className="  flex items-center justify-center flex-col"
@@ -26,7 +38,9 @@ export default function ProfileAvatar({ profileImage }) {
           </AvatarFallback>
         )}
         {isHoverd && (
-          <div className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42">
+          <div 
+          onClick={profileImage ? handleImageDelete : handleFileInputClick}
+          className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42">
             {profileImage ? (
               <FaTrashAlt className="text-gray-200 text-3xl cursor-pointer hover:text-white" />
             ) : (
@@ -35,6 +49,7 @@ export default function ProfileAvatar({ profileImage }) {
           </div>
         )}
       </Avatar>
+      <input type="file" ref={inputFileRef} accept=".png, .jpg, .jpeg, .svg , .webp" />
     </div>
   );
 }
