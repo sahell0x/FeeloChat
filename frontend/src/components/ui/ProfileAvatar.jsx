@@ -4,8 +4,9 @@ import { useRecoilValue } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { FaTrashAlt, FaPlus } from "react-icons/fa";
 import getFirstLetter from "@/util/getFirstLetter";
+import apiClient from "@/lib/api-client";
 
-export default function ProfileAvatar({ profileImage }) {
+export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
@@ -14,8 +15,17 @@ export default function ProfileAvatar({ profileImage }) {
     inputFileRef.current.click();
   };
 
-  const handleImageChange = (e) => {
-    alert("image changed successfull");
+  const handleImageChange = async(e) => {
+    console.dir(e.target.files[0]);
+    const file = e.target.files[0];
+    if(file){
+    //   const url = URL.createObjectURL(file);
+    // setProfileImage(url);
+    const formData = new FormData();
+    formData.append("profile-image",file);
+      const response = await apiClient.post()
+    
+    }
   };
 
   const handleImageDelete = () => {};
@@ -56,6 +66,7 @@ export default function ProfileAvatar({ profileImage }) {
         onChange={handleImageChange}
         name="profile-image"
       />
+
     </div>
   );
 }

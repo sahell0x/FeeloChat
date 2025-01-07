@@ -53,7 +53,7 @@ function Profile() {
     <Modal>
                 
       <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
-        <ProfileAvatar profileImage={profileImage} />
+        <ProfileAvatar profileImage={profileImage} setProfileImage={setProfileImage}/>
         <div className="flex items-center justify-center flex-col gap-5">
           <Input
             value={userInfo.email}
