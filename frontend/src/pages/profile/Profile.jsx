@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import updateProfile from "@/util/updateProfile";
 import { useNavigate } from "react-router-dom";
-import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 function Profile() {
@@ -26,6 +25,15 @@ function Profile() {
       setLastName(userInfo.lastName);
     }
   }, [userInfo]);
+
+  const handleBack = ()=>{
+    if(userInfo.profileSetup){
+      navigate("/chat");
+    }else{
+      toast({variant: "destructive",
+        title: "Please setup profile first.",});
+    }
+  }
   const handleSaveChanges = () => {
     updateProfile(toast, firstName, lastName)
       .then((data) => {
@@ -46,7 +54,7 @@ function Profile() {
                 
       <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
         <ProfileAvatar profileImage={profileImage} />
-        <div className="flex items-center justify-center flex-col gap-3">
+        <div className="flex items-center justify-center flex-col gap-5">
           <Input
             value={userInfo.email}
             disabled
@@ -75,16 +83,19 @@ function Profile() {
             placeholder="Last name"
             style={{ fontSize: "17px" }}
           ></Input>
-          <div className="flex items-center justify-items-center flex-col">
+          <div className="flex flex-row gap-5">
+          <Button className="w-35"
+          variant="outline"
+          onClick={handleBack}
+          >back</Button>
+
           <Button 
 
-          onClick={handleSaveChanges} className="w-40 mt-3">
+          onClick={handleSaveChanges} className="w-40">
             Save changes
           </Button>
 
-          <Button className="w-40 mt-3"
-          variant="outline"
-          ><IoMdArrowRoundBack/></Button>
+          
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ const updateProfile = async (toast,firstName,lastName) =>{
         toast({variant: "destructive",
             title: "First name and last name cannot be empty.",});
     }else if(!profileNameValidator(firstName) ||!profileNameValidator(lastName) ){
-        toast({variant: "",
+        toast({variant: "destructive",
             title: "Spcial characters are not allowed.",});
     }else{
         try{
