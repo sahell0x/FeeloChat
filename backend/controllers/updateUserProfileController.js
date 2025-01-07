@@ -22,6 +22,7 @@ const updateUserProfileController = async (req,res)=>{
        lastName : response.lastName,
        id : response._id,
        profileSetup:response.profileSetup,
+       img:response.img
     });
 
     }catch(e){
