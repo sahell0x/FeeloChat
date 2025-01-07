@@ -26,7 +26,7 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
         const imageUrl = await fileToBase64Convertor(file);
         const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
         if(response.status===202){
-          
+
           setProfileImage(imageUrl);
           toast({variant: "success",
             title: "Profile image uploaded successfully.",});
@@ -39,7 +39,21 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     }
   };
 
-  const handleImageDelete = () => {};
+  const handleImageDelete = async () => {
+    try{
+      const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:""},{withCredentials:true});
+
+      if(response.status===202){
+        toast({variant: "success",
+          title: "Profile image deleted successfully.",});
+          setProfileImage("");
+      }
+
+    }catch{
+      toast({variant: "destructive",
+        title: "Error while deleting image.",});
+    }
+  };
   return (
     <div
       className="  flex items-center justify-center flex-col"
