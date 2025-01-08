@@ -63,15 +63,15 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
       onMouseLeave={() => setIsHoverd(false)}
     >
       <Avatar className="size-40">
-        {profileImage ? (
+       
           <AvatarImage src={profileImage} />
-        ) : (
+        
           <AvatarFallback className="text-6xl">
             {userInfo.firstName
               ? getFirstLetter(userInfo.firstName)
               : getFirstLetter(userInfo.email)}
           </AvatarFallback>
-        )}
+      
         {isHoverd && (
           <div
             onClick={profileImage ? handleImageDelete : handleFileInputClick}
