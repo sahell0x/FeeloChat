@@ -5,13 +5,14 @@ const userProfileUploadAndDeleteController = async (req,res)=>{
     try{
         const userId = req.userId;
     const userProfileImage = req.body;
+    console.log(userProfileImage);
 
-    const response = await User.findOneAndUpdate({_id:userId},userProfileImage,{new:true});
+    // const response = await User.findOneAndUpdate({_id:userId},userProfileImage,{new:true});
 
 
 
     return res.status(StatusCode.SuccessAccepted).json({
-        id:response._id,
+        // id:response._id,
        message:"image uploaded successfully.",
 
     });
