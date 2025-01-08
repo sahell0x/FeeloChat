@@ -24,6 +24,7 @@ function Profile() {
       setFirstName(userInfo.firstName);
       setLastName(userInfo.lastName);
       setProfileImage(userInfo.img);
+      console.log(userInfo.img);
     }
   }, [userInfo]);
 

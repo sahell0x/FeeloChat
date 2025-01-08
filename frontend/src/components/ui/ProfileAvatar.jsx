@@ -19,20 +19,22 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   };
 
   const handleImageChange = async(e) => {
-    console.dir(e.target.files[0]);
     const file = e.target.files[0];
     if(file){
       try{
-        const imageUrl = await fileToBase64Convertor(file);
+       const imageUrl = await fileToBase64Convertor(file);
+       setProfileImage(imageUrl);
+
         const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
+
         if(response.status===202){
 
-          setProfileImage(imageUrl);
           toast({variant: "success",
             title: "Profile image uploaded successfully.",});
         }
 
-      }catch{
+      }catch(e){
+        console.log(e);
         toast({variant: "destructive",
           title: "Error while setting image.",});
       }
@@ -91,6 +93,7 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
         onChange={handleImageChange}
         name="profile-image"
       />
+      {/* <img src={profileImage} alt="profileimg" /> */}
 
     </div>
   );
