@@ -24,11 +24,15 @@ function SignInTabContent() {
     }else if(!password.length){
       toast.error("password can not be empty.");
     }else{
-     try{
+     try{ 
+      setIsButtonDisabled(true);
+      
       const response = await apiClient.post(SIGNIN_ROUTE,{email,password},{withCredentials:true});
+     
 
       if(response.status===200){
         setUserInfo({...response.data});  ///set user data to the atom
+        setIsButtonDisabled(false);
 
         if(!response.data.profileSetup){
           navigate("/profile");
@@ -36,9 +40,13 @@ function SignInTabContent() {
           navigate("/chat");
         }
       }else{
+        setIsButtonDisabled(false);
+
         toast.error("Wrong email or password.");
       }
      }catch{
+      setIsButtonDisabled(false);
+
         toast.error("Wrong email or password.");
      }
       

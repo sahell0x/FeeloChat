@@ -15,6 +15,8 @@ function SignUpTabContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isButtonDisabled,setIsButtonDisabled]  = useState(false);
+
   const navigate = useNavigate();
   const setUserInfo = useSetRecoilState(userInfoAtom);
 
@@ -27,12 +29,25 @@ function SignUpTabContent() {
     }else if(!confirmPasswordChecker(password,confirmPassword)){
       toast.error("Passwords do not match. Please try again.");
     }else{
+     try{
+      setIsButtonDisabled(true);
       const response = await apiClient.post(SIGNUP_ROUTE,{email,password},{withCredentials:true});
       
       if(response.status===201){
         setUserInfo({...response.data});
+        setIsButtonDisabled(false);
+
          navigate("/profile");
       }
+     }catch(response){
+      setIsButtonDisabled(false);
+      if(response.status==409){
+        toast.error("Email already exist.");
+      }else{
+        toast.error("Somthing wents wrong please try again.");
+
+      }
+    }
     }
 
     
@@ -65,7 +80,7 @@ function SignUpTabContent() {
         className="mb-4"
       ></PasswordInput>
 
-      <Button
+      <Button disabled={isButtonDisabled}
         onClick={()=>{
           signUpHandler();
         }}
@@ -81,7 +96,7 @@ function SignUpTabContent() {
                   <span className="px-2 bg-white text-gray-500">or</span>
                 </div>
               </div>
-      <Button variant="outline" className="w-[100%]  mt-2">
+      <Button disabled={isButtonDisabled} variant="outline" className="w-[100%]  mt-2">
         Try as Guest
       </Button>
     </div>
