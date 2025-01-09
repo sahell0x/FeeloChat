@@ -28,6 +28,7 @@ const updateProfile = async (firstName,lastName) =>{
                 return null;
         }
     }
+    return null;
 }
 
 export default updateProfile;

@@ -14,7 +14,9 @@ function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isButtonDisabled,setIsButtonDisabled]  = useState(false);
   const [email, setEmail] = useState("");
+
   const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
@@ -34,16 +36,21 @@ function Profile() {
     }
   }
   const handleSaveChanges = () => {
+    setIsButtonDisabled(true);
     updateProfile(firstName.trim(), lastName.trim())
       .then((data) => {
+
         if (data) {
           console.log(data);
           setUserInfo({ ...data });
+          setIsButtonDisabled(false);
+
           navigate("/chat");
           console.log(userInfo);
         }
       })
       .catch((e) => {
+        setIsButtonDisabled(false);
         console.log(e);
       });
   };
@@ -88,7 +95,7 @@ function Profile() {
           onClick={handleBack}
           >back</Button>
 
-          <Button 
+          <Button  disabled={isButtonDisabled}
 
           onClick={handleSaveChanges} className="w-40">
             Save changes
