@@ -2,7 +2,7 @@
 function EmptyChatContainer() {
   return (
     <div>
-      
+      EmptyChatContainer
     </div>
   )
 }

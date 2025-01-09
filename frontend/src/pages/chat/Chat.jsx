@@ -1,19 +1,24 @@
-import { useToast } from "@/hooks/use-toast";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useEffect } from "react"
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 function Chat() {
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
-  const {toast} = useToast();
 
   useEffect(()=>{
 
     if(!userInfo.profileSetup){
-      toast({variant: "destructive",
-        title: "Please setup Profile first",});
+      toast((t) => (
+        <span>
+          Please setup Profile first
+          <button onClick={() => toast.dismiss(t.id)}>
+            Ok
+          </button>
+        </span>
+      ));
         navigate("/profile");
     }
 
