@@ -5,13 +5,12 @@ import ProfileAvatar from "@/components/ui/ProfileAvatar";
 import Modal from "@/components/ui/Modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import updateProfile from "@/util/updateProfile";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 function Profile() {
-  const { toast } = useToast();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -32,12 +31,11 @@ function Profile() {
     if(userInfo.profileSetup){
       navigate("/chat");
     }else{
-      toast({variant: "destructive",
-        title: "Please setup profile first.",});
+      toast.error("Please setup profile first.");
     }
   }
   const handleSaveChanges = () => {
-    updateProfile(toast, firstName, lastName)
+    updateProfile(firstName.trim(), lastName.trim())
       .then((data) => {
         if (data) {
           console.log(data);

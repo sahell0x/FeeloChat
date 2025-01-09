@@ -1,34 +1,30 @@
 import apiClient from "@/lib/api-client";
 import {profileNameValidator} from "./validator";
 import {USER_ROUTE} from "./constants";
+import toast from "react-hot-toast";
 
-const updateProfile = async (toast,firstName,lastName) =>{
+const updateProfile = async (firstName,lastName) =>{
     if(!firstName.length || !lastName.length){
-        toast({variant: "destructive",
-            title: "First name and last name cannot be empty.",});
+       toast.error("First name and last name cannot be empty.");
     }else if(!profileNameValidator(firstName) ||!profileNameValidator(lastName) ){
-        toast({variant: "destructive",
-            title: "Spcial characters are not allowed.",});
+        toast.error("Spcial characters are not allowed.");
     }else{
         try{
             console.log(firstName,lastName);
             const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
 
             if(response.status === 202){
-                toast({variant: "success",
-                    title: "Saved successfully.",});
+                toast.success("Saved successfully.");
                     console.log(response.data);
                     return response.data;
             }else{
-                toast({variant: "destructive",
-                    title: "Unable to save changes.",});
+                toast.error("Unable to save changes.");
                     return null;
             }
 
             
         }catch(e){
-            toast({variant: "destructive",
-                title: "Unable to save changes try again. ",});
+            toast.error("Unable to save changes try again.");
                 return null;
         }
     }

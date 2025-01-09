@@ -7,12 +7,11 @@ import getFirstLetter from "@/util/getFirstLetter";
 import apiClient from "@/lib/api-client";
 import { USER_PROFILE_ROUTE } from "@/util/constants";
 import fileToBase64Convertor from "@/util/fileToBase64Converter";
-import { useToast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 export default function ProfileAvatar({ profileImage ,setProfileImage }) {
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
-  const {toast} = useToast();
 
   const handleFileInputClick = () => {
     inputFileRef.current.click();
@@ -29,14 +28,12 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
 
         if(response.status===202){
 
-          toast({variant: "success",
-            title: "Profile image uploaded successfully.",});
+          toast.success("Profile image uploaded successfully.");
         }
 
       }catch(e){
         console.log(e);
-        toast({variant: "destructive",
-          title: "Error while setting image.",});
+          toast.error("Error while setting image.");
       }
     }
   };
@@ -46,14 +43,11 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
       const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:""},{withCredentials:true});
 
       if(response.status===202){
-        toast({variant: "success",
-          title: "Profile image deleted successfully.",});
-          setProfileImage("");
+        toast.success("Profile image deleted successfully.");
       }
 
     }catch{
-      toast({variant: "destructive",
-        title: "Error while deleting image.",});
+      toast.error("Error while deleting image.");
     }
   };
   return (
