@@ -9,9 +9,15 @@ const secrete = process.env.SECRETE;
 
 const signUpController = async (req,res)=>{
     console.log("inside signup");
-    const body = req.body;
-    body.password = await bcrypt.hash(body.password,13);
+    
     try{
+        const body = req.body;
+       const isUserAlreadyExist = User.findOne({email:body.email});
+       if(isUserAlreadyExist){
+        return res.status(409).json({error: "user aleady exist"});
+       }
+       body.password = await bcrypt.hash(body.password,13);
+
         const user = await User.create(body);
         const token = jwt.sign({email:user.email,id:user._id},secrete);
 
