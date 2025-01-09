@@ -3,29 +3,28 @@ import { Button } from "./button";
 import { useState } from "react";
 import { PasswordInput } from "./PasswordInput";
 import {emailValidator} from "@/util/validator.js";
-import { useToast } from "@/hooks/use-toast";
 import apiClient from "@/lib/api-client";
 import { SIGNIN_ROUTE } from "@/util/constants";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
+import toast from "react-hot-toast";
 
 
 function SignInTabContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { toast } = useToast();
+  const [isButtonDisabled,setIsButtonDisabled]  = useState(false);
   const navigate = useNavigate();
   const setUserInfo = useSetRecoilState(userInfoAtom);
 
   const handleSignIn = async ()=>{
     if(!emailValidator(email)){
-      toast({variant: "destructive",
-        title: "Please enter valid Email address.",});
+      toast.error("Please enter valid Email address.");
     }else if(!password.length){
-      toast({variant: "destructive",
-        title: "password can not be empty.",});
+      toast.error("password can not be empty.");
     }else{
+     try{
       const response = await apiClient.post(SIGNIN_ROUTE,{email,password},{withCredentials:true});
 
       if(response.status===200){
@@ -36,7 +35,12 @@ function SignInTabContent() {
         }else{
           navigate("/chat");
         }
+      }else{
+        toast.error("Wrong email or password.");
       }
+     }catch{
+        toast.error("Wrong email or password.");
+     }
       
     }
   }
@@ -55,7 +59,7 @@ function SignInTabContent() {
         placeholder="Password"
         className="mb-2"
       ></PasswordInput>
-      <Button 
+      <Button disabled={isButtonDisabled}
 
         onClick={()=>{
           handleSignIn();

@@ -2,33 +2,30 @@ import { Input } from "@/components/ui/input";
 import { Button } from "./button";
 import { useState } from "react";
 import { PasswordInput } from "./PasswordInput";
-import { useToast } from "@/hooks/use-toast";
 import {emailValidator,passwordValidator,confirmPasswordChecker} from "@/util/validator.js";
 import apiClient from "@/lib/api-client";
 import { SIGNUP_ROUTE } from "@/util/constants";
 import { useNavigate } from "react-router-dom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useSetRecoilState } from "recoil";
+import toast from "react-hot-toast";
 
 function SignUpTabContent() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { toast } = useToast();
   const navigate = useNavigate();
   const setUserInfo = useSetRecoilState(userInfoAtom);
 
   const signUpHandler = async ()=>{
     if(!emailValidator(email)){
-      toast({variant: "destructive",
-        title: "Please enter valid Email address.",});
+      toast.error("Please enter valid Email address.");
     }else if(!passwordValidator(password)){
-      toast({variant: "destructive",
-        title: "Password must minimum 8 characters long and should contain lowercase uppercase and special characters.",});
+      toast.error("Password must minimum 8 characters long and should contain lowercase uppercase and special characters.");
+
     }else if(!confirmPasswordChecker(password,confirmPassword)){
-      toast({variant: "destructive",
-        title: "Passwords do not match. Please try again.",});
+      toast.error("Passwords do not match. Please try again.");
     }else{
       const response = await apiClient.post(SIGNUP_ROUTE,{email,password},{withCredentials:true});
       

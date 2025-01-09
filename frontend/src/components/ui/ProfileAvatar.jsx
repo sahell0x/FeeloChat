@@ -43,6 +43,7 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
       const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:""},{withCredentials:true});
 
       if(response.status===202){
+        setProfileImage("");
         toast.success("Profile image deleted successfully.");
       }
 
