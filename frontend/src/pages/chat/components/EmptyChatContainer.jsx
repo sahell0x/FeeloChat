@@ -13,10 +13,10 @@ function EmptyChatContainer() {
         <div className="text-center max-w-md px-6">
           <div className="relative inline-block mb-8">
             <div className="absolute inset-0 animate-spin-slow"></div>
-            <MessagesSquare className="relative w-16 h-16 text-pink-500 transform hover:scale-105 transition-transform" />
+            {/* <MessagesSquare className="relative w-16 h-16 text-purple-500 transform hover:scale-105 transition-transform" /> */}
           </div>
 
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text mb-4">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4">
             Welcome to FeeloChat
           </h2>
 
