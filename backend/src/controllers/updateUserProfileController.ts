@@ -25,7 +25,7 @@ const updateUserProfileController = async (req,res)=>{
        img:response.img
     });
 
-    }catch(e){
+    }catch{
      return res.status(StatusCode.ServerErrorInternal).json({message:"internal server error."});
     }
 }

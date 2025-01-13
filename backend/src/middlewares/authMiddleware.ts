@@ -20,7 +20,7 @@ const authMiddleware = (req,res,next)=>{
 
     return next();
 
-   }catch(e){
+   }catch{
     return res.status(StatusCode.ClientErrorUnauthorized).json({message:"access denield unauthrized client"});
    }
 }

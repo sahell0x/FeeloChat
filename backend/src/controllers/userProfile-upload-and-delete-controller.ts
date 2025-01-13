@@ -16,7 +16,7 @@ const userProfileUploadAndDeleteController = async (req,res)=>{
 
     });
 
-    }catch(e){
+    }catch{
      return res.status(StatusCode.ServerErrorInternal).json({message:"internal server error."});
     }
 }

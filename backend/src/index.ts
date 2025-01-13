@@ -6,10 +6,10 @@ import cors from "cors";
 dotenv.config();
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
+import { Request,Response,NextFunction } from "express";
 const app = express();
 const port = process.env.PORT;
-const dbUrl = process.env.DB_URL;
+const dbUrl: string = process.env.DB_URL as string;
 
 app.use(cors({
     origin:process.env.ORIGIN,
@@ -27,10 +27,7 @@ app.use("/api",userRoutes);
 app.use("/api/auth",authRoutes);
 
 
-app.get("/",(req,res)=>{
-  res.send("hi there");
-})
-app.use((err,req,res,next)=>{   // global catch function
+app.use((err : any,req :Request,res:Response,next :NextFunction)=>{   // global catch function
     res.status(err.status || 500).json({
         message: err.message || 'Internal Server Error',
       });
