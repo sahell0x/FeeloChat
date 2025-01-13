@@ -1,11 +1,11 @@
 import {StatusCode} from "status-code-enum";
-import User from "../models/userModel.js";
+import User from "../models/userModel";
 import { Request,Response } from "express";
-
+import type { UserId } from "../types/userTypes";
 
 const getUserInfoController = async (req :Request,res :Response)=>{
     try{
-        const userId :string |undefined = req.userId;
+        const userId : UserId = req.userId;
 
         const userInfo = await User.findOne({_id:userId});
         if(!userInfo){

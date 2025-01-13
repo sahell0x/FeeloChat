@@ -1,19 +1,22 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+import User from "../models/userModel";
 import {StatusCode} from "status-code-enum";
 import dotenv from "dotenv";
+import { Request,Response,NextFunction } from "express";
+import type { UserType } from "../types/userTypes";
+
 import { compare } from "bcrypt";
 
 dotenv.config();
 
-const secrete = process.env.SECRETE;
+const secrete :string= process.env.SECRETE as string;
 
-const signInController = async (req,res)=>{
+const signInController = async (req:Request,res:Response)=>{
     console.log("inside signIn");
     const {email , password} = req.body;
 
     try{
-        const user = await User.findOne({email});
+        const user:UserType = await User.findOne({email});
 
         if(!user){
 
@@ -45,11 +48,11 @@ const signInController = async (req,res)=>{
             profileSetup:user.profileSetup,
         });
 
-    }catch(e){
+    }catch{
         res.status(StatusCode.ServerErrorInternal).json({
             message:"Internal server error"
         });
-        console.log(e.message);
+        
     }
 }
 
