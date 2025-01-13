@@ -1,8 +1,10 @@
 import signInTypes from "../types/signInTypes.js";
 import {StatusCode} from "status-code-enum";
+import { Request,Response,NextFunction } from "express";
 
 
-const signInMiddleware = (req,res,next)=>{
+
+const signInMiddleware = (req:Request,res:Response,next:NextFunction)=>{
     console.log("inside middleware");
    const body = req.body;
    const {success} = signInTypes.safeParse(body);

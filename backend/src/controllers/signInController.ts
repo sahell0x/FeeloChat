@@ -3,6 +3,7 @@ import User from "../models/userModel.js";
 import {StatusCode} from "status-code-enum";
 import dotenv from "dotenv";
 import { compare } from "bcrypt";
+
 dotenv.config();
 
 const secrete = process.env.SECRETE;

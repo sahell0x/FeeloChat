@@ -1,7 +1,9 @@
 import {StatusCode} from "status-code-enum";
 import User from "../models/userModel.js";
+import { Request,Response,NextFunction } from "express";
 
-const userProfileUploadAndDeleteController = async (req,res)=>{
+
+const userProfileUploadAndDeleteController = async (req:Request,res:Response)=>{
     try{
         const userId = req.userId;
     const userProfileImage = req.body;

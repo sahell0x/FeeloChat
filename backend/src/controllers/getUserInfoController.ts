@@ -1,7 +1,9 @@
 import {StatusCode} from "status-code-enum";
 import User from "../models/userModel.js";
+import { Request,Response } from "express";
 
-const getUserInfoController = async (req,res)=>{
+
+const getUserInfoController = async (req :Request,res :Response)=>{
     try{
         const userId = req.userId;
 

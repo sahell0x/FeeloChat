@@ -3,11 +3,13 @@ import User from "../models/userModel.js";
 import {StatusCode} from "status-code-enum";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { Request,Response,NextFunction } from "express";
+
 dotenv.config();
 
 const secrete = process.env.SECRETE;
 
-const signUpController = async (req,res)=>{
+const signUpController = async (req: Request,res:Response)=>{
     console.log("inside signup");
     
     try{

@@ -1,8 +1,10 @@
 import {StatusCode} from "status-code-enum";
 import profileNameTypes from "../types/profileNameTypes.js";
 import User from "../models/userModel.js";
+import { Request,Response,NextFunction } from "express";
 
-const updateUserProfileController = async (req,res)=>{
+
+const updateUserProfileController = async (req:Request,res:Response)=>{
     try{
         const userId = req.userId;
     const userProfileData = req.body;

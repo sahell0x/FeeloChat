@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 import {StatusCode} from "status-code-enum";
+import { Request,Response,NextFunction } from "express";
 
-const authMiddleware = (req,res,next)=>{
+
+const authMiddleware = (req:Request,res:Response,next:NextFunction)=>{
    const token = req.cookies.token;
    if(!token){
     return res.status(StatusCode.ClientErrorUnauthorized).json({message:"access denield unauthrized client"});
