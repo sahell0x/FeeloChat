@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "tsc -b && node ./dist/index.js",
+  "dev": "tsc -b --watch & node ./dist/index.js"
   },
   "type": "module",
   "keywords": [],
