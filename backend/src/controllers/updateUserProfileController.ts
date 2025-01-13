@@ -1,5 +1,5 @@
 import {StatusCode} from "status-code-enum";
-import profileNameTypes from "../types/profileNameTypes.js";
+import profileNameTypes from "../zod-types/profileNameTypes.js";
 import User from "../models/userModel.js";
 import { Request,Response,NextFunction } from "express";
 

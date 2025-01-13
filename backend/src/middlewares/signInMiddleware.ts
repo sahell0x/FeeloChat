@@ -1,4 +1,4 @@
-import signInTypes from "../types/signInTypes.js";
+import signInTypes from "../zod-types/signInTypes.js";
 import {StatusCode} from "status-code-enum";
 import { Request,Response,NextFunction } from "express";
 
