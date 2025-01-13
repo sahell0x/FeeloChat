@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2016", 
-    "module": "ESNext", 
+    "moduleResolution": "nodenext",
+    "module": "NodeNext", 
     "rootDir": "./src", 
     "typeRoots": ["./node_modules/@types", "./types"], 
     "outDir": "./dist", 
