@@ -1,12 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "tsc -b && node ./dist/index.js",
-  "dev": "tsc -b --watch & node ./dist/index.js"
+    "dev": "tsc -b  && nodemon ./dist/index.js"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,9 +17,9 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.2",
+    "mongoose": "^8.9.4",
     "status-code-enum": "^1.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
