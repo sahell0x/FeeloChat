@@ -98,13 +98,9 @@ const initialContacts = [
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
     status: "offline",
     lastMessage: "Thanks for the update!",
-  },  {
-    id: 2,
-    name: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
-    status: "offline",
-    lastMessage: "Thanks for the update!",
   },
+
+
   {
     id: 2,
     name: "Alice Smith",
@@ -125,20 +121,9 @@ const initialContacts = [
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
     status: "offline",
     lastMessage: "Thanks for the update!",
-  },  {
-    id: 2,
-    name: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
-    status: "offline",
-    lastMessage: "Thanks for the update!",
   },
-  {
-    id: 2,
-    name: "Alice Smith",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
-    status: "offline",
-    lastMessage: "Thanks for the update!",
-  },
+
+  
 ];
 
 function ContactContainer() {
@@ -151,7 +136,7 @@ function ContactContainer() {
   );
 
   return (
-    <div className="flex flex-col md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#f9fafb] border-r border-gray-200 h-full">
+    <div className="flex flex-col w-full md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#f9fafb] border-r border-gray-200 h-full">
       {/* Header */}
       <div className="flex items-center gap-2 p-4 border-b">
         <FeeloChat />
@@ -172,7 +157,7 @@ function ContactContainer() {
       </div>
 
       {/* Scrollable Contacts */}
-      <ScrollArea className="flex-1 overflow-y-auto">
+      <ScrollArea className="flex-1 overflow-y-auto scrollbar-hide">
         <div className="p-2">
           {filteredContacts.map((contact) => (
             <div
