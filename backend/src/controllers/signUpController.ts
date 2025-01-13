@@ -3,13 +3,13 @@ import User from "../models/userModel";
 import {StatusCode} from "status-code-enum";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import { Request,Response,NextFunction } from "express";
+import { Request,Response } from "express";
 
 dotenv.config();
 
 const secrete:string = process.env.SECRETE as string;
 
-const signUpController = async (req: Request,res:Response)=>{
+const signUpController = async (req: Request,res:Response):Promise<any> =>{
     console.log("inside signup");
     
     try{
@@ -21,8 +21,10 @@ const signUpController = async (req: Request,res:Response)=>{
        }
        body.password = await bcrypt.hash(body.password,13);
 
-        const user = await User.create(body);
-        const token = jwt.sign({email:user.email,id:user._id},secrete);
+        const user:any = await User.create(body);
+
+        if(user){
+            const token = jwt.sign({email:user.email,id:user._id},secrete);
 
         res.cookie('token', token, {     //set cookie
             httpOnly: true,
@@ -38,11 +40,18 @@ const signUpController = async (req: Request,res:Response)=>{
            
         });
 
-    }catch(e){
+      
+
+        }
+
+        return res.status(StatusCode.ClientErrorBadRequest).json({
+            message:"unable to create user",
+        });
+    }catch{
         res.status(StatusCode.ServerErrorInternal).json({
             message:"Internal server error"
         });
-        console.log(e.message);
+        
     }
 }
 

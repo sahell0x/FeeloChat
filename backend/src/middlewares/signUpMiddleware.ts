@@ -4,7 +4,7 @@ import { Request,Response,NextFunction } from "express";
 
 
 
-const signUpMiddleware = (req:Request,res:Response,next:NextFunction)=>{
+const signUpMiddleware = (req:Request,res:Response,next:NextFunction):any=>{
     console.log("inside middleware");
    const body = req.body;
    const {success} = signUptypes.safeParse(body);

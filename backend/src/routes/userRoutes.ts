@@ -1,8 +1,8 @@
 import { Router } from "express";
-import authMiddleware from "../middlewares/authMiddleware.js";
-import getUserInfoController from "../controllers/getUserInfoController.js";
-import updateUserProfileController from "../controllers/updateUserProfileController.js";
-import userProfileUploadAndDeleteController from "../controllers/userProfile-upload-and-delete-controller.js";
+import authMiddleware from "../middlewares/authMiddleware";
+import getUserInfoController from "../controllers/getUserInfoController";
+import updateUserProfileController from "../controllers/updateUserProfileController";
+import userProfileUploadAndDeleteController from "../controllers/userProfile-upload-and-delete-controller";
 
 const userRoutes = Router();
 

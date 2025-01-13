@@ -11,7 +11,7 @@ dotenv.config();
 
 const secrete :string= process.env.SECRETE as string;
 
-const signInController = async (req:Request,res:Response)=>{
+const signInController = async (req:Request,res:Response) :Promise<any> =>{
     console.log("inside signIn");
     const {email , password} = req.body;
 

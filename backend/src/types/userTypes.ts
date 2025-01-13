@@ -2,7 +2,7 @@ export type UserId = string | undefined;
 
 export interface User  {
     email :string,
-    _id:string,
+    _id:any,
     firstName?:string,
     lastName?:string,
     img?:string,
