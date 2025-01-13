@@ -5,7 +5,7 @@ import { Request,Response } from "express";
 
 const getUserInfoController = async (req :Request,res :Response)=>{
     try{
-        const userId = req.userId;
+        const userId :string = req.userId;
 
         const userInfo = await User.findOne({_id:userId});
         if(!userInfo){
