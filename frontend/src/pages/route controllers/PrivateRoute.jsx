@@ -6,7 +6,7 @@ function PrivateRoute({children}) {
   const userInfo = useRecoilValue(userInfoAtom );
   const isAuthenticated = userInfo; //check is there user info or not
 
-  return isAuthenticated ? children : <Navigate to="/auth"></Navigate>;
+  return isAuthenticated ? children : <Navigate to="/"></Navigate>;
 }
 
 export default PrivateRoute

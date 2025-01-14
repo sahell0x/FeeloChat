@@ -8,6 +8,7 @@ import PrivateRoute from "./pages/route controllers/PrivateRoute";
 import AuthRoute from "./pages/route controllers/AuthRoute";
 import userInfoAtom from "./stores/userInfoAtom";
 import getUserInfo from "./util/getUserInfo";
+import Loader from "./components/ui/Loader";
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
@@ -34,14 +35,14 @@ function App() {
 
   if(isLoading){
 
-    return <div>Loading...</div>
+    return <Loader/>
   }
 
   return (
       <BrowserRouter>
         <Routes>
           <Route
-            path="/auth"
+            path="/"
             element={
               <AuthRoute>
               <Suspense>
