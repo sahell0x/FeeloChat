@@ -51,6 +51,7 @@ function App() {
               </AuthRoute>
             }
           ></Route>
+          
           <Route
             path="/chat"
             element={

@@ -5,22 +5,30 @@ const ChatInput = ({ value, setValue, className = "" }) => {
 
   const handleInput = (e) => {
     const textarea = textareaRef.current;
-    textarea.style.height = "auto"; // Reset height to recalculate
-    textarea.style.height = `${textarea.scrollHeight}px`; // Adjust to content height
 
-    // Check if the content exceeds the max height
-    if (textarea.scrollHeight > 150) {
-      textarea.style.overflowY = "scroll"; // Enable vertical scroll
-      textarea.style.height = "80px"; // Cap height at 150px
+    // Reset height to recalculate
+    textarea.style.height = "auto";
+
+    // Calculate new height (capped at 150px)
+    const newHeight = Math.min(textarea.scrollHeight, 150);
+    textarea.style.height = `${newHeight}px`;
+
+    // Enable/disable scroll based on content height
+    textarea.style.overflowY = textarea.scrollHeight > 150 ? "scroll" : "hidden";
+
+    // Adjust the textarea's position to grow upwards
+    if (textarea.scrollHeight > 0) {
+      textarea.style.position = "absolute";
+      textarea.style.bottom = "16px"; // Match the padding of the container
     } else {
-      textarea.style.overflowY = "hidden"; // Hide scroll
+      textarea.style.position = "static";
     }
 
     setValue(e.target.value); // Update state
   };
 
   return (
-    <div className={`flex justify-center p-4 ${className}`}>
+    <div className={`flex justify-center p-4 relative ${className}`}>
       <textarea
         ref={textareaRef}
         value={value}
