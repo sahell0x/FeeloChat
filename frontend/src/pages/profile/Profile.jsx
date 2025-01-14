@@ -43,11 +43,12 @@ function Profile() {
         if (data) {
           console.log(data);
           setUserInfo({ ...data });
-          setIsButtonDisabled(false);
 
           navigate("/chat");
           console.log(userInfo);
         }
+        setIsButtonDisabled(false);
+
       })
       .catch((e) => {
         setIsButtonDisabled(false);
@@ -92,6 +93,7 @@ function Profile() {
           <div className="flex flex-row gap-5">
           <Button className="w-35"
           variant="outline"
+          disabled={isButtonDisabled}
           onClick={handleBack}
           >back</Button>
 

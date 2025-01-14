@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import { BiSolidSend } from "react-icons/bi";
+import ChatInput from "./ChatInput";
 
 function MessageBar() {
   const [message, setMessage] = useState("");
@@ -11,7 +12,7 @@ function MessageBar() {
         <div>
           <input
             type="text"
-            className="flex-1 p-5 rounded-md w-[70vw] md:w-[60vw] lg:[50vw] xl:w-[40vw] focus:border-none focus:outline-none"
+            className="flex-1 p-5 rounded-md w-[70vw] md:w-[50vw] lg:[50vw] xl:w-[40vw] focus:border-none focus:outline-none"
             placeholder="Enter Message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}

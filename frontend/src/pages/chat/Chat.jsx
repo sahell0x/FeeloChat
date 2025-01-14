@@ -14,14 +14,9 @@ function Chat() {
   useEffect(()=>{
 
     if(!userInfo.profileSetup){
-      toast((t) => (
-        <span>
-          Please setup Profile first
-          <button onClick={() => toast.dismiss(t.id)}>
-            Ok
-          </button>
-        </span>
-      ));
+      toast('Please setup Profile first!', {
+        icon: '⚠️',
+      });
         navigate("/profile");
     }
 

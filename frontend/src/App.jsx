@@ -42,7 +42,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/"
+            path="*"
             element={
               <AuthRoute>
               <Suspense fallback={<Loader/>}>
