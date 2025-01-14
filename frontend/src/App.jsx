@@ -45,7 +45,7 @@ function App() {
             path="/"
             element={
               <AuthRoute>
-              <Suspense>
+              <Suspense fallback={<Loader/>}>
                 <Auth></Auth>
               </Suspense>
               </AuthRoute>
@@ -55,7 +55,7 @@ function App() {
             path="/chat"
             element={
               <PrivateRoute>
-              <Suspense>
+              <Suspense fallback={<Loader/>}>
                 <Chat></Chat>
               </Suspense>
               </PrivateRoute>
@@ -65,7 +65,7 @@ function App() {
             path="/profile"
             element={
               <PrivateRoute>
-                <Suspense>
+                <Suspense fallback={<Loader/>}>
                   <Profile></Profile>
                 </Suspense>
               </PrivateRoute>
