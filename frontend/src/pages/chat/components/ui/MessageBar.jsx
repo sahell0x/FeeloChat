@@ -7,25 +7,39 @@ import EmojiPicker from "emoji-picker-react";
 function MessageBar() {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpend,setIsEmojiPickerOpend] = useState(false);
-  const emojiRef = useRef();
+  const emojiPickerRef = useRef(null);
+
  const  handleEmojiClick = (e)=>{
-  console.log(e);
   setMessage((prevMessage) => prevMessage.concat(e.emoji));
  }
 
- useEffect(()=>{
-    function handleClickoutSide(e){
-      if(emojiRef.current && !emojiRef.current.contains(e.target)){
-        setIsEmojiPickerOpend(false);
-      }
+ const handleClickOutside = (event) => {
+  const thisTarget = event.target;
+  console.log()
+  if (
+    emojiPickerRef.current &&
+    !emojiPickerRef.current.contains(thisTarget)&&
+    !(thisTarget.tagName == "svg")
 
-      document.addEventListener("mousedown",handleClickoutSide);
+  ) {
+    setIsEmojiPickerOpend(false);
+  }
+};
 
-      return ()=>{
-        document.removeEventListener("mousedown",handleClickoutSide);
-      }
-    }
- },[emojiRef]);
+useEffect(() => {
+  if (isEmojiPickerOpend) {
+    document.addEventListener("mousedown", handleClickOutside);
+  } else {
+    document.removeEventListener("mousedown", handleClickOutside);
+  }
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [isEmojiPickerOpend]);
+
+
+ 
   return (
   <div className="h-[30vh]  flex justify-center items-center px-5">
       <div className="flex-1 flex rounded-md items-center justify-center flex-row">
@@ -48,15 +62,18 @@ function MessageBar() {
             <RiEmojiStickerLine
              className="text-2xl" />
           </button>
-          <div className="absolute bottom-16 right-0"
-          ref={emojiRef}
-          > 
-            <EmojiPicker
-            open={isEmojiPickerOpend}
-            onEmojiClick={handleEmojiClick}
-            autoFocusSearch={false}
-            />
-          </div>
+          {isEmojiPickerOpend && (
+              <div
+                ref={emojiPickerRef} 
+                className="absolute bottom-16 right-0"
+              >
+                <EmojiPicker
+                  open={isEmojiPickerOpend}
+                  onEmojiClick={handleEmojiClick}
+                  autoFocusSearch={false}
+                />
+              </div>
+            )}
         </div>
 
         <button className="bg-purple-400  rounded-md flex items-center justify-center p-4 text-white focus:outline-none transition-all duration-300 hover:bg-purple-500 shadow-md hover:shadow-lg">
