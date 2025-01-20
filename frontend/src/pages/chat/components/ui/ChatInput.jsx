@@ -1,46 +1,32 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
-const ChatInput = ({ value, setValue, className = "" }) => {
-  const textareaRef = useRef(null);
+const ChatInput = () => {
+  const [message, setMessage] = useState("");
 
+  // Function to adjust the height of the textarea dynamically
   const handleInput = (e) => {
-    const textarea = textareaRef.current;
-
-    // Reset height to recalculate
-    textarea.style.height = "auto";
-
-    // Calculate new height (capped at 150px)
-    const newHeight = Math.min(textarea.scrollHeight, 150);
-    textarea.style.height = `${newHeight}px`;
-
-    // Enable/disable scroll based on content height
-    textarea.style.overflowY = textarea.scrollHeight > 150 ? "scroll" : "hidden";
-
-    // Adjust the textarea's position to grow upwards
-    if (textarea.scrollHeight > 0) {
-      textarea.style.position = "absolute";
-      textarea.style.bottom = "16px"; // Match the padding of the container
-    } else {
-      textarea.style.position = "static";
-    }
-
-    setValue(e.target.value); // Update state
+    e.target.style.height = "auto"; // Reset height
+    e.target.style.height = `${e.target.scrollHeight}px`; // Set height based on content
   };
 
   return (
-    <div className={`flex justify-center p-4 relative ${className}`}>
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={handleInput}
-        placeholder="Type a message..."
-        className={`w-full max-w-lg p-3 border scrollbar-none border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden ${className}`}
-        rows={1}
-        style={{
-          maxHeight: "150px", // Set maximum height
-        }}
-      />
-    </div>
+    <textarea
+      rows={1}
+      type="text"
+      className="flex-1 resize-none scrollbar-none overflow-y-auto p-4 pr-12 rounded-md w-[70vw] md:w-[50vw] lg:[50vw] xl:w-[50vw] focus:border-none focus:outline-none"
+      style={{
+        lineHeight: "24px", // Adjust based on your font size
+        paddingTop: "12px", // Vertical padding to center text
+        paddingBottom: "12px", // Vertical padding to center text
+        minHeight: "48px", // Minimum height to ensure consistent padding
+      }}
+      placeholder="Type a Message..."
+      value={message}
+      onChange={(e) => {
+        setMessage(e.target.value);
+        handleInput(e); // Adjust height dynamically
+      }}
+    />
   );
 };
 

@@ -18,6 +18,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "compress-base64": "^7.0.3",
+    "emoji-picker-react": "^4.12.0",
     "lucide-react": "^0.460.0",
     "next-themes": "^0.4.3",
     "react": "^18.3.1",
