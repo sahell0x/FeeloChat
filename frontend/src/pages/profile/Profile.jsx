@@ -57,15 +57,14 @@ function Profile() {
   };
   console.log("rendered from profole");
   return (
-    <Modal>
                 
-      <div className="h-[100vh] flex items-center justify-center flex-col gap-7">
+      <div className="h-[100vh] flex bg-[#1b1c24] text-white/90 items-center justify-center flex-col gap-7">
         <ProfileAvatar profileImage={profileImage} setProfileImage={setProfileImage}/>
         <div className="flex items-center justify-center flex-col gap-5">
           <Input
             value={userInfo.email}
             disabled
-            className="flex items-center justify-center text-center"
+            className="flex border-none bg-[#2c2e3b] items-center justify-center "
             type="email"
             style={{ fontSize: "17px" }}
           ></Input>
@@ -74,7 +73,7 @@ function Profile() {
               setFirstName(e.target.value);
             }}
             value={firstName}
-            className="flex items-center justify-center text-center"
+            className="flex border-none bg-[#2c2e3b] items-center justify-center "
             type="text"
             placeholder="First name"
             style={{ fontSize: "17px" }}
@@ -85,13 +84,13 @@ function Profile() {
               setLastName(e.target.value);
             }}
             value={lastName}
-            className="flex items-center justify-center text-center"
+            className="flex border-none bg-[#2c2e3b] items-center justify-center "
             type="text"
             placeholder="Last name"
             style={{ fontSize: "17px" }}
           ></Input>
           <div className="flex flex-row gap-5">
-          <Button className="w-35"
+          <Button className="w-35 w-35 bg-[#2c2e3b] hover:bg-[#3a3b45] text-white hover:text-white"
           variant="outline"
           disabled={isButtonDisabled}
           onClick={handleBack}
@@ -99,7 +98,7 @@ function Profile() {
 
           <Button  disabled={isButtonDisabled}
 
-          onClick={handleSaveChanges} className="w-40">
+          onClick={handleSaveChanges} className="w-40 bg-purple-700 hover:bg-purple-900">
             Save changes
           </Button>
 
@@ -107,7 +106,6 @@ function Profile() {
           </div>
         </div>
       </div>
-    </Modal>
   );
 }
 

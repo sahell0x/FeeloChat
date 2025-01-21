@@ -8,7 +8,9 @@ import apiClient from "@/lib/api-client";
 import { USER_PROFILE_ROUTE } from "@/util/constants";
 import fileToBase64Convertor from "@/util/fileToBase64Converter";
 import toast from "react-hot-toast";
-export default function ProfileAvatar({ profileImage ,setProfileImage }) {
+
+export default function ProfileAvatar({ profileImage, setProfileImage }) {
+
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
@@ -17,60 +19,63 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
     inputFileRef.current.click();
   };
 
-  const handleImageChange = async(e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if(file){
-      try{
-       const imageUrl = await fileToBase64Convertor(file);
-       setProfileImage(imageUrl);
+    if (file) {
+      try {
+        const imageUrl = await fileToBase64Convertor(file);
+        setProfileImage(imageUrl);
 
-        const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:imageUrl},{withCredentials:true});
+        const response = await apiClient.patch(
+          USER_PROFILE_ROUTE,
+          { img: imageUrl },
+          { withCredentials: true }
+        );
 
-        if(response.status===202){
-
+        if (response.status === 202) {
           toast.success("Profile image uploaded successfully.");
         }
-
-      }catch(e){
+      } catch (e) {
         console.log(e);
-          toast.error("Error while setting image.");
+        toast.error("Error while setting image.");
       }
     }
   };
 
   const handleImageDelete = async () => {
-    try{
-      const response = await apiClient.patch(USER_PROFILE_ROUTE,{img:""},{withCredentials:true});
+    try {
+      const response = await apiClient.patch(
+        USER_PROFILE_ROUTE,
+        { img: "" },
+        { withCredentials: true }
+      );
 
-      if(response.status===202){
+      if (response.status === 202) {
         setProfileImage("");
         toast.success("Profile image deleted successfully.");
       }
-
-    }catch{
+    } catch {
       toast.error("Error while deleting image.");
     }
   };
+
   return (
     <div
-      className="  flex items-center justify-center flex-col"
+      className="flex items-center justify-center flex-col"
       onMouseEnter={() => setIsHoverd(true)}
       onMouseLeave={() => setIsHoverd(false)}
     >
-      <Avatar className="size-40">
-       
-          <AvatarImage src={profileImage} />
-        
-          <AvatarFallback className="text-6xl">
-            {userInfo.firstName
-              ? getFirstLetter(userInfo.firstName)
-              : getFirstLetter(userInfo.email)}
-          </AvatarFallback>
-      
+      <Avatar className="size-40 border-2 border-[#3a3b45]">
+        <AvatarImage src={profileImage} />
+        <AvatarFallback className="text-6xl bg-[#2c2e3b] text-white/90">
+          {userInfo.firstName
+            ? getFirstLetter(userInfo.firstName)
+            : getFirstLetter(userInfo.email)}
+        </AvatarFallback>
         {isHoverd && (
           <div
             onClick={profileImage ? handleImageDelete : handleFileInputClick}
-            className=" absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42"
+            className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full cursor-pointer size-42"
           >
             {profileImage ? (
               <FaTrashAlt className="text-gray-200 text-3xl cursor-pointer hover:text-white" />
@@ -83,13 +88,11 @@ export default function ProfileAvatar({ profileImage ,setProfileImage }) {
       <input
         type="file"
         ref={inputFileRef}
-        accept=".png, .jpg, .jpeg, .svg , .webp"
+        accept=".png, .jpg, .jpeg, .svg, .webp"
         className="hidden"
         onChange={handleImageChange}
         name="profile-image"
       />
-      {/* <img src={profileImage} alt="profileimg" /> */}
-
     </div>
   );
 }

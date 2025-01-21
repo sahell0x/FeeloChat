@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, Plus, Circle } from "lucide-react";
+import UserProfileInfo from "./ui/UserProfileInfo";
 
 const initialContacts = [
   {
@@ -199,12 +200,15 @@ function ContactContainer() {
         </div>
       </ScrollArea>
 
-      {/* New Message Button */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t flex items-center justify-center flex-col gap-3">
+        
+
         <Button className="w-full" variant="outline">
           <Plus className="h-4 w-4 mr-2" />
           New Message
         </Button>
+        <UserProfileInfo/>
+
       </div>
     </div>
   );

@@ -48,7 +48,7 @@ useEffect(() => {
           <textarea
            rows={1}
             type="text"
-            className="flex-1 resize-none scrollbar-none overflow-y-auto p-4 pr-12 rounded-md w-[70vw] md:w-[50vw] lg:[50vw] xl:w-[50vw] focus:border-none focus:outline-none"
+            className="flex-1 resize-none scrollbar-none overflow-y-auto p-4 pr-12 rounded-md w-[70vw] md:w-[50vw] lg:[50vw] xl:w-[50vw]  "
             placeholder="Type a Message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
