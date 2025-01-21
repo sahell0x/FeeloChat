@@ -4,6 +4,14 @@ import userInfoAtom from "@/stores/userInfoAtom";
 import { useRecoilValue } from "recoil";
 import { ImageOff } from "lucide-react";
 import getFirstLetter from "@/util/getFirstLetter";
+import { FiEdit2 } from "react-icons/fi";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 function UserProfileInfo() {
   const userInfo = useRecoilValue(userInfoAtom);
@@ -26,9 +34,16 @@ function UserProfileInfo() {
           <p className="text-sm text-gray-400">{userInfo.email}</p>
         </div>
       </div>
-      <div className="text-gray-400 hover:text-white transition-all duration-300">
-        <ImageOff className="size-5" />
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <FiEdit2 className="text-purple-500 hover:text-purple-700" />
+          </TooltipTrigger>
+          <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
+            Edit Profile
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 }
