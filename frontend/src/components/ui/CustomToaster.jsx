@@ -5,7 +5,7 @@ function CustomToaster() {
   return (
    
 <Toaster
-  position="bottom-right"
+  position="top-right"
   toastOptions={{
     style: {
       background: "#2c2e3b", 
