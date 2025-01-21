@@ -9,7 +9,7 @@ import { MessagesSquare } from "lucide-react";
 
 function EmptyChatContainer() {
   return (
-    <div className="flex-1 bg-[#1b1c24] flex flex-col justify-center items-center duration-1000 transition-all">
+    <div className="flex-1 bg-[#1c1d25] flex flex-col justify-center items-center duration-1000 transition-all">
       <div className="text-center max-w-md px-6">
         <div className="relative inline-block mb-8">
           <div className="absolute inset-0 animate-spin-slow"></div>

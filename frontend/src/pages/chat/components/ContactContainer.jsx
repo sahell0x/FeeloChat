@@ -101,7 +101,7 @@ function ContactContainer() {
 
       {/* Footer */}
       <div className="p-4 border-t border-[#3a3b45] flex items-center justify-center flex-col gap-3">
-        <Button className="w-full bg-[#2c2e3b] hover:bg-[#3a3b45] text-white border-[#3a3b45]" variant="outline">
+        <Button className="w-full bg-[#2c2e3b] text-white/90 hover:bg-[#3a3b45]  border-[#3a3b45] hover:text-white" variant="outline">
           <Plus className="h-4 w-4 mr-2" />
           New Message
         </Button>

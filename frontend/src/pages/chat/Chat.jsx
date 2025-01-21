@@ -25,15 +25,11 @@ function Chat() {
     <div className="flex h-[100vh]  text-[#1f2937] overflow-hidden">
       <ContactContainer/>
       <EmptyChatContainer/>
-      <ChatContainer/>
+      {/* <ChatContainer/> */}
     </div>
   )
 }
 
 export default Chat
 
-
-// Background: #1e293b (Dark Gray, Tailwind: bg-gray-800)
-// Border: #4b5563 (Muted Gray, Tailwind: border-gray-600)
-// Text: #f3f4f6 (Light Gray, Tailwind: text-gray-100)
 
