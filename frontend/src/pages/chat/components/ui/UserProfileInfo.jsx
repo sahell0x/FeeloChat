@@ -12,9 +12,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router-dom";
 
 function UserProfileInfo() {
   const userInfo = useRecoilValue(userInfoAtom);
+  const navigate = useNavigate();
 
   return (
     <div className="w-full h-18 bg-[#2c2e3b] rounded-md p-3 flex items-center justify-between flex-row border border-[#3a3b45] hover:bg-[#3a3b45] transition-all duration-300 cursor-pointer">
@@ -37,7 +39,9 @@ function UserProfileInfo() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <FiEdit2 className="text-purple-500 hover:text-purple-700" />
+            <FiEdit2 className="text-purple-500 hover:text-purple-700" 
+            onClick={()=>navigate("/profile")}
+            />
           </TooltipTrigger>
           <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
             Edit Profile
