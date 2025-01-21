@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useRecoilValue } from "recoil";
@@ -6,6 +6,7 @@ import { ImageOff } from "lucide-react";
 import getFirstLetter from "@/util/getFirstLetter";
 import { FiEdit2 } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
+import AlertDialogComponent from "@/components/ui/AlertDialogComponent";
 
 
 import {
@@ -17,10 +18,12 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function UserProfileInfo() {
+  const [open , setOpen] = useState(false);
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
 
   return (
+    
     <div className="w-full h-18 bg-[#2c2e3b] rounded-md p-3 flex items-center justify-between flex-row border border-[#3a3b45] hover:bg-[#3a3b45] transition-all duration-300 cursor-pointer">
       <div className="flex items-center gap-4">
         <Avatar className="size-14 border-2 border-[#3a3b45]">
@@ -39,6 +42,7 @@ function UserProfileInfo() {
         </div>
       </div>
       <div className="flex items-center justify-center flex-row gap-4">
+        {open ? <AlertDialogComponent/> : ""}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -55,6 +59,7 @@ function UserProfileInfo() {
         <Tooltip>
           <TooltipTrigger>
             <TbLogout className="text-purple-500 text-xl hover:text-purple-700" 
+            onClick={()=>setOpen(true)}
             />
           </TooltipTrigger>
           <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
