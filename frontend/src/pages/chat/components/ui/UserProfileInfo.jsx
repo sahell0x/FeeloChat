@@ -5,6 +5,8 @@ import { useRecoilValue } from "recoil";
 import { ImageOff } from "lucide-react";
 import getFirstLetter from "@/util/getFirstLetter";
 import { FiEdit2 } from "react-icons/fi";
+import { TbLogout } from "react-icons/tb";
+
 
 import {
   Tooltip,
@@ -36,6 +38,7 @@ function UserProfileInfo() {
           <p className="text-sm text-gray-400">{userInfo.email}</p>
         </div>
       </div>
+      <div className="flex items-center justify-center flex-row gap-4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -48,6 +51,19 @@ function UserProfileInfo() {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <TbLogout className="text-purple-500 hover:text-purple-700" 
+            onClick={()=>navigate("/profile")}
+            />
+          </TooltipTrigger>
+          <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
+            Logout
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      </div>
     </div>
   );
 }
