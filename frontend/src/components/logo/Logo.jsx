@@ -7,8 +7,8 @@ const Logo = () => {
     <div className="flex flex-col items-center space-y-4">
       <LogoSVG className="w-32 h-32" />
       <div className="text-center">
-       <FeeloChat></FeeloChat>
-        <p className="text-sm text-gray-500 mt-1">Let your expressions talk</p>
+        <FeeloChat />
+        <p className="text-sm text-gray-400 mt-1">Let your expressions talk</p>
       </div>
     </div>
   );

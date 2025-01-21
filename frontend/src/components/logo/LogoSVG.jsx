@@ -10,8 +10,8 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
       {/* Background Circle with gradient */}
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#4F46E5" />
-          <stop offset="100%" stopColor="#7C3AED" />
+          <stop offset="0%" stopColor="#3b82f6" /> {/* Blue */}
+          <stop offset="100%" stopColor="#9333ea" /> {/* Purple */}
         </linearGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="2" result="coloredBlur" />

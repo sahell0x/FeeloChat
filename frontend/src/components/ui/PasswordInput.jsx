@@ -23,14 +23,14 @@ const PasswordInput = forwardRef(({ className, ...props }, ref) => {
 				type="button"
 				variant="ghost"
 				size="sm"
-				className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+				className="absolute right-0 top-0 h-full px-3 py-2 text-white/90 hover:bg-transparent text-white"
 				onClick={() => setShowPassword((prev) => !prev)}
 				disabled={disabled}
 			>
 				{showPassword && !disabled ? (
-					<EyeIcon className="h-4 w-4" aria-hidden="true" />
+					<EyeIcon className="h-4 w-4 text-white/90" aria-hidden="true" />
 				) : (
-					<EyeOffIcon className="h-4 w-4" aria-hidden="true" />
+					<EyeOffIcon className="h-4 w-4 text-white/90" aria-hidden="true" />
 				)}
 				<span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
 			</Button>

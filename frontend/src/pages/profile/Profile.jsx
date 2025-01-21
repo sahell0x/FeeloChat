@@ -57,7 +57,6 @@ function Profile() {
   };
   console.log("rendered from profole");
   return (
-                
       <div className="h-[100vh] flex bg-[#1b1c24] text-white/90 items-center justify-center flex-col gap-7">
         <ProfileAvatar profileImage={profileImage} setProfileImage={setProfileImage}/>
         <div className="flex items-center justify-center flex-col gap-5">
