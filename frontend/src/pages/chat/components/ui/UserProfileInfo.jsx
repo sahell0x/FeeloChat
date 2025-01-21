@@ -42,7 +42,7 @@ function UserProfileInfo() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <FiEdit2 className="text-purple-500 hover:text-purple-700" 
+            <FiEdit2 className="text-purple-500 text-xl hover:text-purple-700" 
             onClick={()=>navigate("/profile")}
             />
           </TooltipTrigger>
@@ -54,8 +54,7 @@ function UserProfileInfo() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <TbLogout className="text-purple-500 hover:text-purple-700" 
-            onClick={()=>navigate("/profile")}
+            <TbLogout className="text-purple-500 text-xl hover:text-purple-700" 
             />
           </TooltipTrigger>
           <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
