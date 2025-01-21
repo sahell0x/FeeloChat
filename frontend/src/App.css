@@ -3,3 +3,29 @@
 /* input=2c2e3b */
 
 /* button = purple-700/900 */
+
+
+
+::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3a3b45; 
+    border-radius: 3px;
+    transition: background 0.2s ease; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4c4d5c; 
+  }
+  
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3a3b45 transparent; 
+  }

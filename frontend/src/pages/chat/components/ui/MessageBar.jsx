@@ -58,6 +58,8 @@ function MessageBar() {
             {isEmojiPickerOpend && (
               <div ref={emojiPickerRef} className="absolute bottom-16 right-0">
                 <EmojiPicker
+                 theme="dark"
+                 emojiStyle="apple"
                   open={isEmojiPickerOpend}
                   onEmojiClick={handleEmojiClick}
                   autoFocusSearch={false}
@@ -66,7 +68,7 @@ function MessageBar() {
             )}
           </div>
 
-          <button className="bg-purple-600 rounded-md flex items-center justify-center p-4 text-white focus:outline-none transition-all duration-300 hover:bg-purple-700 shadow-md hover:shadow-lg">
+          <button className="bg-purple-700 rounded-md flex items-center justify-center p-4 text-white focus:outline-none transition-all duration-300 hover:bg-purple-900 shadow-md hover:shadow-lg">
             <BiSolidSend className="text-2xl" />
           </button>
         </div>

@@ -48,7 +48,7 @@ function ContactContainer() {
         <div className="relative">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
           <Input
-            placeholder="Search contacts..."
+            placeholder="Search"
             className="pl-9 bg-[#2c2e3b] border-[#3a3b45] text-white placeholder:text-gray-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

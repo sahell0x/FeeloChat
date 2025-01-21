@@ -4,7 +4,7 @@ import MessageContainer from "./ui/MessageContainer"
 
 function ChatContainer() {
   return (
-    <div className="bg-[#f9fafb]">
+    <div className="bg-[#1b1c24]">
       <ChatHeader/>
       <MessageContainer/>
       <MessageBar/>
