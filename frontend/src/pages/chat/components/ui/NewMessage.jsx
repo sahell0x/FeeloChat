@@ -14,6 +14,7 @@ import { Debounce } from "@/util/debounce";
 
 function NewMessage() {
     const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
+    const [searchedContacts,setSearchedContacts] = useState([]);
     
     const handleContactSearch = (query)=>{
       console.log(query);
