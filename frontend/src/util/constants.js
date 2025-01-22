@@ -8,6 +8,8 @@ export const SIGNUP_ROUTE = `${AUTH_ROUTES}/signup`;
 
 export const SIGNIN_ROUTE = `${AUTH_ROUTES}/signin`;
 
+export const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
+
 export const USER_ROUTE = `${USER_BASE_ROUTE}/user`;
 
 export const USER_PROFILE_ROUTE = `${USER_ROUTE}/profile`;

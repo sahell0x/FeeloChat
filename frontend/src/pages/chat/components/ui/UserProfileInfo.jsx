@@ -18,7 +18,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function UserProfileInfo() {
-  const [open , setOpen] = useState(false);
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
 
@@ -42,7 +41,6 @@ function UserProfileInfo() {
         </div>
       </div>
       <div className="flex items-center justify-center flex-row gap-4">
-        {open ? <AlertDialogComponent/> : ""}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
@@ -58,8 +56,8 @@ function UserProfileInfo() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <TbLogout className="text-purple-500 text-xl hover:text-purple-700" 
-            onClick={()=>setOpen(true)}
+            <TbLogout className="text-red-500 text-xl hover:text-red-600" 
+            
             />
           </TooltipTrigger>
           <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
