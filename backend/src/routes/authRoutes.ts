@@ -4,6 +4,7 @@ import signUpController from "../controllers/signUpController";
 import signInMiddleware from "../middlewares/signInMiddleware";
 import signInController from "../controllers/signInController";
 import authMiddleware from "../middlewares/authMiddleware";
+import logOutController from "../controllers/logOutController";
 
 const authRoutes = Router();
 
