@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useRecoilValue } from "recoil";
-import { ImageOff } from "lucide-react";
 import getFirstLetter from "@/util/getFirstLetter";
 import { FiEdit2 } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
-import AlertDialogComponent from "@/components/ui/AlertDialogComponent";
 
 
 import {
@@ -16,10 +14,28 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
+import apiClient from "@/lib/api-client";
+import { LOGOUT_ROUTE } from "@/util/constants";
+import toast from "react-hot-toast";
 
 function UserProfileInfo() {
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
+
+  const handleLogOut = async ()=>{
+     try{
+      const response = await apiClient(LOGOUT_ROUTE,{withCredentials:true});
+
+      if(response.status === 200){
+        toast.success("Logout successfully.");
+        navigate("/");
+      }else{
+        toast.error("Unable to Logout please try again.");
+      }
+     }catch{
+      toast.error("Unable to Logout please try again.");
+     }
+  }
 
   return (
     
