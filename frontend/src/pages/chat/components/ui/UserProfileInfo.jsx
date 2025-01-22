@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import userInfoAtom from "@/stores/userInfoAtom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import getFirstLetter from "@/util/getFirstLetter";
 import { FiEdit2 } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
@@ -19,14 +19,15 @@ import { LOGOUT_ROUTE } from "@/util/constants";
 import toast from "react-hot-toast";
 
 function UserProfileInfo() {
-  const userInfo = useRecoilValue(userInfoAtom);
+  const [userInfo , setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
 
   const handleLogOut = async ()=>{
      try{
-      const response = await apiClient(LOGOUT_ROUTE,{withCredentials:true});
+      const response = await apiClient.post(LOGOUT_ROUTE,{},{withCredentials:true});
 
       if(response.status === 200){
+        setUserInfo(null);
         toast.success("Logout successfully.");
         navigate("/");
       }else{
@@ -73,7 +74,7 @@ function UserProfileInfo() {
         <Tooltip>
           <TooltipTrigger>
             <TbLogout className="text-red-500 text-xl hover:text-red-600" 
-            
+             onClick={handleLogOut}
             />
           </TooltipTrigger>
           <TooltipContent className="bg-[#2c2e3b] border border-[#3a3b45] text-white text-sm p-2 rounded-lg shadow-lg">
