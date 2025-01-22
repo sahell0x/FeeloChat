@@ -25,7 +25,7 @@ function Chat() {
     <div className="flex h-[100vh]  text-[#1f2937] overflow-hidden">
       <ContactContainer/>
       {/* <EmptyChatContainer/> */}
-      <ChatContainer/>
+      {/* <ChatContainer/> */}
     </div>
   )
 }
