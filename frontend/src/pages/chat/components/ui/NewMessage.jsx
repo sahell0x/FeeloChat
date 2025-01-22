@@ -11,6 +11,8 @@ import {
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Debounce } from "@/util/debounce";
+import FeeloChat from "@/components/logo/FeeloChat";
+import GradientWrapper from "@/components/ui/GradientWrapper";
 
 function NewMessage() {
     const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
@@ -49,6 +51,12 @@ function NewMessage() {
 
              />
           </div>
+          {searchedContacts.length ==0 && (
+             <div className="h-[100%] w-[100%] flex items-center justify-center">
+              <h1 className="text-xl md:text-2xl">Please <span className="font-bold"><GradientWrapper>Search</GradientWrapper></span> for a  new contact</h1>
+             </div>
+
+          )}
         </DialogContent>
       </Dialog>
     </>

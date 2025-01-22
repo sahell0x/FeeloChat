@@ -1,14 +1,12 @@
 import React from 'react';
+import GradientWrapper from '../ui/GradientWrapper';
 
 function FeeloChat() {
   return (
     <h1 className="text-3xl font-extrabold">
-      <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-        Feelo
-      </span>
-      <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-        Chat
-      </span>
+      <GradientWrapper>Feelo</GradientWrapper>
+      <GradientWrapper>Chat</GradientWrapper>
+
     </h1>
   );
 }
