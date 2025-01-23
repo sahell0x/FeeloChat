@@ -9,7 +9,7 @@ const userRoutes = Router();
 
 userRoutes.get("/user",authMiddleware,getUserInfoController);
 
-userRoutes.get("/user/search",searchContactController);
+userRoutes.get("/user/search",authMiddleware,searchContactController);
 
 userRoutes.patch("/user",authMiddleware,updateUserProfileController);
 
