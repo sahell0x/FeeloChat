@@ -17,7 +17,7 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
 
         const regex = new RegExp(extractedQuery,"i");
         
-        const response = await User.find({
+        const contacts = await User.find({
             $and:[
                 {_id : {$ne : req.userId}},
                 {
@@ -26,7 +26,7 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
             ],
         }).limit(20);
 
-        return res.status(StatusCode.SuccessOK).json({response});
+        return res.status(StatusCode.SuccessOK).json({contacts});
        
 
     }catch{
