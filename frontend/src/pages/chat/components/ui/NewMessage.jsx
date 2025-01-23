@@ -47,6 +47,11 @@ function NewMessage() {
     const debouncer = new Debounce;
     const debouncedHandleContactSearch =  debouncer.debounce(handleContactSearch,500);
 
+
+    const selectNewContact = (contact)=>{
+      console.log(contact);
+    }
+
   return (
     <>
       <Button
@@ -70,7 +75,7 @@ function NewMessage() {
             <Input 
             placeholder="Search Contacts"
             className="rounded-lg p-6 bg-[#2c2e3b] text-white/90"
-            onChange={(e)=>debouncedHandleContactSearch(e.target.value)}
+            onChange={(e)=>debouncedHandleContactSearch(e.target.value.trim())}
 
              />
           </div>
@@ -78,7 +83,10 @@ function NewMessage() {
             <div className="flex flex-col gap-5">
               {searchedContacts.map((contact)=>{
 
-                return  <ProfileWrapper key={contact._id} firstName={contact.firstName} lastName={contact.lastName} email={contact.email} img={contact.img}  />
+                return  <div className="cursor-pointer" onClick={()=>selectNewContact(contact)} key={contact._id}>
+                  <ProfileWrapper 
+                 firstName={contact.firstName} lastName={contact.lastName} email={contact.email} img={contact.img}  />
+                </div>
 
               })
                
