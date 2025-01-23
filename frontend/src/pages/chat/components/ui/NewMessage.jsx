@@ -17,6 +17,7 @@ import LogoSVG from "@/components/logo/LogoSVG";
 import apiClient from "@/lib/api-client";
 import { SEARCH_ROUTE } from "@/util/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ProfileWrapper from "./ProfileWrapper";
 
 function NewMessage() {
     const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
@@ -73,7 +74,18 @@ function NewMessage() {
 
              />
           </div>
-          <ScrollArea></ScrollArea>
+          <ScrollArea className="h-[250px]">
+            <div className="flex flex-col gap-5">
+              {searchedContacts.map((contact)=>{
+
+                  console.log(contact._id);
+                return  <ProfileWrapper firstName={contact.firstName} lastName={contact.lastName} email={contact.email} img={contact.img} id={contact._id} />
+
+              })
+               
+              }
+            </div>
+          </ScrollArea>
           {searchedContacts.length ==0 && (
              <div className="h-[100%] w-[100%] flex items-center justify-center flex-col">
               <h1 className="text-xl md:text-2xl text-white/80">Please <span className="font-bold"><GradientWrapper>Search</GradientWrapper></span> for a  new contact</h1>
