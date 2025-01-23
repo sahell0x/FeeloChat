@@ -24,7 +24,7 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
                     $or : [{firstName : regex}, {lastName: regex}, {email : regex}]
                 },
             ],
-        });
+        }).limit(20);
 
         return res.status(StatusCode.SuccessOK).json({response});
        
