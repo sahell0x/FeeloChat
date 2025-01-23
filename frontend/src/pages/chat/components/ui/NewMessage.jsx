@@ -9,23 +9,28 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Debounce } from "@/util/debounce";
 import GradientWrapper from "@/components/ui/GradientWrapper";
-import LogoSVG from "@/components/logo/LogoSVG";
 import apiClient from "@/lib/api-client";
 import { SEARCH_ROUTE } from "@/util/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ProfileWrapper from "./ProfileWrapper";
+import { useSetRecoilState } from "recoil";
+import chatAtom from "@/stores/chatAtom";
 
 function NewMessage() {
-  const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
-  const [searchedContacts, setSearchedContacts] = useState([]);
-  const [loading,SetLoading] = useState(false);
+  const setChatData = useSetRecoilState(chatAtom);
 
+  const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
+
+  const [searchedContacts, setSearchedContacts] = useState([]);
+  
+  const [loading,SetLoading] = useState(false);
+  
   const handleContactSearch = async (query) => {
     try {
       if (query.length != 0) {
