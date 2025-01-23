@@ -26,7 +26,15 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
             ],
         }).limit(20);
 
-        return res.status(StatusCode.SuccessOK).json({contacts});
+        return res.status(StatusCode.SuccessOK).json({ contacts:contacts.map((contact)=>{
+              return {
+                _id : contact._id,
+                 email: contact.email,
+                 firstName : contact.firstName,
+                 lastName : contact.lastName,
+                 img : contact.img,
+              }
+        }) });
        
 
     }catch{
