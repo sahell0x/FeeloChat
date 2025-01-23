@@ -1,10 +1,13 @@
 import chatAtom from "@/stores/chatAtom";
+import contactInfoSelector from "@/stores/contactInfoSelector";
 import { RiCloseFill } from "react-icons/ri";
-import { useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import ProfileWrapper from "./ProfileWrapper";
 
 function ChatHeader() {
 
   const chatStateReset = useResetRecoilState(chatAtom);
+  const contactInfo = useRecoilValue(contactInfoSelector);
 
   return (
     <div className="h-[10vh] border-b-2 border-[#3a3b45] flex items-center justify-between px-20 bg-[#1b1c24]">
