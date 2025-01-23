@@ -14,6 +14,7 @@ function ChatHeader() {
       <div className="flex gap-5 items-center">
         <div className="flex gap-3 items-center justify-center"></div>
         <div className="flex items-center justify-center gap-5">
+          <ProfileWrapper firstName={contactInfo.firstName} lastName={contactInfo.lastName} email={contactInfo.email} img={contactInfo.img} />
           <button
           onClick={()=>chatStateReset()}
            className="text-gray-400 hover:text-white transition-all duration-300">

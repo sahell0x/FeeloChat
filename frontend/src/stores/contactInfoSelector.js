@@ -1,10 +1,9 @@
-const { selector } = require("recoil");
-const { default: chatAtom } = require("./chatAtom");
-
+import { selector } from "recoil";
+import chatAtom from "./chatAtom";
 
 const contactInfoSelector = selector({
     key:"contactInfoSelector",
-    get:(get)=>{
+    get:({get})=>{
        const chatState = get(chatAtom);
        return chatState.selectedChatData;
     }
