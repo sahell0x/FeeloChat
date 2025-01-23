@@ -24,11 +24,12 @@ import ProfileWrapper from "./ProfileWrapper";
 function NewMessage() {
   const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
   const [searchedContacts, setSearchedContacts] = useState([]);
-  const [loading,isLoading] = useState(false);
+  const [loading,SetLoading] = useState(false);
 
   const handleContactSearch = async (query) => {
     try {
       if (query.length != 0) {
+        SetLoading(true);
         const queryResponse = await apiClient.get(
           `${SEARCH_ROUTE}?query=${query}`,
           { withCredentials: true }
@@ -41,9 +42,11 @@ function NewMessage() {
         } else {
           setSearchedContacts([]);
         }
+        SetLoading(false);
       }
     } catch {
       setSearchedContacts([]);
+      SetLoading(false);
     }
   };
   const debouncer = new Debounce();
