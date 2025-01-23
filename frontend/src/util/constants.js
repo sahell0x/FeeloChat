@@ -12,4 +12,6 @@ export const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
 
 export const USER_ROUTE = `${USER_BASE_ROUTE}/user`;
 
+export const SEARCH_ROUTE = `${USER_ROUTE}/search`;
+
 export const USER_PROFILE_ROUTE = `${USER_ROUTE}/profile`;

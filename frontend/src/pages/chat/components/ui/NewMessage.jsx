@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -11,8 +12,8 @@ import {
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Debounce } from "@/util/debounce";
-import FeeloChat from "@/components/logo/FeeloChat";
 import GradientWrapper from "@/components/ui/GradientWrapper";
+import LogoSVG from "@/components/logo/LogoSVG";
 
 function NewMessage() {
     const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
@@ -38,7 +39,7 @@ function NewMessage() {
       <Dialog open={isContactDialogOpende} onOpenChange={setIsContactDialogOpende}>
         <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-center">Please select a contact</DialogTitle>
+            <DialogTitle className="flex items-center justify-center">Select a contact</DialogTitle>
             <DialogDescription>
               
             </DialogDescription>
@@ -52,8 +53,8 @@ function NewMessage() {
              />
           </div>
           {searchedContacts.length ==0 && (
-             <div className="h-[100%] w-[100%] flex items-center justify-center">
-              <h1 className="text-xl md:text-2xl">Please <span className="font-bold"><GradientWrapper>Search</GradientWrapper></span> for a  new contact</h1>
+             <div className="h-[100%] w-[100%] flex items-center justify-center flex-col">
+              <h1 className="text-xl md:text-2xl text-white/80">Please <span className="font-bold"><GradientWrapper>Search</GradientWrapper></span> for a  new contact</h1>
              </div>
 
           )}
