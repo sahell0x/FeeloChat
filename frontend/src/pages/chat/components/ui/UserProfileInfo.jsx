@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import getFirstLetter from "@/util/getFirstLetter";
 import { FiEdit2 } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
 
@@ -42,7 +40,7 @@ function UserProfileInfo() {
   return (
     
     <div className="w-full h-18 bg-[#2c2e3b] rounded-md p-3 flex items-center justify-between flex-row border border-[#3a3b45] hover:bg-[#3a3b45] transition-all duration-300 cursor-pointer">
-      <ProfileWrapper/>
+      <ProfileWrapper firstName={userInfo.firstName} lastName={userInfo.lastName} email={userInfo.email} img={userInfo.img} id={userInfo.id} />
       <div className="flex items-center justify-center flex-row gap-4">
       <TooltipProvider>
         <Tooltip>

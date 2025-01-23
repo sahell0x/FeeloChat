@@ -3,7 +3,7 @@ import userInfoAtom from "@/stores/userInfoAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import getFirstLetter from "@/util/getFirstLetter";
 
-function ProfileWrapper({firstName , lastName, img , email}) {
+function ProfileWrapper({firstName , lastName, img , email , id}) {
   return (
     <div className="flex items-center gap-4">
     <Avatar className="size-14 border-2 border-[#3a3b45]">
