@@ -56,7 +56,8 @@ function NewMessage() {
   );
 
   const selectNewContact = (contact) => {
-    console.log(contact);
+    setIsContactDialogOpende(false);
+    setSearchedContacts([]);
   };
 
   return (
