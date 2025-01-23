@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "@/lib/api-client";
 import { LOGOUT_ROUTE } from "@/util/constants";
 import toast from "react-hot-toast";
+import ProfileWrapper from "./ProfileWrapper";
 
 function UserProfileInfo() {
   const [userInfo , setUserInfo] = useRecoilState(userInfoAtom);
@@ -41,22 +42,7 @@ function UserProfileInfo() {
   return (
     
     <div className="w-full h-18 bg-[#2c2e3b] rounded-md p-3 flex items-center justify-between flex-row border border-[#3a3b45] hover:bg-[#3a3b45] transition-all duration-300 cursor-pointer">
-      <div className="flex items-center gap-4">
-        <Avatar className="size-14 border-2 border-[#3a3b45]">
-          <AvatarImage src={userInfo.img} />
-          <AvatarFallback className="text-2xl bg-[#3a3b45] text-white">
-            {userInfo.firstName
-              ? getFirstLetter(userInfo.firstName)
-              : getFirstLetter(userInfo.email)}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col">
-          <h3 className="text-lg font-semibold text-white">
-            {userInfo.firstName ? userInfo.firstName +" "+userInfo.lastName : "User"}
-          </h3>
-          <p className="text-sm text-gray-400">{userInfo.email}</p>
-        </div>
-      </div>
+      <ProfileWrapper/>
       <div className="flex items-center justify-center flex-row gap-4">
       <TooltipProvider>
         <Tooltip>
