@@ -15,7 +15,7 @@ const authMiddleware = (req:Request,res:Response,next:NextFunction):any=>{
 
     const result:any = jwt.verify(token,secrete);
     if(!result.id){
-        return res.status(StatusCode.ClientErrorUnauthorized).json({message:"access denield unauthrized client"});
+        return res.status(StatusCode.ClientErrorUnauthorized).json({message:"Unauthrized client"});
     }
 
     req.userId = result.id;
@@ -23,7 +23,7 @@ const authMiddleware = (req:Request,res:Response,next:NextFunction):any=>{
     return next();
 
    }catch{
-    return res.status(StatusCode.ClientErrorUnauthorized).json({message:"access denield unauthrized client"});
+    return res.status(StatusCode.ClientErrorUnauthorized).json({message:"Unauthrized client"});
    }
 }
 
