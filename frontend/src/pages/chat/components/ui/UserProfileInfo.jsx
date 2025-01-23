@@ -52,7 +52,7 @@ function UserProfileInfo() {
         </Avatar>
         <div className="flex flex-col">
           <h3 className="text-lg font-semibold text-white">
-            {userInfo.firstName || "User"}
+            {userInfo.firstName ? userInfo.firstName +" "+userInfo.lastName : "User"}
           </h3>
           <p className="text-sm text-gray-400">{userInfo.email}</p>
         </div>
