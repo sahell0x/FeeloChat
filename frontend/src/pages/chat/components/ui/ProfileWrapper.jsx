@@ -1,6 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import userInfoAtom from "@/stores/userInfoAtom";
-import { useRecoilState, useRecoilValue } from "recoil";
 import getFirstLetter from "@/util/getFirstLetter";
 
 function ProfileWrapper({firstName , lastName, img , email}) {
