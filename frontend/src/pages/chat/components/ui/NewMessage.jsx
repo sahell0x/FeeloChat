@@ -23,12 +23,12 @@ import { useSetRecoilState } from "recoil";
 import chatAtom from "@/stores/chatAtom";
 
 function NewMessage() {
-  const setChatData = useSetRecoilState(chatAtom);
+  const setChatState = useSetRecoilState(chatAtom);
 
   const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
 
   const [searchedContacts, setSearchedContacts] = useState([]);
-  
+
   const [loading,SetLoading] = useState(false);
   
   const handleContactSearch = async (query) => {
@@ -62,6 +62,12 @@ function NewMessage() {
 
   const selectNewContact = (contact) => {
     setIsContactDialogOpende(false);
+    setChatState((pre)=>({
+        ...pre,
+        selectedChatType : "contact",
+        selectedChatData : contact,
+
+    }));
     setSearchedContacts([]);
   };
 
