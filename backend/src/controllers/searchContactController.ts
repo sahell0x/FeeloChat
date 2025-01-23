@@ -1,7 +1,6 @@
 import {StatusCode} from "status-code-enum";
 import User from "../models/userModel";
 import { Request,Response } from "express";
-import type { UserId } from "../types/userTypes";
 
 const searchContactController = async (req :Request,res :Response) :Promise<any>=>{
     try{
@@ -15,7 +14,6 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
 
         const extractedQuery:string = searchQuery.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 
-        console.log(extractedQuery)
 
         const regex = new RegExp(extractedQuery,"i");
         
@@ -28,7 +26,7 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
             ],
         });
 
-        return res.status(200).json({response});
+        return res.status(StatusCode.SuccessOK).json({response});
        
 
     }catch{
