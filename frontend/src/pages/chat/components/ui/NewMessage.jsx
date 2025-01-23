@@ -14,13 +14,33 @@ import { Input } from "@/components/ui/input";
 import { Debounce } from "@/util/debounce";
 import GradientWrapper from "@/components/ui/GradientWrapper";
 import LogoSVG from "@/components/logo/LogoSVG";
+import apiClient from "@/lib/api-client";
+import { SEARCH_ROUTE } from "@/util/constants";
 
 function NewMessage() {
     const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
     const [searchedContacts,setSearchedContacts] = useState([]);
     
-    const handleContactSearch = (query)=>{
-      console.log(query);
+    const handleContactSearch = async (query)=>{
+      try{
+
+        if(query.length != 0){
+          const queryResponse = await apiClient.get(`${SEARCH_ROUTE}?query=${query}`,{withCredentials:true});
+
+          const contacts = queryResponse.data.contacts;
+          if(queryResponse.status===200 && contacts){
+              setSearchedContacts([...contacts]);
+              console.log(contacts);
+          }else{
+            setSearchedContacts([]);
+          }
+        }
+
+      }catch{
+        setSearchedContacts([]);
+      }
+      
+
     }
     const debouncer = new Debounce;
     const debouncedHandleContactSearch =  debouncer.debounce(handleContactSearch,500);
