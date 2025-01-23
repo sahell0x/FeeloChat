@@ -78,7 +78,6 @@ function NewMessage() {
             <div className="flex flex-col gap-5">
               {searchedContacts.map((contact)=>{
 
-                  console.log(contact._id);
                 return  <ProfileWrapper key={contact._id} firstName={contact.firstName} lastName={contact.lastName} email={contact.email} img={contact.img}  />
 
               })
