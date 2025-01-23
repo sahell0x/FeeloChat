@@ -28,7 +28,7 @@ function NewMessage() {
           const queryResponse = await apiClient.get(`${SEARCH_ROUTE}?query=${query}`,{withCredentials:true});
 
           const contacts = queryResponse.data.contacts;
-          if(queryResponse.status===200 && contacts){
+          if(queryResponse.status===200 && contacts.length){
               setSearchedContacts([...contacts]);
               console.log(contacts);
           }else{
