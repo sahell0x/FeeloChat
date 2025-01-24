@@ -16,11 +16,13 @@ const socketSetup = (server:Server)=>{
    
    io.on("connection",(socket)=>{
       connection(socket,userSocketMap);
+
+      socket.on("disconnect",()=>{
+        disconnection(socket,userSocketMap);
+       });
    });
 
-   io.on("disconnect",(socket)=>{
-    disconnection(socket,userSocketMap);
-   });
+   
 
 
 }
