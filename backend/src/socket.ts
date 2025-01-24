@@ -1,5 +1,6 @@
 import { Server } from "http";
 import { Server as SocketServer} from "socket.io";
+import disconnection from "./socket_util/disconnection";
 
 const socketSetup = (server:Server)=>{
    const io = new SocketServer(server, {
@@ -12,7 +13,9 @@ const socketSetup = (server:Server)=>{
 
    const userSocketMap = new Map();
 
-   
+   disconnection("hi",userSocketMap);
+
+
 }
 
 export default socketSetup;

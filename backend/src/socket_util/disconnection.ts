@@ -1,4 +1,6 @@
-const disconnection = (socket:any , userMap: Map<K,V>)=>{
+import { Socket } from "socket.io";
+
+const disconnection = (socket:Socket , userMap: Map<string,string>)=>{
      console.log(`client disconnected ${socket.id}`);
 
      for(const [userId,socketId] of userMap.entries()){
