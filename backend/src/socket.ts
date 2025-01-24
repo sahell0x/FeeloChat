@@ -9,6 +9,10 @@ const socketSetup = (server:Server)=>{
             credentials:true,
         }
    });
+
+   const userSocketMap = new Map();
+
+   
 }
 
 export default socketSetup;
