@@ -7,6 +7,7 @@ dotenv.config();
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import { Request,Response,NextFunction } from "express";
+import socketSetup from "./socket";
 const app = express();
 const port = process.env.PORT;
 const dbUrl: string = process.env.DB_URL as string;
@@ -35,10 +36,12 @@ app.use((err : any,req :Request,res:Response,next :NextFunction)=>{   // global 
       });
 })
 
-app.listen(port,()=>{
+const server = app.listen(port,()=>{
     console.log(`server is runnig at http://localhost:${port}`);
 });
 
+
+socketSetup(server);
 
 mongoose.connect(dbUrl).then(()=>{
     console.log("connected successfully");
