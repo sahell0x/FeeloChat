@@ -1,9 +1,10 @@
 import { Server } from "http";
 import { Server as SocketServer} from "socket.io";
 import disconnection from "./socket_util/disconnection";
+import connection from "./socket_util/connection";
 
 const socketSetup = (server:Server)=>{
-   const io = new SocketServer(server, {
+   const io:SocketServer = new SocketServer(server, {
         cors:{
             origin: process.env.ORIGIN,
             methods:["GET","POST"],
@@ -12,8 +13,10 @@ const socketSetup = (server:Server)=>{
    });
 
    const userSocketMap = new Map();
-
-   disconnection("hi",userSocketMap);
+   
+   io.on("connection",(socket)=>{
+      connection(socket,userSocketMap);
+   });
 
 
 }
