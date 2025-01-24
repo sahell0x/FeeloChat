@@ -10,3 +10,5 @@ const connection = (socket:Socket, userMap:Map<string,string>):void=>{
         console.log("user id is not provided during connection");
    }
 } 
+
+export default connection;
