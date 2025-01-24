@@ -10,7 +10,7 @@ export const useSocket = ()=>{
     return useContext(SocketContext);
 };
 
-export const socketProvider = ({children})=>{
+export const SocketProvider = ({children})=>{
     const socket = useRef();
     const userInfo = useRecoilValue(userInfoAtom);
 
@@ -27,6 +27,7 @@ export const socketProvider = ({children})=>{
 
             return ()=>{
                 socket.current.disconnect();
+                console.log("disconnected from server");       
             }
         }
     },[userInfo])
