@@ -18,6 +18,10 @@ const socketSetup = (server:Server)=>{
       connection(socket,userSocketMap);
    });
 
+   io.on("disconnect",(socket)=>{
+    disconnection(socket,userSocketMap);
+   });
+
 
 }
 
