@@ -21,7 +21,7 @@ function EmptyChatContainer() {
         </h2>
 
         <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-          Ready to express yourself? Select a chat and let your emotions talk ✨
+          Ready to express yourself? Select a chat and let your expressions talk ✨
         </p>
 
         <div className="flex justify-center gap-6 text-4xl mb-10">
