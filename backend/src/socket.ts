@@ -28,14 +28,19 @@ const socketSetup = (server:Server)=>{
 
     const messageData = await Message.findById(createdMessage._id).populate("sender","id email firstName lastName img").populate("receiver","id email firstName lastName img");
 
+
+    
+
     if(recieverSocketId){
         io.to(recieverSocketId).emit("receiveMessage",messageData);
     }
 
     if(senderSocketId){
+        console.log("message sent to the client");
         io.to(senderSocketId).emit("receiveMessage",messageData);
     }
    }catch(e:any){
+    console.log("inside the cath");
     console.log(e.message);
    }
   

@@ -6,7 +6,7 @@ const messageSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true,
- 
+        },
         receiver: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User', 
@@ -24,16 +24,7 @@ const messageSchema = new mongoose.Schema(
             default: Date.now, 
         },
 
-        // isRead: {
-        },
-       //     type: Boolean,
-        //     default: false,
-        // },
-
-        // isDelivered: {
-        //     type: Boolean,
-        //     default: false,
-        // },
+        
     },
     {
         timestamps: true,
