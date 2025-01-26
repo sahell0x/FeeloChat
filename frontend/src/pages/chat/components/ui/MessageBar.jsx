@@ -16,6 +16,7 @@ function MessageBar() {
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
   const socket = useSocket();
 
+
   const handleEmojiClick = (e) => {
     setMessage((prevMessage) => prevMessage.concat(e.emoji));
   };
@@ -32,7 +33,7 @@ function MessageBar() {
   };
 
   const handleSend = ()=>{
-    if(selectedChatType === "contact"){
+    if(selectedChatType === "contact" && message.length){
       socket.emit("sendMessage",{
          sender: userInfo.id,
          content: message,

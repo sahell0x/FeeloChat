@@ -1,8 +1,8 @@
-import  { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
+import { selectedChatDataAtom, selectedChatMessagesAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { HOST } from "@/util/constants";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext(null);
@@ -16,8 +16,17 @@ export const SocketProvider = ({ children }) => {
   const userInfo = useRecoilValue(userInfoAtom);
   const [selectedChatType, setSelectedChatType] = useRecoilState(selectedChatTypeAtom);
   const [selectedChatData, setSelectedChatData] = useRecoilState(selectedChatDataAtom);
+  const setSelectedMessage = useSetRecoilState(selectedChatMessagesAtom);
+
+  const selectedChatDataRef = useRef(selectedChatData);
+  const selectedChatTypeRef = useRef(selectedChatType);
+
   useEffect(() => {
-    console.log("inside useEffect");
+    selectedChatDataRef.current = selectedChatData;
+    selectedChatTypeRef.current = selectedChatType;
+  }, [selectedChatData,selectedChatType]);
+
+  useEffect(() => {
     if (userInfo) {
       socket.current = io(HOST, {
         withCredentials: true,
@@ -29,22 +38,31 @@ export const SocketProvider = ({ children }) => {
       });
 
       const handleRecieveMessage = (message) => {
-        console.log("this is the message",message);
-
-        console.log("this is the message",selectedChatData);
-
         if (
-          selectedChatType !== null &&
-          (selectedChatData._id === message.sender._id ||
-            selectedChatData._id === message.reciever._id)
+          selectedChatTypeRef.current !== null &&
+          (selectedChatDataRef.current?._id === message.sender?._id ||
+            selectedChatDataRef.current?._id === message.receiver?._id)
         ) {
-          
-        console.log("recived messae :",message);
+          console.log("received message :", message);
+
+          setSelectedMessage((prev)=>{
+              [
+                ...prev,
+                {
+                  ...message,
+                  receiver:message.receiver?._id,
+                  sender:message.sender?._id,
+
+                }
+              ]
+          });
+
+        }
       };
 
-      socket.current.on("receiveMessage", (message)=>{
-        console.log("a message recieved");
-        handleRecieveMessage(message)
+      socket.current.on("receiveMessage", (message) => {
+        console.log(message);
+        handleRecieveMessage(message);
       });
 
       return () => {
@@ -52,8 +70,7 @@ export const SocketProvider = ({ children }) => {
         console.log("disconnected from server");
       };
     }
-
-  }}, [userInfo]);
+  }, [userInfo]);
 
   return (
     <SocketContext.Provider value={socket.current}>
