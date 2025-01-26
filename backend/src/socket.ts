@@ -15,28 +15,36 @@ const socketSetup = (server:Server)=>{
 
    const userSocketMap = new Map();
 
-   const handleMessage = async ( message):Promise<void> => {
-    
+   const handleMessage = async ( message:any):Promise<void> => {
+   
+    console.log("this is message",message);
+
+   try{
     const senderSocketId = userSocketMap.get(message.sender);
 
     const recieverSocketId = userSocketMap.get(message.receiver);
 
     const createdMessage = await Message.create(message);
 
-    const messageData = await Message.findById(createdMessage._id).populate("sender","id email firstName lastName img").populate("reciever","id email firstName lastName img");
+    const messageData = await Message.findById(createdMessage._id).populate("sender","id email firstName lastName img").populate("receiver","id email firstName lastName img");
 
     if(recieverSocketId){
-        io.to(recieverSocketId).emit("recieveMessage",messageData);
+        io.to(recieverSocketId).emit("receiveMessage",messageData);
     }
 
     if(senderSocketId){
-        io.to(senderSocketId).emit("recieveMessage",messageData);
+        io.to(senderSocketId).emit("receiveMessage",messageData);
     }
+   }catch(e:any){
+    console.log(e.message);
+   }
   
 }
    
    io.on("connection",(socket)=>{
       connection(socket,userSocketMap);
+
+      socket.on("sendMessage",handleMessage);
 
       socket.on("disconnect",()=>{
         disconnection(socket,userSocketMap);
