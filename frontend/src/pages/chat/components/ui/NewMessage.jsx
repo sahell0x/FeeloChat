@@ -20,10 +20,11 @@ import { SEARCH_ROUTE } from "@/util/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ProfileWrapper from "./ProfileWrapper";
 import { useSetRecoilState } from "recoil";
-import chatAtom from "@/stores/chatAtom";
+import { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
 
 function NewMessage() {
-  const setChatState = useSetRecoilState(chatAtom);
+  const setSelectedChatType = useSetRecoilState(selectedChatTypeAtom);
+  const setSelectedChatData = useSetRecoilState(selectedChatDataAtom);
 
   const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
 
@@ -62,12 +63,8 @@ function NewMessage() {
 
   const selectNewContact = (contact) => {
     setIsContactDialogOpende(false);
-    setChatState((pre)=>({
-        ...pre,
-        selectedChatType : "contact",
-        selectedChatData : contact,
-
-    }));
+    setSelectedChatType("contact");
+    setSelectedChatData({...contact});
     setSearchedContacts([]);
   };
 

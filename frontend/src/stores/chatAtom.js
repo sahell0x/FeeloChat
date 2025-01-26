@@ -1,13 +1,17 @@
 import { atom } from "recoil";
 
-const chatAtom = atom({
-    key:"chatAtom",
-    default:{
-        selectedChatType : null,
-        selectedChatData : null,
-        selectedChatMessages : [],
 
-    },
+export const selectedChatTypeAtom = atom({
+    key:"selectedChatTypeAtom",
+    default : null,
 });
 
-export default chatAtom;
+export const selectedChatDataAtom = atom({
+    key:"selectedChatDataAtom",
+    default : null,
+});
+
+export const selectedChatMessagesAtom = atom({
+    key:"selectedChatMessagesAtom",
+    default : [],
+});

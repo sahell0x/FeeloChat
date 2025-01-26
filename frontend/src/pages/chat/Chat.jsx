@@ -6,11 +6,11 @@ import { useRecoilValue } from "recoil";
 import ContactContainer from "./components/ContactContainer";
 import EmptyChatContainer from "./components/EmptyChatContainer";
 import ChatContainer from "./components/ChatContainer";
-import chatAtom from "@/stores/chatAtom";
+import  { selectedChatTypeAtom } from "@/stores/chatAtom";
 
 function Chat() {
   const userInfo = useRecoilValue(userInfoAtom);
-  const chatState = useRecoilValue(chatAtom);
+  const selectedChatType = useRecoilValue(selectedChatTypeAtom);
 
 
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function Chat() {
     <div className="flex h-[100vh]  text-[#1f2937] overflow-hidden">
       <ContactContainer/>
       
-      {chatState.selectedChatType ?  <ChatContainer/> : <EmptyChatContainer/>  }
+      {selectedChatType ?  <ChatContainer/> : <EmptyChatContainer/>  }
    
     </div>
   )

@@ -2,11 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import { BiSolidSend } from "react-icons/bi";
 import EmojiPicker from "emoji-picker-react";
+import { useRecoilValue } from "recoil";
+import  { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
+import { useSocket } from "@/context/SocketContext";
+import userInfoAtom from "@/stores/userInfoAtom";
 
 function MessageBar() {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpend, setIsEmojiPickerOpend] = useState(false);
   const emojiPickerRef = useRef(null);
+  const userInfo = useRecoilValue(userInfoAtom);
+  const selectedChatType = useRecoilValue(selectedChatTypeAtom);
+  const selectedChatData = useRecoilValue(selectedChatDataAtom);
+  const socket = useSocket();
 
   const handleEmojiClick = (e) => {
     setMessage((prevMessage) => prevMessage.concat(e.emoji));
@@ -22,6 +30,17 @@ function MessageBar() {
       setIsEmojiPickerOpend(false);
     }
   };
+
+  const handleSend = ()=>{
+    if(selectedChatType === "contact"){
+      socket.emit("sendMessage",{
+         sender: userInfo.id,
+         content: message,
+         receiver : selectedChatData._id,
+
+      });
+    }
+  }
 
   useEffect(() => {
     if (isEmojiPickerOpend) {
@@ -68,7 +87,9 @@ function MessageBar() {
             )}
           </div>
 
-          <button className="bg-purple-700 rounded-md flex items-center justify-center p-4 text-white focus:outline-none transition-all duration-300 hover:bg-purple-900 shadow-md hover:shadow-lg">
+          <button className="bg-purple-700 rounded-md flex items-center justify-center p-4 text-white focus:outline-none transition-all duration-300 hover:bg-purple-900 shadow-md hover:shadow-lg"
+           onClick={handleSend}
+           >
             <BiSolidSend className="text-2xl" />
           </button>
         </div>

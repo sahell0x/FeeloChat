@@ -6,7 +6,7 @@ import { RecoilRoot } from 'recoil'
 import CustomToaster from './components/ui/CustomToaster'
 import { SocketProvider } from './context/SocketContext'
 
-
+console.log("main re rendered");
 createRoot(document.getElementById('root')).render(
   <RecoilRoot>
   <SocketProvider>
