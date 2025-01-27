@@ -26,10 +26,10 @@ const socketSetup = (server:Server)=>{
 
     const createdMessage = await Message.create(message);
 
+    
     const messageData = await Message.findById(createdMessage._id).populate("sender","id email firstName lastName img").populate("receiver","id email firstName lastName img");
 
 
-    
 
     if(recieverSocketId){
         io.to(recieverSocketId).emit("receiveMessage",messageData);
