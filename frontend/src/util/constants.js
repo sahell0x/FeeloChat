@@ -14,4 +14,6 @@ export const USER_ROUTE = `${USER_BASE_ROUTE}/user`;
 
 export const SEARCH_ROUTE = `${USER_ROUTE}/search`;
 
+export const MESSAGE_ROUTE = `${USER_ROUTE}/message`;
+
 export const USER_PROFILE_ROUTE = `${USER_ROUTE}/profile`;
