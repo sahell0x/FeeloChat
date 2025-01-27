@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
   const userInfo = useRecoilValue(userInfoAtom);
   const [selectedChatType, setSelectedChatType] = useRecoilState(selectedChatTypeAtom);
   const [selectedChatData, setSelectedChatData] = useRecoilState(selectedChatDataAtom);
-  const setSelectedMessage = useSetRecoilState(selectedChatMessagesAtom);
+  const setSelectedChatMessage = useSetRecoilState(selectedChatMessagesAtom);
 
   const selectedChatDataRef = useRef(selectedChatData);
   const selectedChatTypeRef = useRef(selectedChatType);
@@ -45,7 +45,7 @@ export const SocketProvider = ({ children }) => {
         ) {
           console.log("received message :", message);
 
-          setSelectedMessage((prev)=>{
+          setSelectedChatMessage((prev)=>(
               [
                 ...prev,
                 {
@@ -55,7 +55,7 @@ export const SocketProvider = ({ children }) => {
 
                 }
               ]
-          });
+          ));
 
         }
       };
