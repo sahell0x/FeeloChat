@@ -7,6 +7,7 @@ dotenv.config();
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import { Request,Response,NextFunction } from "express";
+import rateLimit from "express-rate-limit";
 import socketSetup from "./socket";
 const app = express();
 const port = process.env.PORT;
@@ -23,9 +24,22 @@ app.use(express.json({ limit: '5mb' }));
 
 app.use(cookieParser());
 app.use(express.json());
-app.get("/",(req,res)=>{
-   res.send("hi there");
-})
+
+
+const limiter = rateLimit({
+    windowMs: 1000,
+    max: 5, 
+    message: 'Too many requests from this IP, please try again later.',
+    handler: (req:Request, res:Response) => {
+      res.status(429).json({
+        message: 'Too many requests, please try again later.',
+      });
+    },
+  });
+  
+  app.use(limiter);
+
+
 app.use("/api",userRoutes);
 app.use("/api/auth",authRoutes);
 
