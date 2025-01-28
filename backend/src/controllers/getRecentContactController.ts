@@ -56,8 +56,10 @@ const getRecentContactController = async (
         $project: {
           _id: 0,
           id: "$_id",
-          name: { $concat: ["$contact.firstName", " ", "$contact.lastName"] },
-          avatar: "$contact.img",
+          firstName:"$contact.firstName",
+          lastName:"$contact.lastName",
+          email:"$contact.email",
+          img: "$contact.img",
           lastMessage: {
             $cond: {
               if: { $eq: ["$lastMessageSender", userId] },
