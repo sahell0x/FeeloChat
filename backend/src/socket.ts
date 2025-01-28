@@ -17,7 +17,6 @@ const socketSetup = (server:Server)=>{
 
    const handleMessage = async ( message:any):Promise<void> => {
    
-    console.log("this is message",message);
 
    try{
     const senderSocketId = userSocketMap.get(message.sender);
@@ -36,11 +35,9 @@ const socketSetup = (server:Server)=>{
     }
 
     if(senderSocketId){
-        console.log("message sent to the client");
         io.to(senderSocketId).emit("receiveMessage",messageData);
     }
    }catch(e:any){
-    console.log("inside the cath");
     console.log(e.message);
    }
   

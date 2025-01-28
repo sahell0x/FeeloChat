@@ -5,9 +5,6 @@ const connection = (socket:Socket, userMap:Map<string,string>):void=>{
 
    if(userId){
       userMap.set(userId,socket.id);
-      console.log(`user with id ${userId} is connected with socket id ${socket.id}`)
-   }else{
-        console.log("user id is not provided during connection");
    }
 } 
 

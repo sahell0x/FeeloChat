@@ -11,8 +11,6 @@ const getRecentContactController = async (
   try {
     const userId:mongoose.Types.ObjectId  = new mongoose.Types.ObjectId(req.userId);
 
-    console.log(userId);
-
     const Recentcontacts = await Message.aggregate([
       {
         $match: {
