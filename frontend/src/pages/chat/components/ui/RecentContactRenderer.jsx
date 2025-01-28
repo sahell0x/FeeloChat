@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import getFirstLetter from "@/util/getFirstLetter";
 import { Circle } from "lucide-react";
 import { useCallback } from "react";
 
@@ -11,7 +12,7 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
     return (
       <div
         onClick={handleClick}
-        className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${
+        className={`flex items-center  space-x-3 p-3 rounded-lg cursor-pointer transition-colors ${
           isSelected ? "bg-[#3a3b45] text-white" : "hover:bg-[#2c2e3b]"
         }`}
         style={{ maxWidth: "100%", minWidth: "250px" }}
@@ -19,7 +20,9 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
         <div className="relative">
           <Avatar>
             <AvatarImage src={contact.img} />
-            <AvatarFallback className="bg-[#3a3b45] text-white">{"A"}</AvatarFallback>
+            <AvatarFallback className="bg-[#3a3b45] text-white">{
+                getFirstLetter(contact?.firstName)
+              }</AvatarFallback>
           </Avatar>
   
           {/* <Circle
