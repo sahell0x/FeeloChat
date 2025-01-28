@@ -16,4 +16,6 @@ export const SEARCH_ROUTE = `${USER_ROUTE}/search`;
 
 export const MESSAGE_ROUTE = `${USER_ROUTE}/message`;
 
+export const CONTACT_ROUTE = `${USER_ROUTE}/contact`;
+
 export const USER_PROFILE_ROUTE = `${USER_ROUTE}/profile`;

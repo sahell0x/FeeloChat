@@ -78,7 +78,6 @@ function MessageBar() {
             placeholder="Type a Message..."
             value={message}
             onChange={(e) => {setMessage(e.target.value)
-              console.dir(e.target);
             }}
           />
 
