@@ -1,9 +1,7 @@
 import {StatusCode} from "status-code-enum";
-import User from "../models/userModel";
 import { Request,Response } from "express";
 import type { UserId } from "../types/userTypes";
 import Message from "../models/messageModel";
-import { timeStamp } from "console";
 
 const getMessageController = async (req :Request,res :Response) :Promise<any>=>{
     try{
