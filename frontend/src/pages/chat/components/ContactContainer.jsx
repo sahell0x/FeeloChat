@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { SiLivechat } from "react-icons/si";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, Circle } from "lucide-react";
+import { Search } from "lucide-react";
 import UserProfileInfo from "./ui/UserProfileInfo";
 import NewMessage from "./ui/NewMessage";
 import recentContactAtom from "@/stores/recentContactAtom";
@@ -13,12 +13,16 @@ import { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
 import toast from "react-hot-toast";
 import FeeloChat from "@/components/logo/FeeloChat";
 import RecentContactRenderer from "./ui/RecentContactRenderer";
+import { ClipLoader } from "react-spinners";
+
 
 function ContactContainer() {
-  const [selectedChatData, setSelectedChatData] = useRecoilState(selectedChatDataAtom);
+  const [selectedChatData, setSelectedChatData] =
+    useRecoilState(selectedChatDataAtom);
   const [searchQuery, setSearchQuery] = useState("");
   const [recentContact, setRecentContact] = useRecoilState(recentContactAtom);
   const setSelectedChatType = useSetRecoilState(selectedChatTypeAtom);
+  const [isLoading,setIsLoading] = useState(false);
 
   const filteredContacts = useMemo(() => {
     return recentContact.filter((contact) =>
@@ -43,11 +47,16 @@ function ContactContainer() {
   useEffect(() => {
     const getContacts = async () => {
       try {
-        const response = await apiClient.get(CONTACT_ROUTE, { withCredentials: true });
+        setIsLoading(true);
+        const response = await apiClient.get(CONTACT_ROUTE, {
+          withCredentials: true,
+        });
+        setIsLoading(false);
         if (response.status === 200) {
           setRecentContact(response.data.Recentcontacts);
         }
       } catch (error) {
+        setIsLoading(false);
         toast.error("Unable to fetch Contacts.");
       }
     };
@@ -78,14 +87,27 @@ function ContactContainer() {
       {/* Scrollable Contacts */}
       <ScrollArea className="flex-1 overflow-y-auto scrollbar-hide">
         <div className="p-2">
-          {filteredContacts.map((contact) => (
-            <RecentContactRenderer
-              key={contact.id}
-              contact={contact}
-              isSelected={selectedChatData?._id === contact?.id}
-              onClick={handleContactClick}
-            />
-          ))}
+         
+
+
+          
+
+
+          
+          {filteredContacts.length ? (
+            filteredContacts.map((contact) => (
+              <RecentContactRenderer
+                key={contact.id}
+                contact={contact}
+                isSelected={selectedChatData?._id === contact?.id}
+                onClick={handleContactClick}
+              />
+            ))
+          ) : (
+            <div className=" absolute flex items-center justify-center top-20 w-full text-gray-300 text-xl">
+                 {isLoading ? <ClipLoader color="#9333ea" /> :" No recent coontact"} 
+            </div>
+          )}
         </div>
       </ScrollArea>
 

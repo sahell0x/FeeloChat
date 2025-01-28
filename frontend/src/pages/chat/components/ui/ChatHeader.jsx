@@ -3,6 +3,8 @@ import { RiCloseFill } from "react-icons/ri";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import ProfileWrapper from "./ProfileWrapper";
 
+
+
 function ChatHeader() {
   const selectedChatDataReset = useResetRecoilState(selectedChatDataAtom);
   const selectedChatTypeReset = useResetRecoilState(selectedChatTypeAtom);
@@ -18,6 +20,7 @@ function ChatHeader() {
         email={selectedChatData.email}
         img={selectedChatData.img}
       />
+      
       <div className="flex gap-5 items-center">
         <div className="flex gap-3 items-center justify-between"></div>
         <div className="flex items-center justify-center gap-5">

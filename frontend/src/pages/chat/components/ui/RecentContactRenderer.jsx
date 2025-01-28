@@ -25,13 +25,14 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
               }</AvatarFallback>
           </Avatar>
   
-          {/* <Circle
+          <Circle
             className={`absolute bottom-0 right-0 h-3 w-3 ${
-              contact.status === "online"
-                ? "fill-green-500 text-green-500"
-                : "fill-gray-400 text-gray-400"
+              
+              true
+                ? "fill-green-600 text-green-600"
+                : "fill-gray-500 text-gray-500"
             }`}
-          /> */} 
+          />
   
         </div>
         <div className="flex-1 min-w-0">
