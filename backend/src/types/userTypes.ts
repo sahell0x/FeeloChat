@@ -10,4 +10,5 @@ export interface User  {
     password:string,
 }
 
+
 export type UserType = User | undefined |null;

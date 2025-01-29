@@ -14,23 +14,24 @@ const onlineStatusProvider = async(userId:string ,io:any,userMap:Map<string,stri
     //if the function is called from the connection the user also need the status of its contacts this block handles that
 
     if(isOnline){
-        io.to(currentUserSocketId).emit("status-update", contacts.reduce((acc:any, userId) => {
-            acc[userId] = userMap.has(userId); 
+        io.to(currentUserSocketId).emit("status-update", contacts.reduce((acc:any, contactId) => {
+            acc[contactId] = userMap.has(contactId); 
             return acc;
         }, {}));
     }
 
     //this block handles update the online status to contacts if they are online
 
-    for(let i =0 ; i<contacts.length ; i++){
+    for(let i =0 ; i< contacts.length ; i++){
         const userSocketId = userMap.get(contacts[i]);
 
         if(userSocketId){
-            const userStatusObject:any = {};
 
-            userStatusObject[contacts[i]] = isOnline;
+            const currentUserStatus:any = {};
 
-            io.to(userSocketId).emit("status-update",userStatusObject);
+            currentUserStatus[userId] = isOnline;
+
+            io.to(userSocketId).emit("status-update",currentUserStatus);
         }
     }
     
