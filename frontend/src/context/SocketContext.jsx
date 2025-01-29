@@ -1,4 +1,5 @@
 import { selectedChatDataAtom, selectedChatMessagesAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
+import onlineStatusAtom from "@/stores/onlineStatusAtom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { HOST } from "@/util/constants";
 import { createContext, useContext, useEffect, useRef } from "react";
@@ -17,6 +18,7 @@ export const SocketProvider = ({ children }) => {
   const [selectedChatType, setSelectedChatType] = useRecoilState(selectedChatTypeAtom);
   const [selectedChatData, setSelectedChatData] = useRecoilState(selectedChatDataAtom);
   const setSelectedChatMessage = useSetRecoilState(selectedChatMessagesAtom);
+  const setOnlineStatusState = useSetRecoilState(onlineStatusAtom);
 
   const selectedChatDataRef = useRef(selectedChatData);
   const selectedChatTypeRef = useRef(selectedChatType);
@@ -59,6 +61,17 @@ export const SocketProvider = ({ children }) => {
 
         }
       };
+
+      socket.current.on("status-update", (contactOnlineStatus) => {
+         
+        setOnlineStatusState((prev)=>(
+          {
+            ...prev,
+            contactOnlineStatus,
+          }
+        ));
+        
+      });
 
       socket.current.on("receiveMessage", (message) => {
         console.log(message);
