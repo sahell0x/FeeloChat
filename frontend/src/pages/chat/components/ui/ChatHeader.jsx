@@ -17,15 +17,6 @@ function ChatHeader() {
 
   const onlineStatusState = useRecoilValue(onlineStatusAtom);
 
-  const [isUserOnline,setIsUserOnline] = useState(false);
-
-
-// useEffect(() => {
-
-//   setIsUserOnline(onlineStatusState.contents[selectedChatData._id]);
-
-// }, [onlineStatusState, selectedChatData]);
-
 
 
   return (
