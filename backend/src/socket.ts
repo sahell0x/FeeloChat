@@ -4,6 +4,8 @@ import disconnection from "./socket_util/disconnection";
 import connection from "./socket_util/connection";
 import Message from "./models/messageModel";
 
+//this contains main socket logic 
+
 const socketSetup = (server:Server)=>{
    const io:SocketServer = new SocketServer(server, {
         cors:{
@@ -13,7 +15,10 @@ const socketSetup = (server:Server)=>{
         }
    });
 
-   const userSocketMap = new Map();
+   const userSocketMap = new Map();   //to store user<userId,socketId>
+
+
+   //handle message send logic for p-2-p
 
    const handleMessage = async ( message:any):Promise<void> => {
    
@@ -42,14 +47,15 @@ const socketSetup = (server:Server)=>{
    }
   
 }
-   
+    //io connection disconnection handling
+    
    io.on("connection",(socket)=>{
-      connection(socket,userSocketMap);
+      connection(socket,userSocketMap,io);
 
       socket.on("sendMessage",handleMessage);
 
       socket.on("disconnect",()=>{
-        disconnection(socket,userSocketMap);
+        disconnection(socket,userSocketMap,io);
        });
    });
 
