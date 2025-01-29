@@ -64,13 +64,11 @@ export const SocketProvider = ({ children }) => {
       };
 
       socket.current.on("status-update", (contactOnlineStatus) => { 
-        console.log("new state ",contactOnlineStatus);
         setOnlineStatusState((prev) => {
           const newState = {
             ...prev,
             ...contactOnlineStatus,
           };
-          console.log(newState);
           return newState;
         });
         
