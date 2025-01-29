@@ -1,13 +1,18 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import onlineStatusAtom from "@/stores/onlineStatusAtom";
 import getFirstLetter from "@/util/getFirstLetter";
 import { Circle } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 
 
 const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
     const handleClick = useCallback(() => {
       onClick(contact);
     }, [onClick, contact]);
+
+    const onlineStatusState = useRecoilValue(onlineStatusAtom);
+
   
     return (
       <div
@@ -28,7 +33,7 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
           <Circle
             className={`absolute bottom-0 right-0 h-3 w-3 ${
               
-              true
+              onlineStatusState[contact.id]
                 ? "fill-green-600 text-green-600"
                 : "fill-gray-500 text-gray-500"
             }`}

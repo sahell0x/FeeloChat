@@ -18,7 +18,8 @@ export const SocketProvider = ({ children }) => {
   const [selectedChatType, setSelectedChatType] = useRecoilState(selectedChatTypeAtom);
   const [selectedChatData, setSelectedChatData] = useRecoilState(selectedChatDataAtom);
   const setSelectedChatMessage = useSetRecoilState(selectedChatMessagesAtom);
-  const setOnlineStatusState = useSetRecoilState(onlineStatusAtom);
+  const [onlinStatusState,setOnlineStatusState] = useRecoilState(onlineStatusAtom);
+
 
   const selectedChatDataRef = useRef(selectedChatData);
   const selectedChatTypeRef = useRef(selectedChatType);
@@ -62,14 +63,16 @@ export const SocketProvider = ({ children }) => {
         }
       };
 
-      socket.current.on("status-update", (contactOnlineStatus) => {
-         
-        setOnlineStatusState((prev)=>(
-          {
+      socket.current.on("status-update", (contactOnlineStatus) => { 
+        console.log("new state ",contactOnlineStatus);
+        setOnlineStatusState((prev) => {
+          const newState = {
             ...prev,
-            contactOnlineStatus,
-          }
-        ));
+            ...contactOnlineStatus,
+          };
+          console.log(newState);
+          return newState;
+        });
         
       });
 

@@ -14,7 +14,7 @@ function App() {
   const [isLoading,setIsLoading] = useState(true);
 
 
-
+console.log("app rerendered");
   useEffect(()=>{
 
     if(!userInfo){

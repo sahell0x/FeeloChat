@@ -9,12 +9,8 @@ import { SocketProvider } from './context/SocketContext'
 console.log("main re rendered");
 createRoot(document.getElementById('root')).render(
   <RecoilRoot>
-  <SocketProvider>
-
    <CustomToaster/>
     <App />
-    </SocketProvider>
-
     </RecoilRoot>
    
 )

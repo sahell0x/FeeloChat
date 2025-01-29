@@ -87,11 +87,6 @@ function ContactContainer() {
       {/* Scrollable Contacts */}
       <ScrollArea className="flex-1 overflow-y-auto scrollbar-hide">
         <div className="p-2">
-         
-
-
-          
-
 
           
           {filteredContacts.length ? (
