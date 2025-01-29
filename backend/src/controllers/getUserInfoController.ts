@@ -3,6 +3,8 @@ import User from "../models/userModel";
 import { Request,Response } from "express";
 import type { UserId } from "../types/userTypes";
 
+//this controller provides profile information for current user
+
 const getUserInfoController = async (req :Request,res :Response) :Promise<any>=>{
     try{
         const userId : UserId = req.userId;

@@ -9,16 +9,23 @@ dotenv.config();
 
 const secrete:string = process.env.SECRETE as string;
 
+//this controller responsible to handle sign up requests
+
 const signUpController = async (req: Request,res:Response):Promise<any> =>{
     console.log("inside signup");
     
     try{
         const body = req.body;
+
+        //check is this email already used or not
        const isUserAlreadyExist = await User.findOne({email:body.email});
 
        if(isUserAlreadyExist){
         return res.status(409).json({error: "user aleady exist"});
        }
+
+       //hash user password before storing into database
+
        body.password = await bcrypt.hash(body.password,13);
 
         const user:any = await User.create(body);

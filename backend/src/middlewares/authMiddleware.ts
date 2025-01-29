@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import {StatusCode} from "status-code-enum";
 import { Request,Response,NextFunction } from "express";
 
+//Auth middleware handles authentication of all incoming requests and pass UserId further
 
 const authMiddleware = (req:Request,res:Response,next:NextFunction):any=>{
    const token = req.cookies.token;

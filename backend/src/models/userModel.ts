@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+//user model defination
+
 const userSchem = new mongoose.Schema({
   email: {
     type: String,

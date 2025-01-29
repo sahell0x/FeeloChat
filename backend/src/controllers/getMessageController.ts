@@ -3,6 +3,8 @@ import { Request,Response } from "express";
 import type { UserId } from "../types/userTypes";
 import Message from "../models/messageModel";
 
+//this controller provides messages for given _id
+
 const getMessageController = async (req :Request,res :Response) :Promise<any>=>{
     try{
         const userId : UserId = req.userId;

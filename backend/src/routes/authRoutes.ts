@@ -6,6 +6,8 @@ import signInController from "../controllers/signInController";
 import authMiddleware from "../middlewares/authMiddleware";
 import logOutController from "../controllers/logOutController";
 
+//auth routes
+
 const authRoutes = Router();
 
 authRoutes.post("/signup",signUpMiddleware,signUpController);

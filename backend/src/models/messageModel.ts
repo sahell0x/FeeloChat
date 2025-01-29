@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+//message route defination
+
 const messageSchema = new mongoose.Schema(
     {
         sender: {

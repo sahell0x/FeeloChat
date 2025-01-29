@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import { Request,Response,NextFunction } from "express";
 import { UserId, UserType } from "../types/userTypes.js";
 
+//this controller handles user profile upload and delete.
+//for upload frontend sends a compressed base64 string and for deletion simply we replace it with empty string
 
 const userProfileUploadAndDeleteController = async (req:Request,res:Response):Promise<any> =>{
     try{

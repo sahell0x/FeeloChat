@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 import { Request,Response } from "express";
 import { UserId, UserType } from "../types/userTypes.js";
 
+//this controller simply sets a empty cookie in user browser which makes user logout completly 
 
 const logOutController = async (req:Request,res:Response) :Promise<any>=>{
     try{

@@ -9,6 +9,8 @@ import getRecentContactController from "../controllers/getRecentContactControlle
 
 const userRoutes = Router();
 
+//user routes
+
 userRoutes.get("/user",authMiddleware,getUserInfoController);
 
 userRoutes.get("/user/search",authMiddleware,searchContactController);

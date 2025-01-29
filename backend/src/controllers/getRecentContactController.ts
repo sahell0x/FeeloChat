@@ -4,6 +4,8 @@ import type { UserId } from "../types/userTypes";
 import Message from "../models/messageModel";
 import mongoose from "mongoose";
 
+//this controller provides all recent contacts for current user
+
 const getRecentContactController = async (
   req: Request,
   res: Response
