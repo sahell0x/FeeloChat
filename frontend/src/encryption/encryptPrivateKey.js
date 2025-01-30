@@ -1,4 +1,8 @@
-async function encryptPrivateKey(userPassword, privateKeyBuffer) {
+const { defineLocale } = require("moment");
+
+ 
+ 
+ const encryptPrivateKey = async (userPassword, privateKeyBuffer) => {
     await sodium.ready;
   
      //generate random slat for password hashing (not directoly encrypting the password adding salt for more strong encryption cause encryption key is very senstive data to store in db Feelochat uses architecture of applicatioins like facebook and instagram)
@@ -33,3 +37,5 @@ async function encryptPrivateKey(userPassword, privateKeyBuffer) {
       nonce: sodium.to_base64(nonce)
     };
   }
+
+  export default encryptPrivateKey;
