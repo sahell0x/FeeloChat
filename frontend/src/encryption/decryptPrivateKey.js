@@ -1,4 +1,5 @@
- 
+import sodium from 'libsodium-wrappers';
+
  
  const decryptPrivateKey = async (userPassword, encryptedPrivateKey, salt, nonce) => {
 

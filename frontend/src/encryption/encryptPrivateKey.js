@@ -1,6 +1,4 @@
-const { defineLocale } = require("moment");
-
- 
+import sodium from 'libsodium-wrappers';
  
  const encryptPrivateKey = async (userPassword, privateKeyBuffer) => {
     await sodium.ready;
