@@ -1,4 +1,5 @@
 import sodium from "libsodium-wrappers";
+import uint8ToBase64Converter from "./uint8ToBase64Converter";
 
 const encryptPrivateKey = async (userPassword, privateKeyBuffer) => {
   try {
@@ -30,9 +31,9 @@ const encryptPrivateKey = async (userPassword, privateKeyBuffer) => {
 
     //returning the object to store in db.
     return {
-      encryptedPrivateKey: sodium.to_base64(encryptedPrivateKey),
-      salt: sodium.to_base64(salt),
-      nonce: sodium.to_base64(nonce),
+      encryptedPrivateKey: uint8ToBase64Converter(encryptedPrivateKey),
+      salt: uint8ToBase64Converter(salt),
+      nonce: uint8ToBase64Converter(nonce),
     };
   } catch {
     return {

@@ -1,4 +1,5 @@
 import sodium from "libsodium-wrappers";
+import uint8ToBase64Converter from "./uint8ToBase64Converter";
 
 // Generate a key pair for the user
 
@@ -9,9 +10,9 @@ const keyPairGenerator = async () => {
     const keyPair = sodium.crypto_box_keypair();
 
     return {
-      publicKey: sodium.to_base64(keyPair.publicKey), // Convert to base64 string to store in db.
+      publicKey: uint8ToBase64Converter(keyPair.publicKey), // Convert to base64 string to store in db.
 
-      privateKey: sodium.to_base64(keyPair.privateKey), //converted into base64 string to store in user browser.
+      privateKey: uint8ToBase64Converter(keyPair.privateKey), //converted into base64 string to store in user browser.
 
       privateKeyBuffer: keyPair.privateKey, //this will be used to create a encrypted private key form user password to store in db.
     };

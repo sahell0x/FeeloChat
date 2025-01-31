@@ -1,4 +1,5 @@
 import sodium from "libsodium-wrappers";
+import base64ToUint8Converter from "./base64ToUint8Converter";
 
 const decryptPrivateKey = async (
   userPassword,
@@ -13,9 +14,9 @@ const decryptPrivateKey = async (
 
     // Convert Base64 strings to Uint8Arrays
 
-    const encrypted = sodium.from_base64(encryptedPrivateKey);
-    salt = sodium.from_base64(salt);
-    nonce = sodium.from_base64(nonce);
+    const encrypted = base64ToUint8Converter(encryptedPrivateKey);
+    salt = base64ToUint8Converter(salt);
+    nonce = base64ToUint8Converter(nonce);
 
     // Re derive the encryption key using the password and stored salt
 

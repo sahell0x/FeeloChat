@@ -1,4 +1,5 @@
 import sodium from "libsodium-wrappers";
+import base64ToUint8Converter from "./base64ToUint8Converter";
 
 const decryptMessage = async (
   ciphertext,
@@ -11,14 +12,14 @@ const decryptMessage = async (
 
     // Convert Base64 ciphertext to uint8 array to perform decryption
 
-    const ciphertextUint8 = sodium.from_base64(ciphertext);
+    const ciphertextUint8 = base64ToUint8Converter(ciphertext);
 
     //converting nonce to uint 8 array;
-    nonce = sodium.from_base64(nonce);
+    nonce = base64ToUint8Converter(nonce);
 
     //convert sender public key into uint 8 array
 
-    senderPublicKey = sodium.from_base64(senderPublicKey);
+    senderPublicKey = base64ToUint8Converter(senderPublicKey);
 
     // Decrypt the message
     const decrypted = sodium.crypto_box_open_easy(
@@ -29,7 +30,7 @@ const decryptMessage = async (
     );
 
     return sodium.to_string(decrypted); // decrypted plain text message
-    
+
   } catch {
     return {
       message: "decryption failed",

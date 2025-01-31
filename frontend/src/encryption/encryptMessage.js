@@ -1,4 +1,6 @@
 import sodium from "libsodium-wrappers";
+import base64ToUint8Converter from "./base64ToUint8Converter";
+import uint8ToBase64Converter from "./uint8ToBase64Converter";
 
 const encryptMessage = async (message, receiverPublicKey, senderPrivateKey) => {
   try {
@@ -6,7 +8,7 @@ const encryptMessage = async (message, receiverPublicKey, senderPrivateKey) => {
 
     // Convert receiver public key to Uint8 from base64
 
-    const receiverPublicKeyUint8 = sodium.from_base64(receiverPublicKey);
+    const receiverPublicKeyUint8 = base64ToUint8Converter(receiverPublicKey);
 
     // Generate a random nonce
     const nonce = sodium.randombytes_buf(sodium.crypto_box_NONCEBYTES);
@@ -20,8 +22,8 @@ const encryptMessage = async (message, receiverPublicKey, senderPrivateKey) => {
     );
 
     return {
-      ciphertext: sodium.to_base64(ciphertext), //converted into base64 to store and transfer
-      nonce: sodium.to_base64(nonce), //nonce will be used at the time of decryption
+      ciphertext: uint8ToBase64Converter(ciphertext), //converted into base64 to store and transfer
+      nonce: uint8ToBase64Converter(nonce), //nonce will be used at the time of decryption
     };
   } catch {
     return {
