@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-//message route defination
+//message schema defination
 
 const messageSchema = new mongoose.Schema(
     {
