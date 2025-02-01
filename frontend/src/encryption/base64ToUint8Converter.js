@@ -1,13 +1,12 @@
-import sodium from "libsodium-wrappers";
+// conversionUtils.js
+import naclUtil from "tweetnacl-util";
 
-//this function converts base64 string into uint8 array.
-
-const base64ToUint8Converter = async (base64Input) => {
-  await sodium.ready;
-
-  const unit8ConvertedOutput = sodium.to_base64(base64Input);
-
-  return unit8ConvertedOutput; // Uint8 converted array
-};
-
-export default base64ToUint8Converter;
+/**
+ * Convert a Base64 string to a Uint8Array.
+ *
+ * @param {string} base64String - The Base64-encoded string.
+ * @returns {Uint8Array} The corresponding Uint8Array.
+ */
+export function base64ToUint8Array(base64String) {
+  return naclUtil.decodeBase64(base64String);
+}
