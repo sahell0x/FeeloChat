@@ -20,6 +20,10 @@ const messageSchema = new mongoose.Schema(
             required: true,
             trim: true, 
         },
+        nonce:{
+            type:String,
+            required:true
+        },
 
         timestamp: {
             type: Date,
