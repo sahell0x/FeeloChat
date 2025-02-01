@@ -8,6 +8,10 @@ const userSchem = new mongoose.Schema({
     required: [true, "Email is required"],
     unique: true,
   },
+  publicKey:{
+    type:String,
+    required:true
+  },
   password: {
     type: String,
     required: [true, "Password is required"],
