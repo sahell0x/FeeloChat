@@ -15,7 +15,6 @@ function App() {
   const [isLoading,setIsLoading] = useState(true);
 
 
-  test();
 
   useEffect(()=>{
 

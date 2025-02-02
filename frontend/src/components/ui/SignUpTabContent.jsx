@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import { useSetRecoilState } from "recoil";
 import toast from "react-hot-toast";
+import { encryptPrivateKey, generateKeyPair } from "@/encryption/cryptoUtils";
+import { storePrivateKey } from "@/db/indexedDB";
+import { base64ToUint8Array } from "@/encryption/base64ToUint8Converter";
 
 function SignUpTabContent() {
   const [email, setEmail] = useState("");
@@ -29,11 +32,22 @@ function SignUpTabContent() {
     } else {
       try {
         setIsButtonDisabled(true);
-        const response = await apiClient.post(SIGNUP_ROUTE, { email, password }, { withCredentials: true });
+        const {publicKey , privateKey} =  generateKeyPair();
+
+        const encryptedPrivateKeyData = await encryptPrivateKey(privateKey,password);
+
+        const response = await apiClient.post(SIGNUP_ROUTE, { email, password,publicKey ,encryptedPrivateKeyData}, { withCredentials: true });
 
         if (response.status === 201) {
-          setUserInfo({ ...response.data });
+          const userData = response.data;
+          userData.publicKey = base64ToUint8Array(userData.publicKey);
+          console.log(userData);
+          setUserInfo({ ...userData});
+          //store private key in idexed db 
+         await storePrivateKey(privateKey);
+
           setIsButtonDisabled(false);
+
           navigate("/profile");
         }
       } catch (error) {

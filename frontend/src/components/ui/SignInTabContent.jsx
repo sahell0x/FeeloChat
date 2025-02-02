@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import userInfoAtom from "@/stores/userInfoAtom";
 import toast from "react-hot-toast";
+import { base64ToUint8Array } from "@/encryption/base64ToUint8Converter";
+import { decryptPrivateKey } from "@/encryption/cryptoUtils";
+import { storePrivateKey } from "@/db/indexedDB";
 
 function SignInTabContent() {
   const [email, setEmail] = useState("");
@@ -25,10 +28,24 @@ function SignInTabContent() {
     } else {
       try {
         setIsButtonDisabled(true);
-        const response = await apiClient.post(SIGNIN_ROUTE, { email, password }, { withCredentials: true });
+        const response = await apiClient.post(SIGNIN_ROUTE, { email, password });
 
         if (response.status === 200) {
-          setUserInfo({ ...response.data });
+          const responseData = response.data;
+          const userData = responseData.userData;
+          const encryptedPrivateKeyData = responseData.encryptedPrivateKeyData;
+          console.log("response",responseData);
+          console.log(encryptedPrivateKeyData);
+
+          userData.publicKey = base64ToUint8Array(userData.publicKey);
+
+          const decryptedPrivateKey = await decryptPrivateKey(encryptedPrivateKeyData.privateKey,encryptedPrivateKeyData.salt,encryptedPrivateKeyData.nonce,password);
+
+          console.log("dec key",decryptedPrivateKey);
+
+         await storePrivateKey(decryptedPrivateKey);
+
+          setUserInfo({...userData});
           setIsButtonDisabled(false);
 
           if (!response.data.profileSetup) {
@@ -40,7 +57,8 @@ function SignInTabContent() {
           setIsButtonDisabled(false);
           toast.error("Wrong email or password.");
         }
-      } catch {
+      } catch(e) {
+        console.log("error",e);
         setIsButtonDisabled(false);
         toast.error("Wrong email or password.");
       }

@@ -1,6 +1,8 @@
 import nacl from 'tweetnacl';
 import naclUtil from 'tweetnacl-util';
 import scrypt from 'scrypt-async';
+import { uint8ArrayToBase64 } from './uint8ToBase64Converter';
+import { base64ToUint8Array } from './base64ToUint8Converter';
 
 nacl.util = naclUtil;
 
@@ -36,12 +38,12 @@ function deriveKey(password, salt) {
 /**
  * Generate public and secret (private) keys for asymmetric encryption using tweet nacl box.
  *
- * @returns {{publicKey: Uint8Array, privateKey: Uint8Array}} Generated key pair.
+ * @returns {{publicKey: string, privateKey: Uint8Array}} Generated key pair.
  */
 export function generateKeyPair() {
   const { publicKey, secretKey } = nacl.box.keyPair();
   const privateKey = secretKey;
-  return { publicKey, privateKey };
+  return { publicKey:uint8ArrayToBase64(publicKey), privateKey };
 }
 
 /**
@@ -51,7 +53,7 @@ export function generateKeyPair() {
  *
  * @param {Uint8Array} privateKey - The private key to encrypt.
  * @param {string} password - The user's password.
- * @returns {Promise<{encryptedPrivateKey: Uint8Array, salt: Uint8Array, nonce: Uint8Array}>}
+ * @returns {Promise<{encryptedPrivateKey: string, salt: string, nonce: string}>}
  */
 export async function encryptPrivateKey(privateKey, password) {
   try {
@@ -65,7 +67,10 @@ export async function encryptPrivateKey(privateKey, password) {
     // Encrypt the private key using secretbox
     const encryptedPrivateKey = nacl.secretbox(privateKey, nonce, key);
 
-    return { encryptedPrivateKey, salt, nonce };
+    return { encryptedPrivateKey:uint8ArrayToBase64(encryptedPrivateKey),
+       salt:uint8ArrayToBase64(salt),
+        nonce:uint8ArrayToBase64(nonce),
+      };
   } catch (error) {
     throw new Error('Error encrypting private key: ' + error.message);
   }
@@ -74,16 +79,19 @@ export async function encryptPrivateKey(privateKey, password) {
 /**
  * Decrypt the encrypted private key with the user password.
  *
- * @param {Uint8Array} encryptedPrivateKey - The encrypted private key.
- * @param {Uint8Array} salt - The salt used during encryption.
- * @param {Uint8Array} nonce - The nonce used during encryption.
+ * @param {string} encryptedPrivateKey - The encrypted private key.
+ * @param {string} salt - The salt used during encryption.
+ * @param {string} nonce - The nonce used during encryption.
  * @param {string} password - The user's password.
  * @returns {Promise<Uint8Array>} A promise that resolves with the decrypted private key.
  */
 export async function decryptPrivateKey(encryptedPrivateKey, salt, nonce, password) {
   try {
     // Derive the symmetric key from the password and salt
-    const key = await deriveKey(password, naclUtil.encodeBase64(salt));
+    const key = await deriveKey(password, salt);
+
+    encryptedPrivateKey = base64ToUint8Array(encryptedPrivateKey);
+    nonce = base64ToUint8Array(nonce);
 
     // Decrypt the private key
     const decrypted = nacl.secretbox.open(encryptedPrivateKey, nonce, key);
