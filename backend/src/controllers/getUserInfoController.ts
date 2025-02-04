@@ -25,7 +25,8 @@ const getUserInfoController = async (req :Request,res :Response) :Promise<any>=>
             profileSetup:userInfo.profileSetup
         });
 
-    }catch{
+    }catch(e){
+        console.log(e);
         return res.status(StatusCode.ClientErrorNotFound).json({
             message:"bad request user info not found",
         })

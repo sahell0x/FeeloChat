@@ -19,10 +19,12 @@ const userSchem = new mongoose.Schema({
   firstName: {
     type: String,
     required: false,
+    default:"",
   },
   lastName: {
     type: String,
     required: false,
+    default:"",
   },
   img:{ type: String, required: false ,default:""},
   

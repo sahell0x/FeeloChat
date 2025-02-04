@@ -21,6 +21,7 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
     try {
         const body = req.body;
 
+
         // Check if this email is already used
         const isUserAlreadyExist = await User.findOne({ email: body.email }).session(session);
 
@@ -42,11 +43,12 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
 
         const privateKeyData = {
             userId: user[0]._id,
-            ...body.keyData,
+            ...body.encryptedPrivateKeyData,
         };
 
         // Create private key with session
         const privateKeyResponse = await Key.create([privateKeyData], { session });
+
 
         if (user && privateKeyResponse) {
             // If both user and private key are created successfully, commit the transaction
@@ -58,13 +60,13 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
                 httpOnly: true,
                 sameSite: "strict",
                 secure: true,
-                maxAge: 7 * 24 * 60 * 60 * 1000,   // 7 days max age
+                maxAge: 30 * 24 * 60 * 60 * 1000,   // 7 days max age
             });
 
             return res.status(StatusCode.SuccessCreated).json({
-                message: "User created successfully",
                 email: user[0].email,
                 id: user[0]._id,
+                publicKey:user[0].publicKey,
             });
         }
 

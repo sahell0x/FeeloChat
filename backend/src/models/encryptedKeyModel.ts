@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { string } from "zod";
 
 //model of encrypted keys which are the encrypted private keys encrypted from dirived password of user.
 
@@ -10,6 +9,10 @@ const encryptedKeySchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
+        encryptedPrivateKey:{
+            type:String,
+            required:true,
+        },
         salt: {
             type: String,
             required: true,
@@ -17,7 +20,7 @@ const encryptedKeySchema = new mongoose.Schema(
 
         nonce: {
             type: String,
-            required: true,
+            required: true, 
         },  
        
     }

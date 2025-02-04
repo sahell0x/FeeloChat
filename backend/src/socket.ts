@@ -3,6 +3,7 @@ import { Server as SocketServer} from "socket.io";
 import disconnection from "./socket_util/disconnection";
 import connection from "./socket_util/connection";
 import Message from "./models/messageModel";
+import socketAuthMiddleware from "./socket_util/socketAuthMiddleware";
 
 //this contains main socket logic 
 
@@ -14,6 +15,7 @@ const socketSetup = (server:Server)=>{
             credentials:true,
         }
    });
+
 
    const userSocketMap = new Map();   //to store user<userId,socketId>
 
@@ -47,9 +49,15 @@ const socketSetup = (server:Server)=>{
    }
   
 }
+
+    //authentication
+
+    io.use(socketAuthMiddleware);
     //io connection disconnection handling
     
-   io.on("connection",(socket)=>{
+   io.on("connection",(socket:any)=>{
+
+    
       connection(socket,userSocketMap,io);
 
       socket.on("sendMessage",handleMessage);
@@ -60,7 +68,6 @@ const socketSetup = (server:Server)=>{
    });
 
    
-
 
 }
 

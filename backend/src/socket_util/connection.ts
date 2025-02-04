@@ -5,7 +5,6 @@ import onlineStatusProvider from "./onlineStatusProvider";
 
 const connection = (socket:Socket, userMap:Map<string,string>,io:any):void=>{
    const IS_USER_ONLINE = true; //connection frame
-
    const userId = socket.handshake.query.userId as string;
 
    onlineStatusProvider(userId,io,userMap,IS_USER_ONLINE);

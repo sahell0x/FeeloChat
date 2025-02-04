@@ -8,6 +8,7 @@ export interface User  {
     img?:string,
     profileSetup :boolean,
     password:string,
+    publicKey:string,
 }
 
 

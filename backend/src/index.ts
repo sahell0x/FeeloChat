@@ -72,7 +72,7 @@ socketSetup(server);
 //Database connection logic
 
 mongoose.connect(dbUrl).then(()=>{
-    console.log("connected successfully");
+    console.log("connected to DB successfully");
 }).catch((err)=>{
     console.log("error while connecting");
 })
