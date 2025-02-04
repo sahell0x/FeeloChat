@@ -107,45 +107,77 @@ export async function decryptPrivateKey(encryptedPrivateKey, salt, nonce, passwo
 /**
  * Encrypt plain text message using TweetNaCl box.
  *
- * Uses the sender private key and the receiver public key to perform public key authenticated encryption.
+ * Uses the sender private key , the receiver public key and senderPublicKey to encrypt message for both so then both can access it.
  *
  * @param {string} message - The plaintext message to encrypt.
- * @param {Uint8Array} receiverPublicKey - The recipient's public key.
+ * @param {Uint8Array} receiverPublicKey - The receiver public key.
+ * @param {Uint8Array} senderPublicKey - The sender public key.
  * @param {Uint8Array} senderPrivateKey - The sender's private key.
- * @returns {{cipherText: Uint8Array, nonce: Uint8Array}} The encrypted message and nonce.
+ * @returns {{cipherTextForReceiver: Uint8Array,cipherTextForSender: Uint8Array, nonce: Uint8Array}} The encrypted ciphers for both sendr and reciever with nonce.
  */
-export function encryptMessage(message, receiverPublicKey, senderPrivateKey) {
+export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKey, senderPrivateKey) {
   try {
-    // Convert the message string to a Uint8Array
+    // Convert the message string to a Uint8 array
     const messageUint8 = naclUtil.decodeUTF8(message);
 
     // Generate random nonce for the box
     const nonce = nacl.randomBytes(nacl.box.nonceLength);
 
-    // Encrypt the message
-    const cipherText = nacl.box(messageUint8, nonce, receiverPublicKey, senderPrivateKey);
+    // Encrypt the message for the receiver
+    const cipherTextForReceiver = nacl.box(messageUint8, nonce, receiverPublicKey, senderPrivateKey);
 
-    return { cipherText, nonce };
+    // Encrypt the message for the sender
+    const cipherTextForSender = nacl.box(messageUint8, nonce, senderPublicKey, senderPrivateKey);
+
+    return { 
+      cipherTextForReceiver, 
+      cipherTextForSender, 
+      nonce 
+    };
   } catch (error) {
     throw new Error('Error encrypting message: ' + error.message);
   }
 }
 
 /**
- * Decrypt a ciphertext message using TweetNaCl box.
- *
- * Uses the receiver private key and the sender public key.
+ * Decrypts a message  for the receiver using NaCl box decryption.
  *
  * @param {Uint8Array} cipherText - The encrypted message.
- * @param {Uint8Array} nonce - The nonce used during encryption.
+ * @param {Uint8Array} nonce - A unique nonce used during encryption.
  * @param {Uint8Array} senderPublicKey - The sender public key.
  * @param {Uint8Array} receiverPrivateKey - The receiver private key.
- * @returns {string} The decrypted plaintext message.
+ * @returns {string} The decrypted message as  string.
+ * @throws {Error} If decryption fails.
  */
-export function decryptMessage(cipherText, nonce, senderPublicKey, receiverPrivateKey) {
+export function decryptMessageForReceiver(cipherText, nonce, senderPublicKey, receiverPrivateKey) {
   try {
     // Decrypt the ciphertext
     const decrypted = nacl.box.open(cipherText, nonce, senderPublicKey, receiverPrivateKey);
+    if (!decrypted) {
+      throw new Error("Decryption failed");
+    }
+
+    // Convert the decrypted Uint8Array to a string
+    return naclUtil.encodeUTF8(decrypted);
+  } catch (error) {
+    throw new Error('Error decrypting message: ' + error.message);
+  }
+}
+
+/**
+ * Decrypts a message the sender using NaCl's box decryption.
+ *
+ * @param {Uint8Array} cipherText - The encrypted message.
+ * @param {Uint8Array} nonce - A unique nonce used during encryption.
+ * @param {Uint8Array} receiverPublicKey - The receiver's public key.
+ * @param {Uint8Array} senderPrivateKey - The sender's private key.
+ * @returns {string} The decrypted message as  string.
+ * @throws {Error} If decryption fails.
+ */
+export function decryptMessageForSender(cipherText, nonce, receiverPublicKey, senderPrivateKey) {
+  try {
+    // Decrypt the ciphertext
+    const decrypted = nacl.box.open(cipherText, nonce, receiverPublicKey, senderPrivateKey);
     if (!decrypted) {
       throw new Error("Decryption failed");
     }

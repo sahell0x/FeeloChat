@@ -28,7 +28,7 @@ function SignInTabContent() {
     } else {
       try {
         setIsButtonDisabled(true);
-        const response = await apiClient.post(SIGNIN_ROUTE, { email, password });
+        const response = await apiClient.post(SIGNIN_ROUTE, { email, password },{ withCredentials: true });
 
         if (response.status === 200) {
           const responseData = response.data;
@@ -41,14 +41,12 @@ function SignInTabContent() {
 
           const decryptedPrivateKey = await decryptPrivateKey(encryptedPrivateKeyData.privateKey,encryptedPrivateKeyData.salt,encryptedPrivateKeyData.nonce,password);
 
-          console.log("dec key",decryptedPrivateKey);
-
          await storePrivateKey(decryptedPrivateKey);
 
           setUserInfo({...userData});
           setIsButtonDisabled(false);
 
-          if (!response.data.profileSetup) {
+          if (!userData.profileSetup) {
             navigate("/profile");
           } else {
             navigate("/chat");

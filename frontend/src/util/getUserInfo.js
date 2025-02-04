@@ -3,7 +3,6 @@ import { USER_ROUTE } from "@/util/constants";
 
 const getUserInfo = async()=>{
 
-    console.log("request is going out");
    
         try{
 

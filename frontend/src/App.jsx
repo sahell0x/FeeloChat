@@ -9,12 +9,13 @@ import AuthRoute from "./pages/route controllers/AuthRoute";
 import userInfoAtom from "./stores/userInfoAtom";
 import getUserInfo from "./util/getUserInfo";
 import Loader from "./components/ui/Loader";
+import { getPrivateKey } from "./db/indexedDB";
 import test from "./encryption/test";
 function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
-
-
+  
+  test();
 
   useEffect(()=>{
 

@@ -6,7 +6,6 @@ import { useRecoilValue } from "recoil";
 import  { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
 import { useSocket } from "@/context/SocketContext";
 import userInfoAtom from "@/stores/userInfoAtom";
-import { SiOclif } from "react-icons/si";
 import toast from "react-hot-toast";
 
 function MessageBar() {
@@ -17,7 +16,6 @@ function MessageBar() {
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
   const socket = useSocket();
-
 
   const handleEmojiClick = (e) => {
     setMessage((prevMessage) => prevMessage.concat(e.emoji));
@@ -34,11 +32,14 @@ function MessageBar() {
     }
   };
 
+
+
   const handleSend = ()=>{
 
       if(selectedChatType === "contact" && message.length){
         
         if(socket.connected){
+          console.log("inside send");
           socket.emit("sendMessage",{
             sender: userInfo.id,
             content: message,

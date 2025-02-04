@@ -1,27 +1,26 @@
 import { deletePrivateKey, getPrivateKey, storePrivateKey } from "@/db/indexedDB";
-import { generateKeyPair , encryptPrivateKey , decryptPrivateKey,encryptMessage,decryptMessage} from "./cryptoUtils";
-import { uint8ArrayToBase64 } from "./uint8ToBase64Converter";
+import { generateKeyPair , encryptMessageForBoth, decryptMessageForSender, decryptMessageForReceiver} from "./cryptoUtils";
+import { base64ToUint8Array } from "./base64ToUint8Converter";
 
 async function test(){
     
-      try{
-        const key1 = generateKeyPair();
-    const res =  await storePrivateKey(key1.privateKey);
+      const key1 = generateKeyPair();
+      const key2 = generateKeyPair();
 
-    console.log(res);
-    
-    const privateKEy =await getPrivateKey();
-    console.log(privateKEy);
+      const message = "hi there";
 
-    const deletKey = await deletePrivateKey();
-    console.log(deletKey);
+      const encryptedMessage = await encryptMessageForBoth(message,base64ToUint8Array(key2.publicKey),base64ToUint8Array(key1.publicKey),key1.privateKey);
 
-    const privateKEy1 =await getPrivateKey();
-    console.log(privateKEy1);
+      console.log(encryptedMessage);
 
-      }catch(e){
-        console.log(e);
-      }
+      const forSender = decryptMessageForSender(encryptedMessage.cipherTextForSender,encryptedMessage.nonce,base64ToUint8Array(key1.publicKey),key1.privateKey)
+
+  console.log("sender",forSender)
+
+  const forreceiver = decryptMessageForReceiver(encryptedMessage.cipherTextForReceiver,encryptedMessage.nonce,base64ToUint8Array(key1.publicKey),key2.privateKey)
+
+  console.log("reciever",forreceiver);
+
   }
 
   export default test;

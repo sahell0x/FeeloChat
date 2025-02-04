@@ -1,10 +1,9 @@
 import { selectedChatDataAtom, selectedChatMessagesAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
 import { RiCloseFill } from "react-icons/ri";
-import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useResetRecoilState } from "recoil";
+import {  useRecoilValue,  useResetRecoilState } from "recoil";
 import ProfileWrapper from "./ProfileWrapper";
-import { Circle, RectangleEllipsis } from "lucide-react";
+import { Circle } from "lucide-react";
 import onlineStatusAtom from "@/stores/onlineStatusAtom";
-import { useEffect, useState } from "react";
 
 
 
