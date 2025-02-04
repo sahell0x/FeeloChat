@@ -26,6 +26,7 @@ const socketSetup = (server:Server)=>{
    
 
    try{
+    console.log(message);
     const senderSocketId = userSocketMap.get(message.sender);
 
     const recieverSocketId = userSocketMap.get(message.receiver);
@@ -60,10 +61,18 @@ const socketSetup = (server:Server)=>{
     
       connection(socket,userSocketMap,io);
 
+
       socket.on("sendMessage",handleMessage);
+
+      socket.on("test",()=>{
+        console.log("test is here");
+      });
+
 
       socket.on("disconnect",()=>{
         disconnection(socket,userSocketMap,io);
+        console.log(userSocketMap);
+
        });
    });
 

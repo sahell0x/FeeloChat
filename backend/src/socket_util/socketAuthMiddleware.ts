@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 const socketAuthMiddleware = (socket: Socket, next: (err?: Error) => void) => {
     try {
-        console.log("inside socket middle");
         const secrete = process.env.SECRETE as string;
         const cookies = socket.handshake.headers.cookie;
         if (!cookies){
@@ -26,9 +25,11 @@ const socketAuthMiddleware = (socket: Socket, next: (err?: Error) => void) => {
 
         console.log("Authenticated User:", (socket as any).userId);
         next(); 
+       }else{
+        next(new Error("Authentication error"));
+
        }
 
-       next(new Error("Authentication error"));
 
     } catch (error:any) {
         console.log("Socket authentication failed:", error.message);

@@ -60,6 +60,7 @@ const getRecentContactController = async (
           lastName:"$contact.lastName",
           email:"$contact.email",
           img: "$contact.img",
+          publicKey :"$contact.publicKey",
           lastMessage: {
             $cond: {
               if: { $eq: ["$lastMessageSender", userId] },
