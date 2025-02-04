@@ -64,9 +64,6 @@ const socketSetup = (server:Server)=>{
 
       socket.on("sendMessage",handleMessage);
 
-      socket.on("test",()=>{
-        console.log("test is here");
-      });
 
 
       socket.on("disconnect",()=>{
