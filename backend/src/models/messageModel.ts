@@ -15,10 +15,13 @@ const messageSchema = new mongoose.Schema(
             required: true,
         },
 
-        content: {
+        cipherTextForSender: {
             type: String,
             required: true,
-            trim: true, 
+        },
+        cipherTextForReceiver: {
+            type: String,
+            required: true,
         },
         nonce:{
             type:String,
