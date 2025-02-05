@@ -26,7 +26,8 @@ const updateUserProfileController = async (req:Request,res:Response) :Promise<an
            lastName : response.lastName,
            id : response._id,
            profileSetup:response.profileSetup,
-           img:response.img
+           img:response.img,
+           publicKey: response.publicKey,
         });
     
     }

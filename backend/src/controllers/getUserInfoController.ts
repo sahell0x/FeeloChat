@@ -22,7 +22,8 @@ const getUserInfoController = async (req :Request,res :Response) :Promise<any>=>
             firstName:userInfo.firstName,
             lastName:userInfo.lastName,
             img:userInfo.img,
-            profileSetup:userInfo.profileSetup
+            profileSetup:userInfo.profileSetup,
+            publicKey:userInfo.publicKey,
         });
 
     }catch(e){

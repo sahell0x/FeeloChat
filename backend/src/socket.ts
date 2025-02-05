@@ -26,7 +26,6 @@ const socketSetup = (server:Server)=>{
    
 
    try{
-    console.log(message);
     const senderSocketId = userSocketMap.get(message.sender);
 
     const recieverSocketId = userSocketMap.get(message.receiver);
@@ -34,8 +33,7 @@ const socketSetup = (server:Server)=>{
     const createdMessage = await Message.create(message);
 
     
-    const messageData = await Message.findById(createdMessage._id).populate("sender","id email firstName lastName img").populate("receiver","id email firstName lastName img");
-
+    const messageData = await Message.findById(createdMessage._id);
 
 
     if(recieverSocketId){
@@ -43,6 +41,7 @@ const socketSetup = (server:Server)=>{
     }
 
     if(senderSocketId){
+
         io.to(senderSocketId).emit("receiveMessage",messageData);
     }
    }catch(e:any){
@@ -65,7 +64,6 @@ const socketSetup = (server:Server)=>{
       socket.on("sendMessage",handleMessage);
 
 
-
       socket.on("disconnect",()=>{
         disconnection(socket,userSocketMap,io);
         console.log(userSocketMap);
@@ -73,7 +71,6 @@ const socketSetup = (server:Server)=>{
        });
    });
 
-   
 
 }
 
