@@ -28,6 +28,14 @@ const getRecentContactController = async (
               else: "$sender",
             },
           },
+          cipherText: {
+            $cond: {
+              if: { $eq: ["$sender", userId] },
+              then: "$cipherTextForSender",
+              else: "$cipherTextForReceiver",
+            },
+          },
+          nonce: "$nonce",
         },
       },
       {
@@ -36,9 +44,11 @@ const getRecentContactController = async (
       {
         $group: {
           _id: "$contactId",
-          lastMessageContent: { $first: "$content" },
+          lastMessageContent: { $first: "$cipherText" }, 
           lastMessageSender: { $first: "$sender" },
+          lastMessageNonce: { $first: "$nonce" }, 
           lastTimestamp: { $first: "$timestamp" },
+          isSent: { $first: { $eq: ["$sender", userId] } },
         },
       },
       {
@@ -56,25 +66,23 @@ const getRecentContactController = async (
         $project: {
           _id: 0,
           id: "$_id",
-          firstName:"$contact.firstName",
-          lastName:"$contact.lastName",
-          email:"$contact.email",
+          firstName: "$contact.firstName",
+          lastName: "$contact.lastName",
+          email: "$contact.email",
           img: "$contact.img",
-          publicKey :"$contact.publicKey",
-          lastMessage: {
-            $cond: {
-              if: { $eq: ["$lastMessageSender", userId] },
-              then: { $concat: ["You: ", "$lastMessageContent"] },
-              else: "$lastMessageContent",
-            },
-          },
+          publicKey: "$contact.publicKey",
+          lastMessage: "$lastMessageContent",
+          nonce: "$lastMessageNonce",
           timestamp: "$lastTimestamp",
+          isSent: 1, 
         },
       },
       {
         $sort: { timestamp: -1 },
       },
     ]);
+
+
 
      return res.status(StatusCode.SuccessOK).json({
         Recentcontacts,
