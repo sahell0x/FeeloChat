@@ -51,9 +51,11 @@ function ContactContainer() {
         const response = await apiClient.get(CONTACT_ROUTE, {
           withCredentials: true,
         });
+
+        console.log(response);
         setIsLoading(false);
         if (response.status === 200) {
-          setRecentContact(response.data.Recentcontacts);
+          // setRecentContact(response.data.Recentcontacts);
         }
       } catch (error) {
         setIsLoading(false);

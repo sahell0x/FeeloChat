@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../../App.css";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -9,39 +9,69 @@ import {
 import moment from "moment";
 import apiClient from "@/lib/api-client";
 import { MESSAGE_ROUTE } from "@/util/constants";
+import privateKeyAtom from "@/stores/privateKeyAtom";
+import {
+  decryptMessageForReceiver,
+  decryptMessageForSender,
+} from "@/encryption/cryptoUtils";
+import userInfoAtom from "@/stores/userInfoAtom";
 
 function MessageContainer() {
-
-
   const [selectedChatMessages, setSelectedChatMessages] = useRecoilState(
     selectedChatMessagesAtom
   );
 
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
+  const privateKey = useRecoilValue(privateKeyAtom);
+  const userInfo = useRecoilValue(userInfoAtom);
 
   const containerRef = useRef(null);
 
+  const handleDecryptMessage = (message) => {
+    try {
+      if (message.sender !== selectedChatData._id) {
+        return decryptMessageForSender(
+          message.cipherTextForSender,
+          message.nonce,
+          userInfo.publicKey,
+          privateKey
+        );
+      } else {
+        return decryptMessageForReceiver(
+          message.cipherTextForReceiver,
+          message.nonce,
+          selectedChatData.publicKey,
+          privateKey
+        );
+      }
+    } catch(e) {
+      console.log(e);
+      return "CORRUPTED MESSAGE.";
+    }
+  };
+
   const renderDm = (message) => (
     <div
-  className={`${
-    message.sender === selectedChatData._id ? "text-left" : "text-right"
-  }`}
->
-  <div
-    className={`${
-      message.sender !== selectedChatData._id
-        ? "bg-purple-700 text-white" 
-        : "bg-[#2c2e36] text-[#e5e5e5] "
-    }  inline-block p-4 rounded-lg my-1 max-w-[50%] break-words `}
-  >
-    {message.content}
-  </div>
-  <div className="text-xs text-gray-400">
-    {moment(message.timestamp).format("LT")}
-  </div>
-</div>
-
+      className={`${
+        message.sender === selectedChatData._id ? "text-left" : "text-right"
+      }`}
+    >
+      <div
+        className={`${
+          message.sender !== selectedChatData._id
+            ? "bg-purple-700 text-white"
+            : "bg-[#2c2e36] text-[#e5e5e5] "
+        }  inline-block p-4 rounded-lg my-1 max-w-[50%] break-words `}
+      >
+        {
+          handleDecryptMessage(message)
+        }
+      </div>
+      <div className="text-xs text-gray-400">
+        {moment(message.timestamp).format("LT")}
+      </div>
+    </div>
   );
 
   const renderMessages = () => {
@@ -66,27 +96,28 @@ function MessageContainer() {
     });
   };
 
-//this effect  is for fetch messages when ever a chat is selected
+  //this effect  is for fetch messages when ever a chat is selected
 
-  useEffect(()=>{
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const response = await apiClient.get(
+          `${MESSAGE_ROUTE}?_id=${selectedChatData._id}`,
+          { withCredentials: true }
+        );
 
-    const getMessages = async ()=>{
-          try{
+        console.log("selected messages", response.data.messages);
 
-            const response = await apiClient.get(`${MESSAGE_ROUTE}?_id=${selectedChatData._id}`,{withCredentials:true});
+        setSelectedChatMessages(response.data.messages);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-            setSelectedChatMessages(response.data.messages);
-
-          }catch(e){
-            console.log(e);
-          }
-    }
-     
-    if(selectedChatData._id && selectedChatType==="contact"){
+    if (selectedChatData._id && selectedChatType === "contact") {
       getMessages();
     }
-
-  },[selectedChatData,selectedChatType]);
+  }, [selectedChatData, selectedChatType]);
 
   useEffect(() => {
     if (containerRef.current) {

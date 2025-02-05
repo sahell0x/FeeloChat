@@ -110,13 +110,17 @@ export async function decryptPrivateKey(encryptedPrivateKey, salt, nonce, passwo
  * Uses the sender private key , the receiver public key and senderPublicKey to encrypt message for both so then both can access it.
  *
  * @param {string} message - The plaintext message to encrypt.
- * @param {Uint8Array} receiverPublicKey - The receiver public key.
- * @param {Uint8Array} senderPublicKey - The sender public key.
+ * @param {string} receiverPublicKey - The receiver public key.
+ * @param {string} senderPublicKey - The sender public key.
  * @param {Uint8Array} senderPrivateKey - The sender's private key.
- * @returns {{cipherTextForReceiver: Uint8Array,cipherTextForSender: Uint8Array, nonce: Uint8Array}} The encrypted ciphers for both sendr and reciever with nonce.
+ * @returns {{cipherTextForReceiver: string,cipherTextForSender: string, nonce: string}} The encrypted ciphers for both sendr and reciever with nonce.
  */
 export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKey, senderPrivateKey) {
   try {
+
+    receiverPublicKey = base64ToUint8Array(receiverPublicKey);
+    senderPublicKey  = base64ToUint8Array(senderPublicKey);
+
     // Convert the message string to a Uint8 array
     const messageUint8 = naclUtil.decodeUTF8(message);
 
@@ -130,9 +134,9 @@ export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKe
     const cipherTextForSender = nacl.box(messageUint8, nonce, senderPublicKey, senderPrivateKey);
 
     return { 
-      cipherTextForReceiver, 
-      cipherTextForSender, 
-      nonce 
+      cipherTextForReceiver:uint8ArrayToBase64(cipherTextForReceiver), 
+      cipherTextForSender:uint8ArrayToBase64(cipherTextForSender), 
+      nonce:uint8ArrayToBase64(nonce), 
     };
   } catch (error) {
     throw new Error('Error encrypting message: ' + error.message);
@@ -142,15 +146,20 @@ export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKe
 /**
  * Decrypts a message  for the receiver using NaCl box decryption.
  *
- * @param {Uint8Array} cipherText - The encrypted message.
- * @param {Uint8Array} nonce - A unique nonce used during encryption.
- * @param {Uint8Array} senderPublicKey - The sender public key.
+ * @param {string} cipherText - The encrypted message.
+ * @param {string} nonce - A unique nonce used during encryption.
+ * @param {string} senderPublicKey - The sender public key.
  * @param {Uint8Array} receiverPrivateKey - The receiver private key.
  * @returns {string} The decrypted message as  string.
  * @throws {Error} If decryption fails.
  */
 export function decryptMessageForReceiver(cipherText, nonce, senderPublicKey, receiverPrivateKey) {
   try {
+    //convert into uint 8 array
+    cipherText = base64ToUint8Array(cipherText);
+    nonce = base64ToUint8Array(nonce);
+    senderPublicKey = base64ToUint8Array(senderPublicKey);
+
     // Decrypt the ciphertext
     const decrypted = nacl.box.open(cipherText, nonce, senderPublicKey, receiverPrivateKey);
     if (!decrypted) {
@@ -167,15 +176,21 @@ export function decryptMessageForReceiver(cipherText, nonce, senderPublicKey, re
 /**
  * Decrypts a message the sender using NaCl's box decryption.
  *
- * @param {Uint8Array} cipherText - The encrypted message.
- * @param {Uint8Array} nonce - A unique nonce used during encryption.
- * @param {Uint8Array} receiverPublicKey - The receiver's public key.
+ * @param {string} cipherText - The encrypted message.
+ * @param {string} nonce - A unique nonce used during encryption.
+ * @param {string} receiverPublicKey - The receiver's public key.
  * @param {Uint8Array} senderPrivateKey - The sender's private key.
  * @returns {string} The decrypted message as  string.
  * @throws {Error} If decryption fails.
  */
 export function decryptMessageForSender(cipherText, nonce, receiverPublicKey, senderPrivateKey) {
   try {
+
+    //convert into uint 8 array
+    cipherText = base64ToUint8Array(cipherText);
+    nonce = base64ToUint8Array(nonce);
+    receiverPublicKey = base64ToUint8Array(receiverPublicKey);
+
     // Decrypt the ciphertext
     const decrypted = nacl.box.open(cipherText, nonce, receiverPublicKey, senderPrivateKey);
     if (!decrypted) {

@@ -15,7 +15,7 @@ function App() {
   const [userInfo,setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading,setIsLoading] = useState(true);
   
-  test();
+  // test();
 
   useEffect(()=>{
 

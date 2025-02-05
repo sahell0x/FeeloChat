@@ -37,8 +37,6 @@ function SignInTabContent() {
           console.log("response",responseData);
           console.log(encryptedPrivateKeyData);
 
-          userData.publicKey = base64ToUint8Array(userData.publicKey);
-
           const decryptedPrivateKey = await decryptPrivateKey(encryptedPrivateKeyData.privateKey,encryptedPrivateKeyData.salt,encryptedPrivateKeyData.nonce,password);
 
          await storePrivateKey(decryptedPrivateKey);

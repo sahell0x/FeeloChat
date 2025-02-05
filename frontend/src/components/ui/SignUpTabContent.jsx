@@ -11,7 +11,6 @@ import { useSetRecoilState } from "recoil";
 import toast from "react-hot-toast";
 import { encryptPrivateKey, generateKeyPair } from "@/encryption/cryptoUtils";
 import { storePrivateKey } from "@/db/indexedDB";
-import { base64ToUint8Array } from "@/encryption/base64ToUint8Converter";
 
 function SignUpTabContent() {
   const [email, setEmail] = useState("");
@@ -40,7 +39,6 @@ function SignUpTabContent() {
 
         if (response.status === 201) {
           const userData = response.data;
-          userData.publicKey = base64ToUint8Array(userData.publicKey);
           console.log(userData);
           setUserInfo({ ...userData});
           //store private key in idexed db 

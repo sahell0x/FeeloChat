@@ -42,19 +42,16 @@ export const SocketProvider = ({ children }) => {
       const handleRecieveMessage = (message) => {
         if (
           selectedChatTypeRef.current !== null &&
-          (selectedChatDataRef.current?._id === message.sender?._id ||
-            selectedChatDataRef.current?._id === message.receiver?._id)
+          (selectedChatDataRef.current?._id === message?.sender ||
+            selectedChatDataRef.current?._id === message?.receiver)
         ) {
-          console.log("received message :", message);
-
+            
           setSelectedChatMessage((prev)=>(
               [
                 ...prev,
                 {
                   ...message,
-                  receiver:message.receiver?._id,
-                  sender:message.sender?._id,
-
+                  
                 }
               ]
           ));
