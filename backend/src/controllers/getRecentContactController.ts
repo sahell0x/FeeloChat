@@ -74,7 +74,8 @@ const getRecentContactController = async (
           lastMessage: "$lastMessageContent",
           nonce: "$lastMessageNonce",
           timestamp: "$lastTimestamp",
-          isSent: 1, 
+          isSent: 1,
+          isGuest: "$contact.isGuest",
         },
       },
       {

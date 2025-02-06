@@ -29,6 +29,8 @@ const userSchem = new mongoose.Schema({
   img:{ type: String, required: false ,default:""},
   
   profileSetup: { type: Boolean, required: false, default:false },
+  isGuest: { type: Boolean, required: false, default:false },
+
 });
 
 const User = mongoose.model("User", userSchem);

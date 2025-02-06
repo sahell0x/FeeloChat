@@ -5,6 +5,8 @@ import signInMiddleware from "../middlewares/signInMiddleware";
 import signInController from "../controllers/signInController";
 import authMiddleware from "../middlewares/authMiddleware";
 import logOutController from "../controllers/logOutController";
+import sendOTP from "../utils/emailService";
+import guestAcountController from "../controllers/guestAcountController";
 
 //auth routes
 
@@ -15,6 +17,19 @@ authRoutes.post("/signup",signUpMiddleware,signUpController);
 authRoutes.post("/signin",signInMiddleware,signInController);
 
 authRoutes.post("/logout",authMiddleware,logOutController);
+
+authRoutes.get("/guest",guestAcountController);
+
+authRoutes.post("/test",async(req,res)=>{
+     try{
+        await sendOTP("salinkhan304@gmail.com");
+
+        res.send("otp sent");
+     }catch{
+        res.send("unable to send otp");
+     }
+});
+
 
 
 export default authRoutes;

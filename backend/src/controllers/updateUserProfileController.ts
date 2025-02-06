@@ -28,6 +28,7 @@ const updateUserProfileController = async (req:Request,res:Response) :Promise<an
            profileSetup:response.profileSetup,
            img:response.img,
            publicKey: response.publicKey,
+           isGuest:response.isGuest,
         });
     
     }

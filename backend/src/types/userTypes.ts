@@ -9,6 +9,8 @@ export interface User  {
     profileSetup :boolean,
     password:string,
     publicKey:string,
+    isGuest:boolean,
+
 }
 
 

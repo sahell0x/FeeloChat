@@ -38,6 +38,7 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
                  lastName : contact.lastName,
                  img : contact.img,
                  publicKey : contact.publicKey,
+                 isGuest:contact.isGuest,
 
               }
         }) });

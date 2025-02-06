@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes";
 import { Request,Response,NextFunction } from "express";
 import rateLimit from "express-rate-limit";
 import socketSetup from "./socket";
+import isIPBlockedMiddleware from "./middlewares/isIPBlockedMiddleware";
 const app = express();
 const port = process.env.PORT;
 const dbUrl: string = process.env.DB_URL as string;
@@ -30,20 +31,29 @@ app.use(express.json({ limit: '5mb' }));
 app.use(cookieParser());
 app.use(express.json());
 
+
+
+export const blockList = new Map<string, number>();
+
+// Middleware to check if IP is blocked
+app.use(isIPBlockedMiddleware);
+
 // rate limit the ip's to prevent from common attacks like  DDoS and prevent Feelochat endPoint from the traffic other then Feelochat frontend
 
 const limiter = rateLimit({
-    windowMs: 1000,
-    max: 5, 
+    windowMs: 1000, 
+    max: 5,
     message: 'Too many requests from this IP, please try again later.',
-    handler: (req:Request, res:Response) => {
-      res.status(429).json({
-        message: 'Too many requests, please try again later.',
-      });
+    handler: (req: any, res: any) => {
+        // Block the IP for 30 minutes when limit is exceeded
+        blockList.set(req.ip, Date.now() + 30 * 60 * 1000);
+        res.status(429).json({
+            message: 'Too many requests. You have been blocked for 30 minutes.',
+        });
     },
-  });
-  
-  app.use(limiter);
+});
+
+app.use(limiter);
 
 
 //entry routes for user and auth

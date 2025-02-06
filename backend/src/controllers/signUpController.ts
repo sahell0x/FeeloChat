@@ -67,6 +67,7 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
                 email: user[0].email,
                 id: user[0]._id,
                 publicKey:user[0].publicKey,
+                isGuest:user[0].isGuest,
             });
         }
 

@@ -61,6 +61,7 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
             img:user.img,
             profileSetup:user.profileSetup,
             publicKey:user.publicKey,
+            isGuest : user.isGuest,
           }
 
           const encryptedPrivateKeyData = {
