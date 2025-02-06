@@ -1,3 +1,4 @@
+import StatusCode from 'status-code-enum';
 import { blockList } from './../index';
 
 const isIPBlockedMiddleware = (req: any, res: any, next: any) => {
@@ -7,7 +8,7 @@ const isIPBlockedMiddleware = (req: any, res: any, next: any) => {
     
     if (expirationTime) {
         if (expirationTime > Date.now()) {
-            return res.status(429).json({ message: 'You are blocked for 30 minutes.' });
+            return res.status(StatusCode.ClientErrorTooManyRequests).json({ message: 'You are blocked for 30 minutes.' });
         } else {
             blockList.delete(ip); 
         }
