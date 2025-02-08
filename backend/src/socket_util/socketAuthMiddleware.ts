@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 const socketAuthMiddleware = (socket: Socket, next: (err?: Error) => void) => {
     try {
-        const secrete = process.env.SECRETE as string;
+        const secret = process.env.SECRET as string;
         const cookies = socket.handshake.headers.cookie;
         if (!cookies){
              throw new Error("No cookies found");
@@ -16,7 +16,7 @@ const socketAuthMiddleware = (socket: Socket, next: (err?: Error) => void) => {
             throw new Error("Token not found");
         }
 
-        const decoded:any = jwt.verify(token,secrete);
+        const decoded:any = jwt.verify(token,secret);
 
         
        if(decoded.id){

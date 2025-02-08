@@ -17,6 +17,10 @@ const updateUserProfileController = async (req:Request,res:Response) :Promise<an
             message:"invalid inputs.",
         });
     }
+    userProfileData.firstName = userProfileData.firstName.toLowerCase();
+    userProfileData.lastName = userProfileData.lastName.toLowerCase();
+
+
     const response:UserType = await User.findOneAndUpdate({_id:userId},{...userProfileData,profileSetup:true},{new:true});
     
     if(response){

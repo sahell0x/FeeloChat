@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 
 dotenv.config();
 
-const secrete: string = process.env.SECRETE as string;
+const secret: string = process.env.SECRET as string;
 
 // This controller is responsible for handling sign-up requests
 const signUpController = async (req: Request, res: Response): Promise<any> => {
@@ -54,7 +54,7 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
             // If both user and private key are created successfully, commit the transaction
             await session.commitTransaction();
 
-            const token = jwt.sign({ email: user[0].email, id: user[0]._id }, secrete);
+            const token = jwt.sign({ email: user[0].email, id: user[0]._id }, secret);
 
             res.cookie("token", token, {     // Set cookie
                 httpOnly: true,

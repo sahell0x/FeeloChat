@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendOTP(email: string,OTP : string) {
+const emailService = async (email: string, OTP: string) => {
   const mailOptions = {
     from: "your-email@gmail.com",
     to: email,
@@ -73,6 +73,6 @@ async function sendOTP(email: string,OTP : string) {
   } catch (error) {
     console.error("Error sending OTP:", error);
   }
-}
+};
 
-export default sendOTP;
+export default emailService;

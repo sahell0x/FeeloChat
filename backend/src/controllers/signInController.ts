@@ -10,7 +10,7 @@ import Key from "../models/encryptedKeyModel";
 
 dotenv.config();
 
-const secrete :string= process.env.SECRETE as string;
+const secret :string= process.env.SECRET as string;
 
 //this controller handles user sign in
 
@@ -23,7 +23,7 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
 
         if(!user){
 
-            return res.status(StatusCode.ClientErrorBadRequest).json({message:"Wrong email and password"});
+            return res.status(StatusCode.ClientErrorBadRequest).json({message:"Wrong email or password"});
         }
         
         //compare the user provide password with hashed password from the db
@@ -35,7 +35,7 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
         }
 
         //create a jwt token to set cookie in user browser
-        const token = jwt.sign({email:user.email,id:user._id},secrete);
+        const token = jwt.sign({email:user.email,id:user._id},secret);
 
         const privateKeyResponse:any = await Key.findOne({userId:user._id});
 

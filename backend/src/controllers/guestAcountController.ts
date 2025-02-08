@@ -14,7 +14,7 @@ const guestAcountController = async (
   try {
     const IP = req.ip;
     const publicKey = req.body.publicKey;
-    const secrete = process.env.SECRETE as string;
+    const secret = process.env.SECRET as string;
 
     if (!IP || !publicKey) {
        throw new Error("No IP or PublicKey");
@@ -49,7 +49,7 @@ const guestAcountController = async (
         throw new Error("Error while creating");
     }
 
-   const token = jwt.sign({ email: guestUser.email, id: guestUser._id }, secrete);
+   const token = jwt.sign({ email: guestUser.email, id: guestUser._id }, secret);
 
     res.cookie("token", token, {     // Set cookie
         httpOnly: true,

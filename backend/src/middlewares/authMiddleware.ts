@@ -13,9 +13,9 @@ const authMiddleware = (req:Request,res:Response,next:NextFunction):any=>{
 
    try{
 
-    const secrete:string = process.env.SECRETE as string;
+    const secret:string = process.env.SECRET as string;
 
-    const result:any = jwt.verify(token,secrete);
+    const result:any = jwt.verify(token,secret);
     if(!result.id){
 
         return res.status(StatusCode.ClientErrorUnauthorized).json({message:"Unauthrized client"});
