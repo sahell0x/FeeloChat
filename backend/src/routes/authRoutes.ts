@@ -18,18 +18,17 @@ authRoutes.post("/signin",signInMiddleware,signInController);
 
 authRoutes.post("/logout",authMiddleware,logOutController);
 
-authRoutes.get("/guest",guestAcountController);
+authRoutes.post("/guest",guestAcountController);
 
 authRoutes.post("/test",async(req,res)=>{
      try{
-        await sendOTP("salinkhan304@gmail.com");
+        await sendOTP("salinkhan304@gmail.com","111111");
 
         res.send("otp sent");
      }catch{
         res.send("unable to send otp");
      }
 });
-
 
 
 export default authRoutes;

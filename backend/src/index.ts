@@ -33,7 +33,12 @@ app.use(express.json());
 
 
 
-export const blockList = new Map<string, number>();
+export let blockList = new Map<string, number>();
+
+//reset block list after 24 hours.
+setTimeout(()=>{
+    blockList = new Map<string, number>();
+},86400000);
 
 // Middleware to check if IP is blocked
 app.use(isIPBlockedMiddleware);
@@ -42,7 +47,7 @@ app.use(isIPBlockedMiddleware);
 
 const limiter = rateLimit({
     windowMs: 1000, 
-    max: 5,
+    max: 10,
     message: 'Too many requests from this IP, please try again later.',
     handler: (req: any, res: any) => {
         // Block the IP for 30 minutes when limit is exceeded
@@ -86,3 +91,4 @@ mongoose.connect(dbUrl).then(()=>{
 }).catch((err)=>{
     console.log("error while connecting");
 })
+

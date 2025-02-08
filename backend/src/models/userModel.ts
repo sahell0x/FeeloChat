@@ -14,7 +14,7 @@ const userSchem = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is required"],
+    required: false,  //to allow create guest acount for user acount it will get verifiend by middleware.
   },
   firstName: {
     type: String,
