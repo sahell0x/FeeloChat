@@ -6,25 +6,24 @@ import signInController from "../controllers/signInController";
 import authMiddleware from "../middlewares/authMiddleware";
 import logOutController from "../controllers/logOutController";
 import guestAcountController from "../controllers/guestAcountController";
-import verifyTOTPController from "../controllers/verifyTOTPController";
 import sendTOTPController from "../controllers/sendTOTPCOntroller";
 import ratelimiterForOTP from "../middlewares/rateLimiterForOTP";
+import verifyTOTPMiddleware from "../middlewares/verifyTOTPMiddleware";
 
 //auth routes
 
 const authRoutes = Router();
 
-authRoutes.post("/signup",signUpMiddleware,signUpController);
+authRoutes.post("/signup",ratelimiterForOTP,verifyTOTPMiddleware,signUpMiddleware,signUpController);
 
-authRoutes.post("/signin",signInMiddleware,signInController);
+authRoutes.post("/signin",ratelimiterForOTP,verifyTOTPMiddleware,signInMiddleware,signInController);
 
 authRoutes.post("/logout",authMiddleware,logOutController);
 
 authRoutes.post("/guest",guestAcountController);
 
-authRoutes.post("/send-otp",ratelimiterForOTP,sendTOTPController);
+authRoutes.post("/send-otp",sendTOTPController);
 
-authRoutes.post("/verify-otp",verifyTOTPController);
 
 
 

@@ -16,6 +16,8 @@ const generateTOTP = (): generatorRetrunType => {
     step: 120,
   });
 
+  console.log(otp);
+
   return { otp, secret };
 };
 
