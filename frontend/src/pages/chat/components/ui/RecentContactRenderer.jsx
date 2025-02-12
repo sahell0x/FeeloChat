@@ -31,7 +31,7 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
       return decryptMessageForReceiver(
         contact.lastMessage,
         contact.nonce,
-        selectedChatData.publicKey,
+        contact.publicKey,
         privateKey
       );
     }

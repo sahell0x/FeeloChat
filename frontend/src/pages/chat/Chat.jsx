@@ -7,7 +7,6 @@ import ContactContainer from "./components/ContactContainer";
 import EmptyChatContainer from "./components/EmptyChatContainer";
 import ChatContainer from "./components/ChatContainer";
 import  { selectedChatTypeAtom } from "@/stores/chatAtom";
-import { SocketProvider } from "@/context/SocketContext";
 import { getPrivateKey } from "@/db/indexedDB";
 import privateKeyAtom from "@/stores/privateKeyAtom";
 import apiClient from "@/lib/api-client";
@@ -47,14 +46,12 @@ function Chat() {
 
   },[userInfo,navigate]);
   return (
-    <SocketProvider>
     <div className="flex h-[100vh]  text-[#1f2937] overflow-hidden">
       <ContactContainer/>
       
       {selectedChatType ?  <ChatContainer/> : <EmptyChatContainer/>  }
    
     </div>
-    </SocketProvider>
   )
 }
 

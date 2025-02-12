@@ -4,11 +4,11 @@ import { BiSolidSend } from "react-icons/bi";
 import EmojiPicker from "emoji-picker-react";
 import { useRecoilValue } from "recoil";
 import { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
-import { useSocket } from "@/context/SocketContext";
 import userInfoAtom from "@/stores/userInfoAtom";
 import toast from "react-hot-toast";
 import { encryptMessageForBoth } from "@/encryption/cryptoUtils";
 import { getPrivateKey } from "@/db/indexedDB";
+import socket from "@/socket";
 
 function MessageBar({setShouldScroll}) {
   const [message, setMessage] = useState("");
@@ -17,7 +17,6 @@ function MessageBar({setShouldScroll}) {
   const userInfo = useRecoilValue(userInfoAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
-  const socket = useSocket();
 
   const handleEmojiClick = (e) => {
     setMessage((prevMessage) => prevMessage.concat(e.emoji));

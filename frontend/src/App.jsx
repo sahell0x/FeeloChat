@@ -10,9 +10,11 @@ import AuthRoute from "./pages/route controllers/AuthRoute";
 import userInfoAtom from "./stores/userInfoAtom";
 import getUserInfo from "./util/getUserInfo";
 import Loader from "./components/ui/Loader";
+import useSocketSetup from "./hooks/useSocketSetup";
 function App() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading, setIsLoading] = useState(true);
+  useSocketSetup();
 
   // test();
 
