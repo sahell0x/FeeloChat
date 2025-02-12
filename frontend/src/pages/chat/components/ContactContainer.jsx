@@ -32,14 +32,25 @@ function ContactContainer() {
 
   const handleContactClick = useCallback(
     (contact) => {
-      setSelectedChatData({
-        _id: contact.id,
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        email: contact.email,
-        img: contact.img,
+      
+
+      
+      setSelectedChatData((pre)=>{
+        if(pre?._id !== contact.id){
+          return {
+            _id: contact.id,
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            email: contact.email,
+            img: contact.img,
+            publicKey:contact.publicKey,
+          };
+        }else{
+          return pre;
+        }
       });
       setSelectedChatType("contact");
+    
     },
     [setSelectedChatData, setSelectedChatType]
   );
@@ -55,7 +66,8 @@ function ContactContainer() {
         console.log(response);
         setIsLoading(false);
         if (response.status === 200) {
-          // setRecentContact(response.data.Recentcontacts);
+          console.log(response.data.Recentcontacts);
+          setRecentContact(response.data.Recentcontacts);
         }
       } catch (error) {
         setIsLoading(false);

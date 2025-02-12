@@ -15,18 +15,21 @@ import {
   decryptMessageForSender,
 } from "@/encryption/cryptoUtils";
 import userInfoAtom from "@/stores/userInfoAtom";
+import { ClipLoader } from "react-spinners";
 
-function MessageContainer() {
-  const [selectedChatMessages, setSelectedChatMessages] = useRecoilState(
-    selectedChatMessagesAtom
-  );
-
+function MessageContainer({shouldScroll,setShouldScroll}) {
+  const [selectedChatMessages, setSelectedChatMessages] = useRecoilState(selectedChatMessagesAtom);
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const privateKey = useRecoilValue(privateKeyAtom);
   const userInfo = useRecoilValue(userInfoAtom);
+  const [lastContainerHeight,setLastContainerHeight] = useState(0);
 
   const containerRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const limit = 10;
 
   const handleDecryptMessage = (message) => {
     try {
@@ -45,28 +48,94 @@ function MessageContainer() {
           privateKey
         );
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       return "CORRUPTED MESSAGE.";
     }
   };
 
+  const fetchMessages = async (isInitial = false) => {
+    if (loading || (!hasMore && !isInitial)) return;
+
+    setLoading(true);
+    try {
+      const response = await apiClient.get(
+        `${MESSAGE_ROUTE}?_id=${selectedChatData._id}&limit=${limit}&skip=${page * limit}`,
+        { withCredentials: true }
+      );
+
+      const newMessages = response.data.messages;
+      
+      if (newMessages.length < limit) {
+        setHasMore(false);
+      }
+
+      if (isInitial) {
+        setSelectedChatMessages(newMessages);
+      } else {
+        setSelectedChatMessages(prevMessages => [...newMessages, ...prevMessages]);
+      }
+      
+      setPage(prevPage => prevPage + 1);
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
+
+  // Initial fetch when chat is selected
+  useEffect(() => {
+    if (selectedChatData._id && selectedChatType === "contact") {
+      setSelectedChatMessages([]);
+      setPage(0);
+      setHasMore(true);
+      fetchMessages(true);
+    }
+  }, [selectedChatData, selectedChatType]);
+
+  // Handle scroll to load more
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+
+    const { scrollTop } = containerRef.current;
+    
+    if (scrollTop === 0 && hasMore && !loading) {
+      setLastContainerHeight(containerRef.current.scrollHeight);
+      setShouldScroll(false);
+      fetchMessages();
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [hasMore, loading]);
+
+  useEffect(() => {
+    if (containerRef.current && shouldScroll) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }else{
+      containerRef.current.scrollTop = containerRef.current.scrollHeight- lastContainerHeight;
+    }
+  }, [selectedChatMessages,shouldScroll]);
+
   const renderDm = (message) => (
-    <div
-      className={`${
-        message.sender === selectedChatData._id ? "text-left" : "text-right"
-      }`}
-    >
+    <div className={`${message.sender === selectedChatData._id ? "text-left" : "text-right"}`}>
       <div
         className={`${
           message.sender !== selectedChatData._id
             ? "bg-purple-700 text-white"
-            : "bg-[#2c2e36] text-[#e5e5e5] "
-        }  inline-block p-4 rounded-lg my-1 max-w-[50%] break-words `}
+            : "bg-[#2c2e36] text-[#e5e5e5]"
+        } inline-block p-4 rounded-lg my-1 max-w-[50%] break-words`}
       >
-        {
-          handleDecryptMessage(message)
-        }
+        {handleDecryptMessage(message)}
       </div>
       <div className="text-xs text-gray-400">
         {moment(message.timestamp).format("LT")}
@@ -76,11 +145,9 @@ function MessageContainer() {
 
   const renderMessages = () => {
     let lastData = null;
-
     return selectedChatMessages.map((message, index) => {
       const messageDate = moment(message.timestamp).format("YYYY-MM-DD");
       const showData = messageDate !== lastData;
-
       lastData = messageDate;
 
       return (
@@ -96,40 +163,12 @@ function MessageContainer() {
     });
   };
 
-  //this effect  is for fetch messages when ever a chat is selected
-
-  useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const response = await apiClient.get(
-          `${MESSAGE_ROUTE}?_id=${selectedChatData._id}`,
-          { withCredentials: true }
-        );
-
-        console.log("selected messages", response.data.messages);
-
-        setSelectedChatMessages(response.data.messages);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    if (selectedChatData._id && selectedChatType === "contact") {
-      getMessages();
-    }
-  }, [selectedChatData, selectedChatType]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [selectedChatMessages]);
-
   return (
     <div
       ref={containerRef}
       className="flex-1 overflow-y-auto scroll-smooth h-[75vh] bg-[#1b1c24] text-white scrollbar-none scrollbar-thumb-[#3a3b45] scrollbar-track-transparent hover:scrollbar-thumb-[#4c4d5c] w-[100vw] pb-11 p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw]"
     >
+      {loading && <div className="text-center"><ClipLoader color="#ffffff"/></div>}
       {renderMessages()}
     </div>
   );

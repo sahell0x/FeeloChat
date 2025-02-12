@@ -26,7 +26,7 @@ function NewMessage() {
   const setSelectedChatType = useSetRecoilState(selectedChatTypeAtom);
   const setSelectedChatData = useSetRecoilState(selectedChatDataAtom);
 
-  const [isContactDialogOpende, setIsContactDialogOpende] = useState(false);
+  const [isContactDialogOpend, setIsContactDialogOpend] = useState(false);
 
   const [searchedContacts, setSearchedContacts] = useState([]);
 
@@ -62,7 +62,7 @@ function NewMessage() {
   );
 
   const selectNewContact = (contact) => {
-    setIsContactDialogOpende(false);
+    setIsContactDialogOpend(false);
     setSelectedChatType("contact");
     setSelectedChatData({...contact});
     setSearchedContacts([]);
@@ -73,15 +73,15 @@ function NewMessage() {
       <Button
         className="w-full bg-[#2c2e3b] text-white/90 hover:bg-[#3a3b45]  border-[#3a3b45] hover:text-white"
         variant="outline"
-        onClick={() => setIsContactDialogOpende(true)}
+        onClick={() => setIsContactDialogOpend(true)}
       >
         <Plus className="h-4 w-4 mr-2" />
         New Message
       </Button>
 
       <Dialog
-        open={isContactDialogOpende}
-        onOpenChange={setIsContactDialogOpende}
+        open={isContactDialogOpend}
+        onOpenChange={setIsContactDialogOpend}
       >
         <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
           <DialogHeader>

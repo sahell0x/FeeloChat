@@ -10,6 +10,10 @@ export const SIGNIN_ROUTE = `${AUTH_ROUTES}/signin`;
 
 export const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
 
+export const GUEST_ROUTE = `${AUTH_ROUTES}/guest`;
+
+export const SEND_OTP_ROUTE = `${AUTH_ROUTES}/send-otp`;
+
 export const USER_ROUTE = `${USER_BASE_ROUTE}/user`;
 
 export const SEARCH_ROUTE = `${USER_ROUTE}/search`;

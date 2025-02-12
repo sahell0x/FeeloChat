@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { encryptMessageForBoth } from "@/encryption/cryptoUtils";
 import { getPrivateKey } from "@/db/indexedDB";
 
-function MessageBar() {
+function MessageBar({setShouldScroll}) {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpend, setIsEmojiPickerOpend] = useState(false);
   const emojiPickerRef = useRef(null);
@@ -60,7 +60,7 @@ function MessageBar() {
             cipherTextForSender: encryptedMessageData.cipherTextForSender,
             nonce: encryptedMessageData.nonce,
           });
-
+          setShouldScroll(true);  
           setMessage("");
         } else {
           toast.error("Please check you internet connection.");
@@ -68,7 +68,7 @@ function MessageBar() {
       }
     } catch (e) {
       console.log(e);
-      toast.error("Somthing wents wrong unable to send.");
+      toast.error("Unable to send try after refreshing page.");
     }
   };
 

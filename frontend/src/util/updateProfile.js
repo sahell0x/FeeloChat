@@ -4,6 +4,9 @@ import {USER_ROUTE} from "./constants";
 import toast from "react-hot-toast";
 
 const updateProfile = async (firstName,lastName) =>{
+    firstName = firstName.trim();
+    lastName = lastName.trim();
+
     if(!firstName.length || !lastName.length){
        toast.error("First name and last name cannot be empty.");
     }else if(!profileNameValidator(firstName) ||!profileNameValidator(lastName) ){

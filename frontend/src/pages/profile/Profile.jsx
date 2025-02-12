@@ -37,7 +37,7 @@ function Profile() {
   }
   const handleSaveChanges = () => {
     setIsButtonDisabled(true);
-    updateProfile(firstName.trim(), lastName.trim())
+    updateProfile(firstName, lastName)
       .then((data) => {
 
         if (data) {
