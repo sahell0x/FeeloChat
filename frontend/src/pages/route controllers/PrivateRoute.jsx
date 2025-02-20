@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 
 function PrivateRoute({children}) {
   const userInfo = useRecoilValue(userInfoAtom );
-  const isAuthenticated = userInfo; //check is there user info or not
+  const isAuthenticated = userInfo; 
 
   return isAuthenticated ? children : <Navigate to="/"></Navigate>;
 }

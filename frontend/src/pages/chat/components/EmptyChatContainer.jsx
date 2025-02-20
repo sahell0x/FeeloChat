@@ -5,7 +5,6 @@ import Happy from "@/components/emojis/Happy";
 import Neutral from "@/components/emojis/Neutral";
 import Sad from "@/components/emojis/Sad";
 import Surprised from "@/components/emojis/Surprised";
-import { MessagesSquare } from "lucide-react";
 
 function EmptyChatContainer() {
   return (
@@ -56,10 +55,11 @@ function EmptyChatContainer() {
           </div>
           <ul className="space-y-3 text-gray-400">
             {[
+              "Chats are end-to-end encrypted",
               "Your camera reads emotions, not secrets.",
               "All processing stays on your device.",
               "Only emotions, no faces shared.",
-              "Your privacy, our priority.",
+              
             ].map((tip, index) => (
               <li key={index} className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />

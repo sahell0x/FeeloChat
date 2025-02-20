@@ -86,7 +86,6 @@ function SignUpTabContent() {
 
       if (response.status === 201) {
         const userData = response.data;
-        console.log(userData);
         setUserInfo({ ...userData });
         //store private key in idexed db
         await storePrivateKey(privateKey);

@@ -37,13 +37,10 @@ function MessageBar({setShouldScroll}) {
     try {
       if (selectedChatType === "contact" && message.trim()) {
         if (socket.connected) {
-          console.log("inside send");
 
           const privateKey = await getPrivateKey();
 
-          console.log(userInfo);
-          console.log(selectedChatData);
-          console.log(privateKey);
+          
 
           const encryptedMessageData = encryptMessageForBoth(
             message.trim(),

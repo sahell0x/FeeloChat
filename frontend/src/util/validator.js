@@ -12,7 +12,7 @@ export const emailValidator = (email)=>{
 };
 
 export const passwordValidator = (password,confirmPassword)=>{
-    const passwordValidation = new RegExp(  // regex for standard password
+    const passwordValidation = new RegExp( 
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
       );
 

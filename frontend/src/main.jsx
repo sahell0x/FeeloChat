@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import { RecoilRoot } from "recoil";
 import CustomToaster from "./components/ui/CustomToaster";
 
-console.log("main re rendered");
+
 createRoot(document.getElementById("root")).render(
   <RecoilRoot>
     <CustomToaster />

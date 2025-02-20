@@ -36,8 +36,6 @@ function SignInTabContent() {
         const responseData = response.data;
         const userData = responseData.userData;
         const encryptedPrivateKeyData = responseData.encryptedPrivateKeyData;
-        console.log("response", responseData);
-        console.log(encryptedPrivateKeyData);
 
         const decryptedPrivateKey = await decryptPrivateKey(
           encryptedPrivateKeyData.privateKey,
@@ -47,7 +45,6 @@ function SignInTabContent() {
         );
 
         await storePrivateKey(decryptedPrivateKey);
-        console.log("this is login data", userData);
         setUserInfo({ ...userData });
 
         if (!userData.profileSetup) {

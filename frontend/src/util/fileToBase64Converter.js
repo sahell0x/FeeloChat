@@ -10,7 +10,6 @@ const fileToBase64Convertor = (file, compressionPercentage = 60) => {
 
         const quality = 1 - compressionPercentage / 100;
 
-        // Compress the Base64 string
         const compressedResult = await compress(base64String, {
           width: 800, 
           type: 'image/jpeg',

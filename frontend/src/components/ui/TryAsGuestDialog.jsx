@@ -26,7 +26,6 @@ function TryAsGuestDialog({ isTryGuestDialogOpend, setIsTryGuestDialogOpend }) {
 
   const handleCreateGuest = async () => {
     try {
-        console.log("inside handler")
       setIsLoading(true);
       const { publicKey, privateKey } = generateKeyPair();
 

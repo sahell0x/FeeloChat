@@ -44,7 +44,6 @@ function NewMessage() {
         const contacts = queryResponse.data.contacts;
         if (queryResponse.status === 200 && contacts.length) {
           setSearchedContacts([...contacts]);
-          console.log(contacts);
         } else {
           setSearchedContacts([]);
         }

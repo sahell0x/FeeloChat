@@ -22,4 +22,6 @@ export const MESSAGE_ROUTE = `${USER_ROUTE}/message`;
 
 export const CONTACT_ROUTE = `${USER_ROUTE}/contact`;
 
+export const CONTACT_INFO_ROUTE = `${CONTACT_ROUTE}/info`;
+
 export const USER_PROFILE_ROUTE = `${USER_ROUTE}/profile`;

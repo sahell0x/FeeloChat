@@ -18,6 +18,16 @@ function App() {
 
   // test();
 
+
+  useEffect(()=>{
+    console.log(
+      "%cFeeloChat is open-source! 🚀\nIf you find a bug or want to contribute, please visit: %chttps://github.com/sahell0x/FeeloChat",
+      "color: #ffffff; font-size: 16px; font-weight: bold;",
+      "color: #2196F3; font-size: 14px; text-decoration: underline;"
+    );
+    
+  },[]);
+
   useEffect(() => {
     if (!userInfo) {
       getUserInfo()
@@ -33,7 +43,6 @@ function App() {
       setIsLoading(false);
     }
   }, [userInfo, setUserInfo]);
-  console.log("rerender");
 
   if (isLoading) {
     return <Loader />;

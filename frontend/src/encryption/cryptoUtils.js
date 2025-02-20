@@ -20,7 +20,7 @@ function deriveKey(password, salt) {
         N: 16384,   
         r: 8,
         p: 1,
-        dkLen: 32, // key length 32 bytes
+        dkLen: 32, 
         encoding: 'binary'
       }, (derivedKey) => {
         if (derivedKey instanceof Uint8Array) {
@@ -57,14 +57,11 @@ export function generateKeyPair() {
  */
 export async function encryptPrivateKey(privateKey, password) {
   try {
-    // Generate random salt and nonce
     const salt = nacl.randomBytes(16);
     const nonce = nacl.randomBytes(nacl.secretbox.nonceLength);
 
-    // Derive a symmetric key from the password and salt
     const key = await deriveKey(password, naclUtil.encodeBase64(salt));
 
-    // Encrypt the private key using secretbox
     const encryptedPrivateKey = nacl.secretbox(privateKey, nonce, key);
 
     return { encryptedPrivateKey:uint8ArrayToBase64(encryptedPrivateKey),
@@ -87,13 +84,11 @@ export async function encryptPrivateKey(privateKey, password) {
  */
 export async function decryptPrivateKey(encryptedPrivateKey, salt, nonce, password) {
   try {
-    // Derive the symmetric key from the password and salt
     const key = await deriveKey(password, salt);
 
     encryptedPrivateKey = base64ToUint8Array(encryptedPrivateKey);
     nonce = base64ToUint8Array(nonce);
 
-    // Decrypt the private key
     const decrypted = nacl.secretbox.open(encryptedPrivateKey, nonce, key);
     if (!decrypted) {
       throw new Error("Decryption failed. The password may be incorrect or the data is corrupted.");
@@ -121,16 +116,12 @@ export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKe
     receiverPublicKey = base64ToUint8Array(receiverPublicKey);
     senderPublicKey  = base64ToUint8Array(senderPublicKey);
 
-    // Convert the message string to a Uint8 array
     const messageUint8 = naclUtil.decodeUTF8(message);
 
-    // Generate random nonce for the box
     const nonce = nacl.randomBytes(nacl.box.nonceLength);
 
-    // Encrypt the message for the receiver
     const cipherTextForReceiver = nacl.box(messageUint8, nonce, receiverPublicKey, senderPrivateKey);
 
-    // Encrypt the message for the sender
     const cipherTextForSender = nacl.box(messageUint8, nonce, senderPublicKey, senderPrivateKey);
 
     return { 
@@ -155,18 +146,15 @@ export function encryptMessageForBoth(message, receiverPublicKey, senderPublicKe
  */
 export function decryptMessageForReceiver(cipherText, nonce, senderPublicKey, receiverPrivateKey) {
   try {
-    //convert into uint 8 array
     cipherText = base64ToUint8Array(cipherText);
     nonce = base64ToUint8Array(nonce);
     senderPublicKey = base64ToUint8Array(senderPublicKey);
 
-    // Decrypt the ciphertext
     const decrypted = nacl.box.open(cipherText, nonce, senderPublicKey, receiverPrivateKey);
     if (!decrypted) {
       throw new Error("Decryption failed");
     }
 
-    // Convert the decrypted Uint8Array to a string
     return naclUtil.encodeUTF8(decrypted);
   } catch (error) {
     throw new Error('Error decrypting message: ' + error.message);
@@ -186,18 +174,15 @@ export function decryptMessageForReceiver(cipherText, nonce, senderPublicKey, re
 export function decryptMessageForSender(cipherText, nonce, receiverPublicKey, senderPrivateKey) {
   try {
 
-    //convert into uint 8 array
     cipherText = base64ToUint8Array(cipherText);
     nonce = base64ToUint8Array(nonce);
     receiverPublicKey = base64ToUint8Array(receiverPublicKey);
 
-    // Decrypt the ciphertext
     const decrypted = nacl.box.open(cipherText, nonce, receiverPublicKey, senderPrivateKey);
     if (!decrypted) {
       throw new Error("Decryption failed");
     }
 
-    // Convert the decrypted Uint8Array to a string
     return naclUtil.encodeUTF8(decrypted);
   } catch (error) {
     throw new Error('Error decrypting message: ' + error.message);

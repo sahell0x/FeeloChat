@@ -3,45 +3,57 @@ import {
   decryptMessageForReceiver,
   decryptMessageForSender,
 } from "@/encryption/cryptoUtils";
+import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
 import onlineStatusAtom from "@/stores/onlineStatusAtom";
 import privateKeyAtom from "@/stores/privateKeyAtom";
+import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import getFirstLetter from "@/util/getFirstLetter";
 import { Circle } from "lucide-react";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
 
-const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
+const RecentContactRenderer = ({
+  contact,
+  isSelected,
+  onClick,
+}) => {
   const privateKey = useRecoilValue(privateKeyAtom);
   const userInfo = useRecoilValue(userInfoAtom);
+  const unReadMessageCounts = useRecoilValue(unreadMessageCountAtom);
+  const messageSeenTrack = useRecoilValue(messageSeenTrackerAtom);
+  const onlineStatusState = useRecoilValue(onlineStatusAtom);
 
+  const SEEN_INDICATOR = "seen";
   const handleDecryptLastMessage = (contact) => {
-    console.log("contact", contact);
-    if (contact.isSent) {
-      return (
-        "You : " +
-        decryptMessageForSender(
+    try {
+      if (contact.isSent) {
+        return (
+          "You : " +
+          decryptMessageForSender(
+            contact.lastMessage,
+            contact.nonce,
+            userInfo.publicKey,
+            privateKey
+          )
+        );
+      } else {
+        return decryptMessageForReceiver(
           contact.lastMessage,
           contact.nonce,
-          userInfo.publicKey,
+          contact.publicKey,
           privateKey
-        )
-      );
-    } else {
-      return decryptMessageForReceiver(
-        contact.lastMessage,
-        contact.nonce,
-        contact.publicKey,
-        privateKey
-      );
+        );
+      }
+    } catch {
+      return "𝘤𝘰𝘳𝘳𝘶𝘱𝘵𝘦𝘥 𝘮𝘦𝘴𝘴𝘢𝘨𝘦";
     }
   };
   const handleClick = useCallback(() => {
     onClick(contact);
   }, [onClick, contact]);
 
-  const onlineStatusState = useRecoilValue(onlineStatusAtom);
-
+console.log(onlineStatusState);
   return (
     <div
       onClick={handleClick}
@@ -54,7 +66,8 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
         <Avatar>
           <AvatarImage src={contact.img} />
           <AvatarFallback className="bg-[#3a3b45] text-white">
-            {getFirstLetter(contact?.firstName) || getFirstLetter(contact?.email)}
+            {getFirstLetter(contact?.firstName) ||
+              getFirstLetter(contact?.email)}
           </AvatarFallback>
         </Avatar>
 
@@ -76,9 +89,19 @@ const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
           className="text-sm text-gray-400 truncate"
           style={{ maxWidth: "200px" }}
         >
-          {handleDecryptLastMessage(contact)}
+          {messageSeenTrack[contact?.id] ? SEEN_INDICATOR : handleDecryptLastMessage(contact)}
         </p>
       </div>
+
+      {unReadMessageCounts[contact.id] > 0 && (
+        <span
+          className={`relative right-2  h-7 w-7 bg-purple-700 rounded-full flex items-center justify-center text-center text-white`}
+        >
+          {unReadMessageCounts[contact.id] > 9
+            ? "9+"
+            : unReadMessageCounts[contact.id]}
+        </span>
+      )}
     </div>
   );
 };

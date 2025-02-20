@@ -11,7 +11,6 @@ async function test(){
 
       const encryptedMessage = await encryptMessageForBoth(message,base64ToUint8Array(key2.publicKey),base64ToUint8Array(key1.publicKey),key1.privateKey);
 
-      console.log(encryptedMessage);
 
       const forSender = decryptMessageForSender(encryptedMessage.cipherTextForSender,encryptedMessage.nonce,base64ToUint8Array(key1.publicKey),key1.privateKey)
 

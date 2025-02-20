@@ -13,12 +13,10 @@ const updateProfile = async (firstName,lastName) =>{
         toast.error("Spcial characters are not allowed.");
     }else{
         try{
-            console.log(firstName,lastName);
             const response = await apiClient.patch(USER_ROUTE,{firstName,lastName},{withCredentials:true});
 
             if(response.status === 202){
                 toast.success("Saved successfully.");
-                    console.log(response.data);
                     return response.data;
             }else{
                 toast.error("Unable to save changes.");
