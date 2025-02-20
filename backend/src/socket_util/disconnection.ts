@@ -10,10 +10,13 @@ const disconnection = (socket:Socket , userMap: Map<string,string>,io:any):void=
 
 
      const userId = (socket as any).userId;    
+
+     console.log("disconected",userId);
+
       
      if(userId){
-        onlineStatusProvider(userId,io,userMap,IS_USER_ONLINE);
         userMap.delete(userId);
+        onlineStatusProvider(userId,io,userMap,IS_USER_ONLINE);
         
      }       
            

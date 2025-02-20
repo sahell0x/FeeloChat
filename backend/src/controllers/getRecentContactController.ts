@@ -1,6 +1,5 @@
 import { StatusCode } from "status-code-enum";
 import { Request, Response } from "express";
-import type { UserId } from "../types/userTypes";
 import Message from "../models/messageModel";
 import mongoose from "mongoose";
 
@@ -13,7 +12,7 @@ const getRecentContactController = async (
   try {
     const userId:mongoose.Types.ObjectId  = new mongoose.Types.ObjectId(req.userId);
 
-    const Recentcontacts = await Message.aggregate([
+    const recentContacts = await Message.aggregate([
       {
         $match: {
           $or: [{ sender: userId }, { receiver: userId }],
@@ -35,7 +34,13 @@ const getRecentContactController = async (
               else: "$cipherTextForReceiver",
             },
           },
-          nonce: "$nonce",
+          isUnread: {
+            $cond: {
+              if: { $and: [{ $eq: ["$receiver", userId] }, { $eq: ["$isRead", false] }] },
+              then: 1,
+              else: 0,
+            },
+          },
         },
       },
       {
@@ -44,11 +49,13 @@ const getRecentContactController = async (
       {
         $group: {
           _id: "$contactId",
-          lastMessageContent: { $first: "$cipherText" }, 
+          lastMessageContent: { $first: "$cipherText" },
           lastMessageSender: { $first: "$sender" },
-          lastMessageNonce: { $first: "$nonce" }, 
+          lastMessageNonce: { $first: "$nonce" },
           lastTimestamp: { $first: "$timestamp" },
+          lastMessageIsRead: { $first: "$isRead" }, 
           isSent: { $first: { $eq: ["$sender", userId] } },
+          unreadCount: { $sum: "$isUnread" }, 
         },
       },
       {
@@ -76,18 +83,23 @@ const getRecentContactController = async (
           timestamp: "$lastTimestamp",
           isSent: 1,
           isGuest: "$contact.isGuest",
+          unreadCount: 1,
+          lastMessageIsRead: 1,
         },
       },
       {
         $sort: { timestamp: -1 },
       },
     ]);
+    
+    
 
 
 
      return res.status(StatusCode.SuccessOK).json({
-        Recentcontacts,
+      recentContacts,
      });
+     
 
 
   } catch {

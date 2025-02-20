@@ -6,6 +6,7 @@ import userProfileUploadAndDeleteController from "../controllers/userProfile-upl
 import searchContactController from "../controllers/searchContactController";
 import getMessageController from "../controllers/getMessageController";
 import getRecentContactController from "../controllers/getRecentContactController";
+import getContactInfoController from "../controllers/getContactInfoController";
 
 const userRoutes = Router();
 
@@ -18,6 +19,8 @@ userRoutes.get("/user/search",authMiddleware,searchContactController);
 userRoutes.get("/user/message",authMiddleware,getMessageController);
 
 userRoutes.get("/user/contact",authMiddleware,getRecentContactController);
+
+userRoutes.get("/user/contact/info",authMiddleware,getContactInfoController);
 
 userRoutes.patch("/user",authMiddleware,updateUserProfileController);
 

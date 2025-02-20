@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { boolean } from "zod";
 
 //message schema defination
 
@@ -32,6 +33,10 @@ const messageSchema = new mongoose.Schema(
             type: Date,
             default: Date.now, 
         },
+        isRead : {
+            type: Boolean,
+            default:false,
+        }
 
     },
     {

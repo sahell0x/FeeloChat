@@ -28,13 +28,13 @@ const guestAcountController = async (
       });
     }
 
-    const response = await GuestIP.create({
-      guestUserIP: IP,
-    });
+    // const response = await GuestIP.create({
+    //   guestUserIP: IP,
+    // });
 
-    if (!response) {
-      throw new Error("DB opration failed");
-    }
+    // if (!response) {
+    //   throw new Error("DB opration failed");
+    // }
 
     const GuestUserData = {
         email : guestUUIDProvider(),

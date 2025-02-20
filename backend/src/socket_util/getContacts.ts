@@ -42,7 +42,7 @@ const getContacts = async (id: string) :Promise<string[]> => {
 
     const contactIds = response.length > 0 ? response[0].contactIds : [];
 
-    
+    console.log(contactIds);
     return contactIds; 
 };
 

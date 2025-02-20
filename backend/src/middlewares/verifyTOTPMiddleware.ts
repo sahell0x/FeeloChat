@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import speakeasy from "speakeasy";
+import StatusCode from 'status-code-enum';
  
  const verifyTOTPMiddleware   =  (req:Request, res:Response , next : NextFunction):any => {
 
@@ -13,19 +14,19 @@ import speakeasy from "speakeasy";
           secret,
           encoding: "base32",
           token: otp,
-          step:120,
+          step:60,
           window: 1, // Allow small time drift
         });
       
         if (!isValid) {
-            return res.status(400).json({ success: false, message: "Invalid OTP" });
+            return res.status(StatusCode.ClientErrorUnauthorized).json({ success: false, message: "Invalid OTP" });
         }
 
         next();
 
     }catch(e:any){
         console.log(e.message);
-        return res.status(400).json({ success: false, message: "Invalid OTP" });
+        return res.status(StatusCode.ClientErrorUnauthorized).json({ success: false, message: "Invalid OTP" });
     }
   }
 

@@ -9,6 +9,7 @@ import { compare } from "bcrypt";
 const sendTOTPController = async (req: any, res: any) => {
   try {
     const requestBody = req.body;
+    console.log(requestBody);
 
     if (requestBody.purpose && requestBody.purpose) {
       const email = requestBody.email;
@@ -37,7 +38,7 @@ const sendTOTPController = async (req: any, res: any) => {
         throw new Error("invalid email address");
       } else if (requestBody.purpose === "signin") {
         const password = requestBody.password;
-
+        
         if (!email && !password) {
           throw new Error("Invalid inputs");
         }

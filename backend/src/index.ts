@@ -45,7 +45,7 @@ app.use(isIPBlockedMiddleware);
 
 // rate limit the ip's to prevent from common attacks like  DDoS and prevent Feelochat endPoint from the traffic other then Feelochat frontend
 
-app.use(globalRateLimiter);
+// app.use(globalRateLimiter);
 
 
 //entry routes for user and auth

@@ -8,7 +8,6 @@ const socketAuthMiddleware = (socket: Socket, next: (err?: Error) => void) => {
         if (!cookies){
              throw new Error("No cookies found");
             }
-
         const token = cookies.split("token=")[1];
 
         if (!token) 

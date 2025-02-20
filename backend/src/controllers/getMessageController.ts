@@ -10,6 +10,8 @@ const getMessageController = async (req: Request, res: Response): Promise<any> =
         const limit = parseInt(req.query.limit as string) || 10;
         const skip = parseInt(req.query.skip as string) || 0;
 
+
+
         if (!userId || !targetUserId) {
             return res.status(StatusCode.ClientErrorBadRequest).json({
                 message: "Bad request.",
@@ -25,6 +27,7 @@ const getMessageController = async (req: Request, res: Response): Promise<any> =
         .sort({ timestamp: -1 }) // Sort by newest first
         .skip(skip)
         .limit(limit);
+        
 
         res.status(StatusCode.SuccessOK).json({
             messages: messages.reverse(), // Reverse to maintain chronological order

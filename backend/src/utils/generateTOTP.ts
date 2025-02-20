@@ -13,7 +13,7 @@ const generateTOTP = (): generatorRetrunType => {
   const otp = speakeasy.totp({
     secret,
     encoding: "base32",
-    step: 120,
+    step: 60,
   });
 
   console.log(otp);

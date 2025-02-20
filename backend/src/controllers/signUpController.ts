@@ -25,7 +25,7 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
     }).session(session);
 
     if (isUserAlreadyExist) {
-      return res.status(409).json({ error: "User already exists" });
+      return res.status(StatusCode.ClientErrorConflict).json({ error: "User already exists" });
     }
 
     body.password = await bcrypt.hash(body.password, 13);
