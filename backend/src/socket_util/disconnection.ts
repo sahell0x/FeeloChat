@@ -16,8 +16,10 @@ const disconnection = (socket:Socket , userMap: Map<string,string>,io:any):void=
       
      if(userId){
         userMap.delete(userId);
-        onlineStatusProvider(userId,io,userMap,IS_USER_ONLINE);
-        
+         setTimeout(()=>{
+            onlineStatusProvider(userId,io,userMap,IS_USER_ONLINE);
+
+         },3000);        
      }       
            
 }

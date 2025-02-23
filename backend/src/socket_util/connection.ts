@@ -16,7 +16,9 @@ const connection = (
 
   if (userId) {
     userMap.set(userId, socket.id);
-    onlineStatusProvider(userId, io, userMap, IS_USER_ONLINE);
+    setTimeout(()=>{
+      onlineStatusProvider(userId, io, userMap, IS_USER_ONLINE);
+    },3000);
   }
 };
 

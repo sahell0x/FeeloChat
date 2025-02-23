@@ -2,7 +2,6 @@ import { Server } from "http";
 import { Server as SocketServer } from "socket.io";
 import disconnection from "./socket_util/disconnection";
 import connection from "./socket_util/connection";
-import Message from "./models/messageModel";
 import socketAuthMiddleware from "./socket_util/socketAuthMiddleware";
 import {
   IndivisualStatusType,
@@ -10,6 +9,8 @@ import {
   MessageType,
 } from "./types/socketTypes";
 import handleMessageSeen from "./socket_util/handleMessageSeen";
+import handleIndivisualStatus from "./socket_util/handleIndivisualStatus";
+import handleMessage from "./socket_util/handleMessage";
 
 //this contains main socket logic
 
@@ -26,27 +27,7 @@ const socketSetup = (server: Server) => {
 
   //handle message send logic for p-2-p
 
-  const handleMessage = async (message: MessageType): Promise<void> => {
-    try {
-      const senderSocketId = userSocketMap.get(message.sender);
 
-      const recieverSocketId = userSocketMap.get(message.receiver);
-
-      const createdMessage = await Message.create(message);
-
-      const messageData = await Message.findById(createdMessage._id);
-
-      if (recieverSocketId) {
-        io.to(recieverSocketId).emit("receive-message", messageData);
-      }
-
-      if (senderSocketId) {
-        io.to(senderSocketId).emit("receive-message", messageData);
-      }
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  };
 
   //authentication
 
@@ -56,7 +37,9 @@ const socketSetup = (server: Server) => {
   io.on("connection", (socket: any) => {
     connection(socket, userSocketMap, io);
 
-    socket.on("sendMessage", handleMessage);
+    socket.on("send-message", (message:MessageType)=>{
+        handleMessage(message,userSocketMap,socket,io);
+    });
 
     socket.on("message-seen", (data: MessageSeen) => {
       handleMessageSeen(data, userSocketMap, socket, io);
@@ -65,23 +48,7 @@ const socketSetup = (server: Server) => {
     socket.on(
       "online-status-new-message",
       (indivisulaStatus: IndivisualStatusType) => {
-        const contactId: string = indivisulaStatus.statusOf;
-        const userId = (socket as any).userId;
-        const IS_ONLINE = true;
-
-        const contactSocketId: string = userSocketMap.get(contactId);
-
-        const userSocketId: string = userSocketMap.get(userId);
-
-        console.log("sending status for ", contactSocketId, userSocketId);
-
-        if (contactSocketId && userSocketId) {
-          const statusData: Record<string, boolean> = {};
-
-          statusData[contactId] = IS_ONLINE;
-
-          io.to(userSocketId).emit("online-status-new-message", statusData);
-        }
+        handleIndivisualStatus(indivisulaStatus, userSocketMap, socket, io);
       }
     );
 

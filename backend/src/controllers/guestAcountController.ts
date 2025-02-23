@@ -54,7 +54,7 @@ const guestAcountController = async (
     res.cookie("token", token, {     // Set cookie
         httpOnly: true,
         sameSite: "strict",
-        secure: true,
+        // secure: true,
         maxAge: 24 * 60 * 60 * 1000,   //24 hours
     });
 

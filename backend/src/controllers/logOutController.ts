@@ -9,8 +9,12 @@ import { UserId, UserType } from "../types/userTypes.js";
 const logOutController = async (req:Request,res:Response) :Promise<any>=>{
     try{
         
-        res.cookie("token","",{maxAge:1,secure:true,sameSite:"none"});
-
+        res.cookie("token","", {     
+            httpOnly: true,
+            sameSite: "strict",
+            // secure: true,
+            maxAge: 1,   
+        });
     return res.status(StatusCode.SuccessOK).json({
         message:"Logout successfully",
     });

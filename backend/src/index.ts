@@ -11,7 +11,7 @@ import socketSetup from "./socket";
 import isIPBlockedMiddleware from "./middlewares/isIPBlockedMiddleware";
 import globalRateLimiter from "./middlewares/globalRateLimiter";
 const app = express();
-const port = process.env.PORT;
+const port: number = Number(process.env.PORT) || 3000;
 const dbUrl: string = process.env.DB_URL as string;
 
 //cors defination
@@ -50,6 +50,9 @@ app.use(isIPBlockedMiddleware);
 
 //entry routes for user and auth
 
+app.get("/hey",(req,res)=>{
+    res.send("hey there");
+})
 app.use("/api",userRoutes);
 app.use("/api/auth",authRoutes);
 
@@ -63,7 +66,7 @@ app.use((err : any,req :Request,res:Response,next :NextFunction)=>{
 })
 
 
-const server = app.listen(port,()=>{
+const server = app.listen(port,"0.0.0.0",()=>{
     console.log(`server is runnig at http://localhost:${port}`);
 });
 
