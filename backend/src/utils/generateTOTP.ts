@@ -1,8 +1,8 @@
 import speakeasy from "speakeasy";
 
 type generatorRetrunType = {
-  otp: string,
-  secret: string,
+  otp: string;
+  secret: string;
 };
 
 const generateTOTP = (): generatorRetrunType => {
@@ -13,8 +13,6 @@ const generateTOTP = (): generatorRetrunType => {
     encoding: "base32",
     step: 60,
   });
-
-  console.log(otp);
 
   return { otp, secret };
 };

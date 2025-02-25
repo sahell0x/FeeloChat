@@ -1,4 +1,3 @@
-
 import getContacts from "./getContacts";
 
 const onlineStatusProvider = async (
@@ -12,21 +11,14 @@ const onlineStatusProvider = async (
 
     const currentUserSocketId = userMap.get(userId);
 
-    console.log("inside online status provider", currentUserSocketId);
-
-    
-
     if (isOnline) {
       const onlineStatusList = contacts.reduce((acc: any, contactId) => {
         acc[contactId] = userMap.has(contactId);
         return acc;
       }, {});
 
-      console.log("sending data to this socket id: ",currentUserSocketId);
-
-      io.to(currentUserSocketId).emit("status-update",onlineStatusList);
+      io.to(currentUserSocketId).emit("status-update", onlineStatusList);
     }
-
 
     for (let i = 0; i < contacts.length; i++) {
       const userSocketId = userMap.get(contacts[i]);

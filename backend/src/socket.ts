@@ -16,7 +16,6 @@ import handleMessage from "./socket_util/handleMessage";
 import handleTyping from "./socket_util/handleTyping";
 import handleExpression from "./socket_util/handleExpression";
 
-
 const socketSetup = (server: Server) => {
   const io: SocketServer = new SocketServer(server, {
     cors: {
@@ -26,24 +25,20 @@ const socketSetup = (server: Server) => {
     },
   });
 
-  const userSocketMap = new Map(); 
-
-
-
-
+  const userSocketMap = new Map();
 
   io.use(socketAuthMiddleware);
 
   io.on("connection", (socket: any) => {
     connection(socket, userSocketMap, io);
 
-    socket.on("send-message", (message:MessageType)=>{
-        handleMessage(message,userSocketMap,socket,io);
+    socket.on("send-message", (message: MessageType) => {
+      handleMessage(message, userSocketMap, socket, io);
     });
 
-    socket.on("typing",(typingEventData:TypingEventData)=>{
-        handleTyping(typingEventData,userSocketMap,socket,io);
-    })
+    socket.on("typing", (typingEventData: TypingEventData) => {
+      handleTyping(typingEventData, userSocketMap, socket, io);
+    });
 
     socket.on("message-seen", (data: MessageSeen) => {
       handleMessageSeen(data, userSocketMap, socket, io);
@@ -56,14 +51,12 @@ const socketSetup = (server: Server) => {
       }
     );
 
-    socket.on("expression",(expressionEventData : ExpressionEventData)=>{
-          handleExpression(expressionEventData,userSocketMap,socket,io);
+    socket.on("expression", (expressionEventData: ExpressionEventData) => {
+      handleExpression(expressionEventData, userSocketMap, socket, io);
     });
-    
 
     socket.on("disconnect", () => {
       disconnection(socket, userSocketMap, io);
-      console.log(userSocketMap);
     });
   });
 };

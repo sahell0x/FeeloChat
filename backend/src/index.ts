@@ -44,7 +44,7 @@ app.use((err : any,req :Request,res:Response,next :NextFunction)=>{
 
 
 const server = app.listen(port,()=>{
-    console.log(`server is runnig at http://localhost:${port}`);
+    console.log(`server is runnig at port:${port}`);
 });
 
 

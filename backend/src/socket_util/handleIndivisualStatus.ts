@@ -7,7 +7,6 @@ const handleIndivisualStatus = (
   socket: Socket,
   io: Server
 ) => {
-
   const contactId: string = indivisulaStatus.statusOf;
   const userId = (socket as any).userId;
   const IS_ONLINE = true;
@@ -15,8 +14,6 @@ const handleIndivisualStatus = (
   const contactSocketId: string = userSocketMap.get(contactId) as string;
 
   const userSocketId: string = userSocketMap.get(userId) as string;
-
-  console.log("sending status for ", contactSocketId, userSocketId);
 
   if (contactSocketId && userSocketId) {
     const statusData: Record<string, boolean> = {};

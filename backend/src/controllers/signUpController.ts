@@ -12,8 +12,6 @@ dotenv.config();
 const secret: string = process.env.SECRET as string;
 
 const signUpController = async (req: Request, res: Response): Promise<any> => {
-  console.log("inside signup");
-
   const session = await mongoose.startSession();
   session.startTransaction();
 
@@ -25,7 +23,9 @@ const signUpController = async (req: Request, res: Response): Promise<any> => {
     }).session(session);
 
     if (isUserAlreadyExist) {
-      return res.status(StatusCode.ClientErrorConflict).json({ error: "User already exists" });
+      return res
+        .status(StatusCode.ClientErrorConflict)
+        .json({ error: "User already exists" });
     }
 
     body.password = await bcrypt.hash(body.password, 13);

@@ -26,9 +26,7 @@ const handleMessage = async (
       if (senderSocketId) {
         io.to(senderSocketId).emit("receive-message", messageData);
       }
-    } catch (e: any) {
-      console.log(e.message);
-    }
+    } catch (e: any) {}
   }
 };
 
