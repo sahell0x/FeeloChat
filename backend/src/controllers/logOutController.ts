@@ -8,6 +8,7 @@ const logOutController = async (req:Request,res:Response) :Promise<any>=>{
         res.cookie("token","", {     
             httpOnly: true,
             secure: true,
+            sameSite: "none",
             maxAge: 1,   
         });
     return res.status(StatusCode.SuccessOK).json({
