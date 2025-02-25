@@ -8,29 +8,34 @@ import {
 } from "@/stores/chatAtom";
 import moment from "moment";
 import apiClient from "@/lib/api-client";
-import {  MESSAGE_ROUTE } from "@/util/constants";
+import { MESSAGE_ROUTE } from "@/util/constants";
 import privateKeyAtom from "@/stores/privateKeyAtom";
 import {
   decryptMessageForReceiver,
   decryptMessageForSender,
 } from "@/encryption/cryptoUtils";
 import userInfoAtom from "@/stores/userInfoAtom";
-import { ClipLoader } from "react-spinners";
+import { ClipLoader, SyncLoader } from "react-spinners";
 import messagePageAtom from "@/stores/messagePageAtom";
 import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
 import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
 import socket from "@/socket";
+import shouldScrollAtom from "@/stores/shouldScrollAtom";
+import typingTrackerAtom from "@/stores/typingTrackerAtom";
 
-function MessageContainer({ shouldScroll, setShouldScroll }) {
+function MessageContainer() {
   const [selectedChatMessages, setSelectedChatMessages] = useRecoilState(
     selectedChatMessagesAtom
   );
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const messageSeenTrack = useRecoilValue(messageSeenTrackerAtom);
+  const typingTrack = useRecoilValue(typingTrackerAtom);
   const [unReadMessageCounts, setUnReadMessageCounts] = useRecoilState(
     unreadMessageCountAtom
   );
+  const unreadMessageCounts = useRecoilValue(unreadMessageCountAtom);
+  const [shouldScroll, setShouldScroll] = useRecoilState(shouldScrollAtom);
   const privateKey = useRecoilValue(privateKeyAtom);
   const userInfo = useRecoilValue(userInfoAtom);
   const [lastContainerHeight, setLastContainerHeight] = useState(0);
@@ -59,7 +64,6 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
         );
       }
     } catch (e) {
-      console.log(e);
       return "𝘤𝘰𝘳𝘳𝘶𝘱𝘵𝘦𝘥 𝘮𝘦𝘴𝘴𝘢𝘨𝘦";
     }
   };
@@ -76,7 +80,6 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
         { withCredentials: true }
       );
 
-
       const newMessages = response.data.messages;
 
       if (newMessages.length < limit) {
@@ -92,23 +95,20 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
         ]);
       }
       setPage((prevPage) => prevPage + 1);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     setLoading(false);
   };
 
   const handleMarkAsRead = async (id) => {
-    try {
-        socket.emit("message-seen",{
-          to:id,
+    if (unreadMessageCounts[id] > 0) {
+      try {
+        socket.emit("message-seen", {
+          to: id,
         });
-    } catch (e) {
-      console.log(e);
+      } catch (e) {}
     }
   };
 
-  // Initial fetch when chat is selected
   useEffect(() => {
     setLastContainerHeight(0);
     setHasMore(true);
@@ -135,7 +135,6 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
     };
   }, [selectedChatData, selectedChatType]);
 
-  // Handle scroll to load more
   const handleScroll = () => {
     if (!containerRef.current) return;
 
@@ -180,7 +179,7 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
           message.sender !== selectedChatData._id
             ? "bg-purple-700 text-white rounded-l-2xl rounded-br-2xl"
             : "bg-[#2c2e36] text-[#e5e5e5] rounded-r-2xl rounded-bl-2xl"
-        } inline-block p-4  my-1 max-w-[50%] break-words`}
+        } inline-block p-3  my-1 max-w-[50%] break-words text-center`}
       >
         {handleDecryptMessage(message)}
       </div>
@@ -218,7 +217,7 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
   return (
     <div
       ref={containerRef}
-      className="flex-1 overflow-y-auto scroll-smooth h-[75vh] bg-[#1b1c24] text-white scrollbar-none scrollbar-thumb-[#3a3b45] scrollbar-track-transparent hover:scrollbar-thumb-[#4c4d5c] w-[100vw] pb-11 p-4 px-8 md:w-[65vw] lg:w-[70vw] xl:w-[80vw]"
+      className="flex-1 overflow-y-auto scroll-smooth h-[70vh] bg-[#1b1c24] text-white scrollbar-none scrollbar-thumb-[#3a3b45] scrollbar-track-transparent hover:scrollbar-thumb-[#4c4d5c] w-[100vw] pb-11 p-4 md:px-12 lg:px-8 md:h-[75vh] md:w-[65vw] lg:w-[70vw] xl:w-[80vw]"
     >
       {loading && (
         <div className="text-center">
@@ -227,11 +226,18 @@ function MessageContainer({ shouldScroll, setShouldScroll }) {
       )}
       {renderMessages()}
 
-      {messageSeenTrack[selectedChatData?._id] ? (
-        <div className="text-right text-gray-500 text-lg">seen</div>
-      ) : (
-        ""
-      )}
+      <div>
+        {typingTrack[selectedChatData?._id] ? (
+          <div className="bg-[#2c2e36] text-[#e5e5e5] rounded-r-2xl rounded-bl-2xl inline-block p-3  my-1 max-w-[50%] break-words text-center">
+            {" "}
+            <SyncLoader size={5} speedMultiplier={0.5} color="#e5e5e5" />
+          </div>
+        ) : messageSeenTrack[selectedChatData?._id] ? (
+          <div className="text-right text-gray-500 text-lg">seen</div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

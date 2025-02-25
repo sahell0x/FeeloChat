@@ -23,6 +23,14 @@ import {
 } from "@/stores/chatAtom";
 import onlineStatusAtom from "@/stores/onlineStatusAtom";
 import recentContactAtom from "@/stores/recentContactAtom";
+import typingTrackerAtom from "@/stores/typingTrackerAtom";
+import shouldScrollAtom from "@/stores/shouldScrollAtom";
+import showExpressionsAtom from "@/stores/showExpressionsAtom";
+import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
+import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
+import messagePageAtom from "@/stores/messagePageAtom";
+import recentContactDataAtom from "@/stores/recentContactDataAtom";
+import currentExpressionAtom from "@/stores/currentExpressionAtom";
 
 function UserProfileInfo() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -31,6 +39,16 @@ function UserProfileInfo() {
   const resetSelectedChatMessagesAtom = useResetRecoilState(
     selectedChatMessagesAtom
   );
+  const resetTypingTrack = useResetRecoilState(typingTrackerAtom);
+  const resetShouldScroll = useResetRecoilState(shouldScrollAtom);
+  const resetShowExpressions = useResetRecoilState(showExpressionsAtom);
+  const resetUnreadMessageCounts = useResetRecoilState(unreadMessageCountAtom);
+  const resetMessageSeenTrack = useResetRecoilState(messageSeenTrackerAtom);
+  const resetMessagePage = useResetRecoilState(messagePageAtom);
+  const resetRecentContacts = useResetRecoilState(recentContactAtom);
+  const resetRecentContactData = useResetRecoilState(recentContactDataAtom);
+  const resetCurrentExpression = useResetRecoilState(currentExpressionAtom);
+
   const resetOnlineStatusAtom = useResetRecoilState(onlineStatusAtom);
   const resetRecentContactAtom = useResetRecoilState(recentContactAtom);
 
@@ -53,6 +71,15 @@ function UserProfileInfo() {
         resetSelectedChatMessagesAtom();
         resetOnlineStatusAtom();
         resetRecentContactAtom();
+        resetTypingTrack();
+        resetShouldScroll();
+        resetUnreadMessageCounts();
+        resetShowExpressions();
+        resetMessageSeenTrack();
+        resetMessagePage();
+        resetRecentContactData();
+        resetRecentContacts();
+        resetCurrentExpression();
 
         toast.success("Logout successfully.");
         navigate("/");

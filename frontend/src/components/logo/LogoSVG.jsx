@@ -7,11 +7,10 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Background Circle with gradient */}
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" /> {/* Blue */}
-          <stop offset="100%" stopColor="#9333ea" /> {/* Purple */}
+          <stop offset="0%" stopColor="#3b82f6" /> 
+          <stop offset="100%" stopColor="#9333ea" /> 
         </linearGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -22,16 +21,13 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
         </filter>
       </defs>
 
-      {/* Main chat bubble */}
       <path
         d="M100 20c-44.183 0-80 35.817-80 80 0 44.183 35.817 80 80 80 44.183 0 80-35.817 80-80 0-44.183-35.817-80-80-80z"
         fill="url(#logoGradient)"
         className="animate-pulse"
       />
 
-      {/* Expression elements */}
       <g fill="white" filter="url(#glow)">
-        {/* Left eye */}
         <circle cx="70" cy="90" r="12" className="animate-bounce">
           <animate
             attributeName="r"
@@ -41,7 +37,6 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
           />
         </circle>
 
-        {/* Right eye */}
         <circle cx="130" cy="90" r="12" className="animate-bounce">
           <animate
             attributeName="r"
@@ -51,7 +46,6 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
           />
         </circle>
 
-        {/* Smile */}
         <path
           d="M70 120 Q100 150 130 120"
           stroke="white"
@@ -67,7 +61,6 @@ const LogoSVG = ({ className = 'w-48 h-48' }) => {
           />
         </path>
 
-        {/* Sparkles */}
         <circle cx="160" cy="60" r="4">
           <animate
             attributeName="opacity"

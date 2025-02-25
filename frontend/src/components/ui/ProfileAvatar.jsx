@@ -10,7 +10,6 @@ import fileToBase64Convertor from "@/util/fileToBase64Converter";
 import toast from "react-hot-toast";
 
 export default function ProfileAvatar({ profileImage, setProfileImage }) {
-
   const userInfo = useRecoilValue(userInfoAtom);
   const [isHoverd, setIsHoverd] = useState(false);
   const inputFileRef = useRef(null);
@@ -36,7 +35,6 @@ export default function ProfileAvatar({ profileImage, setProfileImage }) {
           toast.success("Profile image uploaded successfully.");
         }
       } catch (e) {
-        console.log(e);
         toast.error("Error while setting image.");
       }
     }

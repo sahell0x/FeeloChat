@@ -11,14 +11,16 @@ import { getPrivateKey } from "@/db/indexedDB";
 import privateKeyAtom from "@/stores/privateKeyAtom";
 import apiClient from "@/lib/api-client";
 import { LOGOUT_ROUTE } from "@/util/constants";
+import isMobileAtom from "@/stores/isMobileAtom";
 
 function Chat() {
   const userInfo = useRecoilValue(userInfoAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const setPrivateKey = useSetRecoilState(privateKeyAtom);
+  const isMobile = useRecoilValue(isMobileAtom);
+
 
   const navigate = useNavigate();
-
 
   useEffect(()=>{
     (
@@ -47,10 +49,10 @@ function Chat() {
   },[userInfo,navigate]);
   return (
     <div className="flex h-[100vh]  text-[#1f2937] overflow-hidden">
-      <ContactContainer/>
-      
-      {selectedChatType ?  <ChatContainer/> : <EmptyChatContainer/>  }
-   
+
+  {(!isMobile || !selectedChatType) && <ContactContainer />}
+
+  {selectedChatType ? <ChatContainer /> : !isMobile && <EmptyChatContainer />}
     </div>
   )
 }

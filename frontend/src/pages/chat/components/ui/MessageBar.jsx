@@ -9,14 +9,37 @@ import toast from "react-hot-toast";
 import { encryptMessageForBoth } from "@/encryption/cryptoUtils";
 import { getPrivateKey } from "@/db/indexedDB";
 import socket from "@/socket";
+import isMobileAtom from "@/stores/isMobileAtom";
 
-function MessageBar({setShouldScroll}) {
+import ExpressionsProvider from "./ExpressionsProvider";
+
+function MessageBar() {
   const [message, setMessage] = useState("");
   const [isEmojiPickerOpend, setIsEmojiPickerOpend] = useState(false);
   const emojiPickerRef = useRef(null);
   const userInfo = useRecoilValue(userInfoAtom);
   const selectedChatType = useRecoilValue(selectedChatTypeAtom);
   const selectedChatData = useRecoilValue(selectedChatDataAtom);
+  const isMobile = useRecoilValue(isMobileAtom);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const USER_TYPING = true;
+  const USER_STOPED_TYPING = false;
+
+  const typingTimeOutIdRef = useRef(null);
+
+  
+  useEffect(() => {
+    if (isEmojiPickerOpend) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isEmojiPickerOpend]);
 
   const handleEmojiClick = (e) => {
     setMessage((prevMessage) => prevMessage.concat(e.emoji));
@@ -37,10 +60,7 @@ function MessageBar({setShouldScroll}) {
     try {
       if (selectedChatType === "contact" && message.trim()) {
         if (socket.connected) {
-
           const privateKey = await getPrivateKey();
-
-          
 
           const encryptedMessageData = encryptMessageForBoth(
             message.trim(),
@@ -49,40 +69,63 @@ function MessageBar({setShouldScroll}) {
             privateKey
           );
 
-          socket.emit("sendMessage", {
+          socket.emit("send-message", {
             sender: userInfo.id,
             receiver: selectedChatData._id,
             cipherTextForReceiver: encryptedMessageData.cipherTextForReceiver,
             cipherTextForSender: encryptedMessageData.cipherTextForSender,
             nonce: encryptedMessageData.nonce,
           });
-          setShouldScroll(true);  
           setMessage("");
         } else {
           toast.error("Please check you internet connection.");
         }
       }
     } catch (e) {
-      console.log(e);
       toast.error("Unable to send try after refreshing page.");
     }
   };
 
-  useEffect(() => {
-    if (isEmojiPickerOpend) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (!e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
     }
+  };
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isEmojiPickerOpend]);
+  const handleTyping = () => {
+    try {
+      if (!isTyping) {
+        setIsTyping(true);
+        socket.emit("typing", {
+          typingEnvetTo: selectedChatData._id,
+          isTyping: USER_TYPING,
+        });
+      }
+
+      if (typingTimeOutIdRef.current) {
+        clearTimeout(typingTimeOutIdRef.current);
+      }
+
+      typingTimeOutIdRef.current = setTimeout(() => {
+        socket.emit("typing", {
+          typingEnvetTo: selectedChatData._id,
+          isTyping: USER_STOPED_TYPING,
+        });
+
+        setIsTyping(false);
+      }, 2000);
+    } catch {}
+  };
+
 
   return (
-    <div className="h-[20vh] flex justify-center items-center px-5 bg-[#1b1c24]">
-      <div className="flex-1 flex rounded-md items-center justify-center flex-row">
+    <div className="h-[15vh] flex justify-center items-center px-5 bg-[#1b1c24]">
+      <div className=" flex rounded-md items-center justify-center flex-col">
+
+          <ExpressionsProvider/>
         <div className="flex items-center justify-center flex-row">
           <textarea
             rows={1}
@@ -92,10 +135,12 @@ function MessageBar({setShouldScroll}) {
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);
+              handleTyping();
             }}
+            onKeyDown={isMobile ? () => {} : handleKeyDown}
           />
 
-          <div className="relative right-10 flex items-center justify-center">
+          <div className="invisible relative right-10 flex items-center justify-center md:visible">
             <button
               onClick={() => setIsEmojiPickerOpend(!isEmojiPickerOpend)}
               className="text-gray-400 hover:text-white transition-all duration-300"

@@ -89,7 +89,6 @@ function SignInTabContent() {
           throw new Error("somthing wents wrong");
         }
       } catch (e) {
-        console.log("error", e.message);
         setIsButtonDisabled(false);
         toast.error("Wrong email or password.");
       }
@@ -133,7 +132,7 @@ function SignInTabContent() {
           setSecret={setSecret}
         />
       )}
-  </div>
+    </div>
   );
 }
 

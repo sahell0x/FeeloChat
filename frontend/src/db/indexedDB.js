@@ -1,5 +1,5 @@
 /**
- * Opens the IndexedDB database and creates the object store if it doesn't exist.
+ * Open  indexed  database and create  object store if it does not exist.
  * @returns {Promise} Resolves with the database object or rejects with an error message.
  */
 const openDB = () => {
@@ -19,8 +19,8 @@ const openDB = () => {
   };
   
   /**
-   * Stores the user's private key in IndexedDB.
-   * @param {string} privateKey - The private key to be stored.
+   * Stores the user private key in indexed DB.
+   * @param {string} privateKey - private key to be stored.
    * @returns {Promise} Resolves with a success message or rejects with an error message.
    */
   const storePrivateKey = (privateKey) => {
@@ -46,7 +46,7 @@ const openDB = () => {
   };
   
   /**
-   * Retrieves the user's private key from IndexedDB.
+   * Retrieve the user private key from indexed db.
    * @returns {Promise} Resolves with the private key or rejects with an error message.
    */
   const getPrivateKey = () => {
@@ -74,7 +74,7 @@ const openDB = () => {
   };
   
   /**
-   * Deletes the user's private key from IndexedDB.
+   * Deletes the user private key from indexed DB.
    * @returns {Promise} Resolves with a success message or rejects with an error message.
    */
   const deletePrivateKey = () => {

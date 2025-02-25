@@ -6,6 +6,7 @@ import {
 import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
 import onlineStatusAtom from "@/stores/onlineStatusAtom";
 import privateKeyAtom from "@/stores/privateKeyAtom";
+import typingTrackerAtom from "@/stores/typingTrackerAtom";
 import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
 import userInfoAtom from "@/stores/userInfoAtom";
 import getFirstLetter from "@/util/getFirstLetter";
@@ -13,18 +14,16 @@ import { Circle } from "lucide-react";
 import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
 
-const RecentContactRenderer = ({
-  contact,
-  isSelected,
-  onClick,
-}) => {
+const RecentContactRenderer = ({ contact, isSelected, onClick }) => {
   const privateKey = useRecoilValue(privateKeyAtom);
   const userInfo = useRecoilValue(userInfoAtom);
   const unReadMessageCounts = useRecoilValue(unreadMessageCountAtom);
   const messageSeenTrack = useRecoilValue(messageSeenTrackerAtom);
   const onlineStatusState = useRecoilValue(onlineStatusAtom);
+  const typingTrack = useRecoilValue(typingTrackerAtom);
 
   const SEEN_INDICATOR = "seen";
+  const TYPING_INDICATOR = "typing...";
   const handleDecryptLastMessage = (contact) => {
     try {
       if (contact.isSent) {
@@ -53,7 +52,6 @@ const RecentContactRenderer = ({
     onClick(contact);
   }, [onClick, contact]);
 
-console.log(onlineStatusState);
   return (
     <div
       onClick={handleClick}
@@ -89,7 +87,11 @@ console.log(onlineStatusState);
           className="text-sm text-gray-400 truncate"
           style={{ maxWidth: "200px" }}
         >
-          {messageSeenTrack[contact?.id] ? SEEN_INDICATOR : handleDecryptLastMessage(contact)}
+          {typingTrack[contact?.id]
+            ? TYPING_INDICATOR
+            : messageSeenTrack[contact?.id]
+            ? SEEN_INDICATOR
+            : handleDecryptLastMessage(contact)}
         </p>
       </div>
 

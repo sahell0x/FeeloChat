@@ -36,27 +36,29 @@ function TryAsGuestDialog({ isTryGuestDialogOpend, setIsTryGuestDialogOpend }) {
       );
       if (response.status === 201) {
         await storePrivateKey(privateKey);
-        setUserInfo({...response.data});
+        setUserInfo({ ...response.data });
         navigate("/chat");
         toast.success("Guest acount created successfully.");
       }
       setIsLoading(false);
     } catch (e) {
-        console.log(e);
       if (e.status === 409) {
-        toast.error("Acount with this IP already exist please try after a week");
+        toast.error(
+          "Acount with this IP already exist please try after a week"
+        );
       } else {
         toast.error("Somthing wents wrong please Try again");
       }
       setIsLoading(false);
-
     }
-   
   };
 
   return (
-    <Dialog open={isTryGuestDialogOpend} onOpenChange={isLoading ? ()=>{} : setIsTryGuestDialogOpend}>
-      <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[200px] flex flex-col">
+    <Dialog
+      open={isTryGuestDialogOpend}
+      onOpenChange={isLoading ? () => {} : setIsTryGuestDialogOpend}
+    >
+      <DialogContent className="bg-[#181920] border-none text-white w-[350px] h-[220px] flex flex-col md:w-[400px] md:h-[200px]">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-center text-xl font-semibold">
             Guest Access Policy

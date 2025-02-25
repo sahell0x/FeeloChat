@@ -59,7 +59,6 @@ function SignUpTabContent() {
         }
       } catch (error) {
         setIsButtonDisabled(false);
-        console.log(error.message);
         if (error.response?.status === 409) {
           toast.error("Email already exists.");
         } else {
@@ -87,7 +86,6 @@ function SignUpTabContent() {
       if (response.status === 201) {
         const userData = response.data;
         setUserInfo({ ...userData });
-        //store private key in idexed db
         await storePrivateKey(privateKey);
 
         navigate("/profile");

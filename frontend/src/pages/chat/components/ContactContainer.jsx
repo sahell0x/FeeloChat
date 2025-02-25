@@ -22,6 +22,8 @@ import messagePageAtom from "@/stores/messagePageAtom";
 import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
 import recentContactDataAtom from "@/stores/recentContactDataAtom";
 import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
+import showExpressionsAtom from "@/stores/showExpressionsAtom";
+import currentExpressionAtom from "@/stores/currentExpressionAtom";
 
 function ContactContainer() {
   const [selectedChatData, setSelectedChatData] =
@@ -35,9 +37,11 @@ function ContactContainer() {
   const selectedChatMessageReset = useResetRecoilState(
     selectedChatMessagesAtom
   );
+  const showExpressionsReset = useResetRecoilState(showExpressionsAtom);
   const setMessageSeenTracker = useSetRecoilState(messageSeenTrackerAtom);
   const setUnReadMessageCounts = useSetRecoilState(unreadMessageCountAtom);
   const resetMessagePage = useResetRecoilState(messagePageAtom);
+  const resetCurrentExpression = useResetRecoilState(currentExpressionAtom);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -57,6 +61,8 @@ function ContactContainer() {
     if (selectedChatData?._id !== contact?.id) {
       selectedChatMessageReset();
       resetMessagePage();
+      showExpressionsReset();
+      resetCurrentExpression();
       setSelectedChatType("contact");
 
       setSelectedChatData({
@@ -122,14 +128,12 @@ function ContactContainer() {
   }, [setRecentContact]);
 
   return (
-    <div className="flex flex-col w-full md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-[#1b1c24] border-r border-[#3a3b45] h-full">
-      {/* Header */}
+    <div className="flex flex-col w-full md:w-[40vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[20vw] bg-[#1b1c24] border-r border-[#3a3b45] h-full">
       <div className="flex items-center gap-2 p-4 border-b border-[#3a3b45]">
         <FeeloChat />
         <SiLivechat className="w-8 h-8 text-purple-500 transform hover:scale-105 transition-transform" />
       </div>
 
-      {/* Search Input */}
       <div className="p-4 border-b border-[#3a3b45]">
         <div className="relative">
           <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -142,7 +146,6 @@ function ContactContainer() {
         </div>
       </div>
 
-      {/* Scrollable Contacts */}
       <ScrollArea className="flex-1 overflow-y-auto scrollbar-hide">
         <div className="p-2">
           {filteredContacts.length ? (
@@ -159,7 +162,7 @@ function ContactContainer() {
               {isLoading ? (
                 <ClipLoader color="#9333ea" />
               ) : (
-                " No recent coontact"
+                " No recent contact"
               )}
             </div>
           )}

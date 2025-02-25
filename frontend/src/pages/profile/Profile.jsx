@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
-
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [firstName, setFirstName] = useState("");
@@ -48,7 +47,6 @@ function Profile() {
       })
       .catch((e) => {
         setIsButtonDisabled(false);
-        console.log(e);
       });
   };
   return (
@@ -106,7 +104,6 @@ function Profile() {
             ) : (
               "Save changes"
             )}
-            
           </Button>
         </div>
       </div>

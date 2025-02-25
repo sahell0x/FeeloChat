@@ -1,17 +1,21 @@
-import { useState } from "react"
-import ChatHeader from "./ui/ChatHeader"
-import MessageBar from "./ui/MessageBar"
-import MessageContainer from "./ui/MessageContainer"
+import { useRef, useState } from "react";
+import ChatHeader from "./ui/ChatHeader";
+import MessageBar from "./ui/MessageBar";
+import MessageContainer from "./ui/MessageContainer";
 
 function ChatContainer() {
-  const [shouldScroll,setShouldScroll] = useState(true);
-   return (
-    <div className="bg-[#1b1c24]">
-      <ChatHeader/>
-      <MessageContainer shouldScroll={shouldScroll} setShouldScroll={setShouldScroll}/>
-      <MessageBar setShouldScroll={setShouldScroll}/>
+  const containerRef = useRef(null);
+
+  containerRef?.current?.addEventListener("keypress",(e)=>{
+})
+
+  return (
+    <div ref={containerRef} className="bg-[#1b1c24] w-full md:w-[60vw] lg:w-full ">
+      <ChatHeader />
+      <MessageContainer />
+      <MessageBar containerRef={containerRef} />
     </div>
-  )
+  );
 }
 
-export default ChatContainer
+export default ChatContainer;

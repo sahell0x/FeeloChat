@@ -19,12 +19,17 @@ import apiClient from "@/lib/api-client";
 import { SEARCH_ROUTE } from "@/util/constants";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ProfileWrapper from "./ProfileWrapper";
-import { useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { selectedChatDataAtom, selectedChatTypeAtom } from "@/stores/chatAtom";
+import showExpressionsAtom from "@/stores/showExpressionsAtom";
+import currentExpressionAtom from "@/stores/currentExpressionAtom";
 
 function NewMessage() {
   const setSelectedChatType = useSetRecoilState(selectedChatTypeAtom);
   const setSelectedChatData = useSetRecoilState(selectedChatDataAtom);
+  const resetShowExpressions = useResetRecoilState(showExpressionsAtom);
+  const resetCurrentExpression = useResetRecoilState(currentExpressionAtom);
+
 
   const [isContactDialogOpend, setIsContactDialogOpend] = useState(false);
 
@@ -65,6 +70,9 @@ function NewMessage() {
     setSelectedChatType("contact");
     setSelectedChatData({...contact});
     setSearchedContacts([]);
+    resetShowExpressions();
+    resetCurrentExpression();
+    
   };
 
   return (
@@ -82,7 +90,7 @@ function NewMessage() {
         open={isContactDialogOpend}
         onOpenChange={setIsContactDialogOpend}
       >
-        <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
+        <DialogContent className="bg-[#181920] border-none text-white w-[350px] h-[400px]  flex flex-col md:w-[400px]">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-center">
               Select a contact

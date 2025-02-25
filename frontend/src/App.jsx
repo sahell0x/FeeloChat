@@ -11,22 +11,21 @@ import userInfoAtom from "./stores/userInfoAtom";
 import getUserInfo from "./util/getUserInfo";
 import Loader from "./components/ui/Loader";
 import useSocketSetup from "./hooks/useSocketSetup";
+import useIsMobile from "./hooks/useIsMobile";
 function App() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [isLoading, setIsLoading] = useState(true);
+
   useSocketSetup();
+  useIsMobile();
 
-  // test();
-
-
-  useEffect(()=>{
+  useEffect(() => {
     console.log(
       "%cFeeloChat is open-source! 🚀\nIf you find a bug or want to contribute, please visit: %chttps://github.com/sahell0x/FeeloChat",
       "color: #ffffff; font-size: 16px; font-weight: bold;",
       "color: #2196F3; font-size: 14px; text-decoration: underline;"
     );
-    
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!userInfo) {
@@ -36,7 +35,6 @@ function App() {
           setIsLoading(false);
         })
         .catch((e) => {
-          console.log(e);
           setIsLoading(false);
         });
     } else {
@@ -61,7 +59,6 @@ function App() {
             </AuthRoute>
           }
         ></Route>
-
 
         <Route
           path="/chat"

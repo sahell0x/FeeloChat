@@ -1,4 +1,3 @@
-// conversionUtils.js
 import naclUtil from "tweetnacl-util";
 
 /**

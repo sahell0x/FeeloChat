@@ -13,6 +13,9 @@ import recentContactDataAtom from "@/stores/recentContactDataAtom";
 import getContactInfo from "@/util/getContactInfo";
 import unreadMessageCountAtom from "@/stores/unreadMessageCountAtom";
 import messageSeenTrackerAtom from "@/stores/messsageSeenTrackerAtom";
+import shouldScrollAtom from "@/stores/shouldScrollAtom";
+import typingTrackerAtom from "@/stores/typingTrackerAtom";
+import currentExpressionAtom from "@/stores/currentExpressionAtom";
 
 const useSocketSetup = () => {
   const userInfo = useRecoilValue(userInfoAtom);
@@ -20,15 +23,19 @@ const useSocketSetup = () => {
   const [selectedChatData] = useRecoilState(selectedChatDataAtom);
   const setSelectedChatMessage = useSetRecoilState(selectedChatMessagesAtom);
   const setMessageSeenTrack = useSetRecoilState(messageSeenTrackerAtom);
-  const [onlineStatusState, setOnlineStatusState] =
-    useRecoilState(onlineStatusAtom);
+  const setOnlineStatusState = useSetRecoilState(onlineStatusAtom);
   const [recentContactList, setRecentContactList] =
     useRecoilState(recentContactAtom);
   const [recentContactData, setRecentContactData] = useRecoilState(
     recentContactDataAtom
   );
 
+  const setCurrentExpression = useSetRecoilState(currentExpressionAtom);
+
+  const setTypingTracker = useSetRecoilState(typingTrackerAtom);
+
   const setUnreadMessageCount = useSetRecoilState(unreadMessageCountAtom);
+  const setShouldScroll = useSetRecoilState(shouldScrollAtom);
 
   const selectedChatDataRef = useRef(selectedChatData);
   const selectedChatTypeRef = useRef(selectedChatType);
@@ -49,10 +56,6 @@ const useSocketSetup = () => {
 
   useEffect(() => {
     if (userInfo) {
-      
-
-      console.log("connected to the socket server");
-
       const handleReceiveMessage = async (message) => {
         const contactId =
           message?.sender === userInfo?.id ? message.receiver : message.sender;
@@ -78,6 +81,7 @@ const useSocketSetup = () => {
           selectedChatTypeRef.current !== null &&
           selectedChatDataRef.current?._id === contactId
         ) {
+          setShouldScroll(true);
           setSelectedChatMessage((prev) => [...prev, message]);
 
           if (!IS_SENT) {
@@ -130,9 +134,8 @@ const useSocketSetup = () => {
             });
           }
         } else {
-
-          socket.emit("online-status-new-message",{
-            statusOf : contactId,
+          socket.emit("online-status-new-message", {
+            statusOf: contactId,
           });
 
           const contactData = await getContactInfo(contactId);
@@ -185,46 +188,67 @@ const useSocketSetup = () => {
       const handleMessageSeen = (data) => {
         const IS_SEEN = true;
 
-        setMessageSeenTrack((pre)=>{
+        setMessageSeenTrack((pre) => {
           const tem = {
             ...pre,
-          }
+          };
           tem[data.seenBy] = IS_SEEN;
           return tem;
         });
-      }
-
-      const handleStatusUpdate = (contactOnlineStatus) => {
-        console.log("inside status update");
-        console.log("this istatus we got",contactOnlineStatus);
-        setOnlineStatusState((prev) => ({ ...prev, ...contactOnlineStatus }));
       };
 
-      const handleIndivisualStatus = (indivisualStatus)=>{
-         setOnlineStatusState((pre)=>{
-            return {
-              ...pre,
-              ...indivisualStatus,
-            }
-         });
-      }
+      const handleStatusUpdate = (contactOnlineStatus) => {
+        setOnlineStatusState((pre) => {
+          return { ...pre, ...contactOnlineStatus };
+        });
+      };
+
+      const handleIndivisualStatus = (indivisualStatus) => {
+        setOnlineStatusState((pre) => {
+          return {
+            ...pre,
+            ...indivisualStatus,
+          };
+        });
+      };
+
+      const handleTypingEvent = (data) => {
+        setTypingTracker((pre) => {
+          return {
+            ...pre,
+            ...data,
+          };
+        });
+      };
+
+      const handleExpression = (expressionEventData) => {
+        if (expressionEventData.sender === selectedChatDataRef.current?._id) {
+          setCurrentExpression(expressionEventData.expression);
+        }
+      };
+
+      socket.on("status-update", handleStatusUpdate);
 
       socket.on("receive-message", handleReceiveMessage);
 
-      socket.on("status-update",handleStatusUpdate);
-
       socket.on("message-seen", handleMessageSeen);
 
-      socket.on("online-status-new-message",handleIndivisualStatus);
+      socket.on("online-status-new-message", handleIndivisualStatus);
+
+      socket.on("typing", handleTypingEvent);
+
+      socket.on("expression", handleExpression);
 
       socket.connect();
 
       return () => {
-        console.log("this is the distruction")
         socket.off("receive-message", handleReceiveMessage);
-        socket.off("status-update",handleStatusUpdate);
-        socket.off("message-seen",handleMessageSeen);
-        socket.off("online-status-new-message",handleIndivisualStatus);
+        socket.off("status-update", handleStatusUpdate);
+        socket.off("message-seen", handleMessageSeen);
+        socket.off("online-status-new-message", handleIndivisualStatus);
+        socket.off("typing", handleTypingEvent);
+        socket.off("expression", handleExpression);
+
         socket.disconnect();
       };
     }
