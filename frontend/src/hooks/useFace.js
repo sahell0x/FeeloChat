@@ -13,6 +13,7 @@ const useFace = () => {
 
   useEffect(() => {
     if (!showExpressions) {
+      setExpression("");
       if (intervalId.current) {
         clearInterval(intervalId.current);
         intervalId.current = null;
