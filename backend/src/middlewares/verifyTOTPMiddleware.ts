@@ -9,13 +9,12 @@ import StatusCode from 'status-code-enum';
         if ( !otp || !secret) return res.status(400).json({ message: "Missing fields" });
       
         
-        // Verify OTP
         const isValid = speakeasy.totp.verify({
           secret,
           encoding: "base32",
           token: otp,
           step:60,
-          window: 1, // Allow small time drift
+          window: 1, 
         });
       
         if (!isValid) {

@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
 
 const emailService = async (email: string, OTP: string) => {
   const mailOptions = {
-    from: "your-email@gmail.com",
+    from: process.env.EMAIL,
     to: email,
     subject: "Your OTP Code",
     html: `<!DOCTYPE html>

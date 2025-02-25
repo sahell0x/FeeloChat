@@ -12,7 +12,6 @@ dotenv.config();
 
 const secret :string= process.env.SECRET as string;
 
-//this controller handles user sign in
 
 const signInController = async (req:Request,res:Response) :Promise<any> =>{
     console.log("inside signIn");
@@ -26,7 +25,6 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
             return res.status(StatusCode.ClientErrorBadRequest).json({message:"Wrong email or password"});
         }
         
-        //compare the user provide password with hashed password from the db
 
         const isMatch = await compare(password, user.password);
 
@@ -34,7 +32,6 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
             return res.status(StatusCode.ClientErrorBadRequest).json({message:"incorrect password"});
         }
 
-        //create a jwt token to set cookie in user browser
         const token = jwt.sign({email:user.email,id:user._id},secret);
 
         const privateKeyResponse:any = await Key.findOne({userId:user._id});
@@ -45,11 +42,11 @@ const signInController = async (req:Request,res:Response) :Promise<any> =>{
             });
         }
 
-        res.cookie("token", token, {     // Set cookie
+        res.cookie("token", token, {     
             httpOnly: true,
             sameSite: "strict",
             secure: false,
-            maxAge: 30 * 24 * 60 * 60 * 1000,   // 30 days max age
+            maxAge: 30 * 24 * 60 * 60 * 1000,   
         });
 
 

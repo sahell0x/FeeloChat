@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-//user model defination
 
 const userSchem = new mongoose.Schema({
   email: {
@@ -14,7 +13,7 @@ const userSchem = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: false,  //to allow create guest acount for user acount it will get verifiend by middleware.
+    required: false,  
   },
   firstName: {
     type: String,

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-//model of encrypted keys which are the encrypted private keys encrypted from dirived password of user.
 
 const encryptedKeySchema = new mongoose.Schema(
     {

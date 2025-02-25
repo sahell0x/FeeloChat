@@ -4,7 +4,6 @@ import User from "../models/userModel.js";
 import { Request,Response } from "express";
 import { UserId, UserType } from "../types/userTypes.js";
 
-//this controller handles user profile first name and last name updatetions 
 
 const updateUserProfileController = async (req:Request,res:Response) :Promise<any>=>{
     try{

@@ -2,7 +2,6 @@ import signUptypes from "../zod-types/signUptypes.js";
 import {StatusCode} from "status-code-enum";
 import { Request,Response,NextFunction } from "express";
 
-//this middleware responsible for signup input validation
 
 
 const signUpMiddleware = (req:Request,res:Response,next:NextFunction):any=>{

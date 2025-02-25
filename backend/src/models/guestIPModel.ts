@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-//IP's schema defination
 
 const guestIPSchema = new mongoose.Schema(
    {

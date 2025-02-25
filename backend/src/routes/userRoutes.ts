@@ -10,7 +10,6 @@ import getContactInfoController from "../controllers/getContactInfoController";
 
 const userRoutes = Router();
 
-//user routes
 
 userRoutes.get("/user",authMiddleware,getUserInfoController);
 

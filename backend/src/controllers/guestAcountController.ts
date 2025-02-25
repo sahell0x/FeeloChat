@@ -28,13 +28,13 @@ const guestAcountController = async (
       });
     }
 
-    // const response = await GuestIP.create({
-    //   guestUserIP: IP,
-    // });
+    const response = await GuestIP.create({
+      guestUserIP: IP,
+    });
 
-    // if (!response) {
-    //   throw new Error("DB opration failed");
-    // }
+    if (!response) {
+      throw new Error("DB opration failed");
+    }
 
     const GuestUserData = {
         email : guestUUIDProvider(),
@@ -51,11 +51,11 @@ const guestAcountController = async (
 
    const token = jwt.sign({ email: guestUser.email, id: guestUser._id }, secret);
 
-    res.cookie("token", token, {     // Set cookie
+    res.cookie("token", token, {     
         httpOnly: true,
         sameSite: "strict",
-        // secure: true,
-        maxAge: 24 * 60 * 60 * 1000,   //24 hours
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,   
     });
 
     return res.status(StatusCode.SuccessCreated).json({

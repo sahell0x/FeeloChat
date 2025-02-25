@@ -24,13 +24,13 @@ const getMessageController = async (req: Request, res: Response): Promise<any> =
                 { receiver: userId, sender: targetUserId }
             ],
         })
-        .sort({ timestamp: -1 }) // Sort by newest first
+        .sort({ timestamp: -1 }) 
         .skip(skip)
         .limit(limit);
         
 
         res.status(StatusCode.SuccessOK).json({
-            messages: messages.reverse(), // Reverse to maintain chronological order
+            messages: messages.reverse(),
             hasMore: messages.length === limit
         });
 

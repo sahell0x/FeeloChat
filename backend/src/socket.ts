@@ -4,15 +4,18 @@ import disconnection from "./socket_util/disconnection";
 import connection from "./socket_util/connection";
 import socketAuthMiddleware from "./socket_util/socketAuthMiddleware";
 import {
+  ExpressionEventData,
   IndivisualStatusType,
   MessageSeen,
   MessageType,
+  TypingEventData,
 } from "./types/socketTypes";
 import handleMessageSeen from "./socket_util/handleMessageSeen";
 import handleIndivisualStatus from "./socket_util/handleIndivisualStatus";
 import handleMessage from "./socket_util/handleMessage";
+import handleTyping from "./socket_util/handleTyping";
+import handleExpression from "./socket_util/handleExpression";
 
-//this contains main socket logic
 
 const socketSetup = (server: Server) => {
   const io: SocketServer = new SocketServer(server, {
@@ -23,16 +26,13 @@ const socketSetup = (server: Server) => {
     },
   });
 
-  const userSocketMap = new Map(); //to store user<userId,socketId>
-
-  //handle message send logic for p-2-p
+  const userSocketMap = new Map(); 
 
 
 
-  //authentication
+
 
   io.use(socketAuthMiddleware);
-  //io connection disconnection handling
 
   io.on("connection", (socket: any) => {
     connection(socket, userSocketMap, io);
@@ -40,6 +40,10 @@ const socketSetup = (server: Server) => {
     socket.on("send-message", (message:MessageType)=>{
         handleMessage(message,userSocketMap,socket,io);
     });
+
+    socket.on("typing",(typingEventData:TypingEventData)=>{
+        handleTyping(typingEventData,userSocketMap,socket,io);
+    })
 
     socket.on("message-seen", (data: MessageSeen) => {
       handleMessageSeen(data, userSocketMap, socket, io);
@@ -51,6 +55,11 @@ const socketSetup = (server: Server) => {
         handleIndivisualStatus(indivisulaStatus, userSocketMap, socket, io);
       }
     );
+
+    socket.on("expression",(expressionEventData : ExpressionEventData)=>{
+          handleExpression(expressionEventData,userSocketMap,socket,io);
+    });
+    
 
     socket.on("disconnect", () => {
       disconnection(socket, userSocketMap, io);

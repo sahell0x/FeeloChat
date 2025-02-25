@@ -3,7 +3,6 @@ import User from "../models/userModel";
 import { Request,Response } from "express";
 
 
-//this controller provides contats for given  query 
 
 const searchContactController = async (req :Request,res :Response) :Promise<any>=>{
     try{
@@ -15,7 +14,6 @@ const searchContactController = async (req :Request,res :Response) :Promise<any>
             });
         }
 
-        //regex to skip special characters
         const extractedQuery:string = searchQuery.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 
 

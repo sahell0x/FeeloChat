@@ -1,14 +1,14 @@
 import { Socket } from "socket.io";
 import onlineStatusProvider from "./onlineStatusProvider";
 
-//this func handles user connection and menage map with user id and user socket id adds id into the map.
+
 
 const connection = (
   socket: Socket,
   userMap: Map<string, string>,
   io: any
 ): void => {
-  const IS_USER_ONLINE = true; //connection frame
+  const IS_USER_ONLINE = true; 
   const userId = (socket as any).userId;
   console.log((socket as any).userId);
 

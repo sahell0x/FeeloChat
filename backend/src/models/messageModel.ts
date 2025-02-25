@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import { boolean } from "zod";
 
-//message schema defination
 
 const messageSchema = new mongoose.Schema(
     {

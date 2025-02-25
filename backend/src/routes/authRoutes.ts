@@ -10,7 +10,6 @@ import sendTOTPController from "../controllers/sendTOTPCOntroller";
 import ratelimiterForOTP from "../middlewares/rateLimiterForOTP";
 import verifyTOTPMiddleware from "../middlewares/verifyTOTPMiddleware";
 
-//auth routes
 
 const authRoutes = Router();
 

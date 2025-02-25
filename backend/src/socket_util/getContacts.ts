@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import Message from "../models/messageModel";
 
-//this function gets user id's of contacts that will be used for online status updation
 
 const getContacts = async (id: string) :Promise<string[]> => {
     const userId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(id);
