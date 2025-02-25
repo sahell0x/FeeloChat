@@ -13,7 +13,7 @@ const guestAcountController = async (
 ): Promise<any> => {
   try {
     // const IP = req.ip;
-    const IP = req.headers["x-forwarded-for"];
+    const IP = (req.headers["x-forwarded-for"] as string)?.split(",")[0];
 
     const publicKey = req.body.publicKey;
     const secret = process.env.SECRET as string;
@@ -66,7 +66,6 @@ const guestAcountController = async (
         publicKey:guestUser.publicKey,
         isGuest:guestUser.isGuest,
         profileSetup:guestUser.profileSetup,
-        hereisDetail : "data : " + IP,
     });
 
   } catch {
