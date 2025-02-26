@@ -9,6 +9,7 @@ import guestAcountController from "../controllers/guestAcountController";
 import sendTOTPController from "../controllers/sendTOTPCOntroller";
 import ratelimiterForOTP from "../middlewares/rateLimiterForOTP";
 import verifyTOTPMiddleware from "../middlewares/verifyTOTPMiddleware";
+import guestMiddleware from "../middlewares/guestMiddleware";
 
 
 const authRoutes = Router();
@@ -19,7 +20,7 @@ authRoutes.post("/signin",ratelimiterForOTP,verifyTOTPMiddleware,signInMiddlewar
 
 authRoutes.post("/logout",authMiddleware,logOutController);
 
-authRoutes.post("/guest",guestAcountController);
+authRoutes.post("/guest",guestMiddleware,guestAcountController);
 
 authRoutes.post("/send-otp",sendTOTPController);
 

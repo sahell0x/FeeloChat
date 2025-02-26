@@ -1,10 +1,12 @@
+import { RecaptchaResponse } from './../types/captchaTypes';
 import jwt from "jsonwebtoken";
 import { StatusCode } from "status-code-enum";
 import User from "../models/userModel.js";
 import { Request, Response } from "express";
-import GuestIP from "../models/guestIPModel.js";
 import dotenv from "dotenv";
 import guestUUIDProvider from "../utils/guestUUiDProvider.js";
+import GuestDeviceFingerPrint from "../models/guestIPModel.js";
+import axios from "axios";
 dotenv.config();
 
 const guestAcountController = async (
@@ -12,27 +14,29 @@ const guestAcountController = async (
   res: Response
 ): Promise<any> => {
   try {
-    // const IP = req.ip;
-    const IP = (req.headers["x-forwarded-for"] as string)?.split(",")[0];
-
-    const publicKey = req.body.publicKey;
+    const {publicKey,deviceFingerPrint,captchaValue} = req.body;
     const secret = process.env.SECRET as string;
+    const RECAPTCHA_SITE_SECRET = process.env.RECAPTCHA_SITE_SECRET as string;
 
-    if (!IP || !publicKey) {
-       throw new Error("No IP or PublicKey");
+    const reponseData :any = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SITE_SECRET}&response=${captchaValue}`,
+    );
+
+    const data : RecaptchaResponse = reponseData.data
+
+    if(!data.success){
+      throw new Error("Captcha validation error");
     }
 
-    const isIPExist = await GuestIP.findOne({ guestUserIP: IP });
+    const isFingerPrintExist = await GuestDeviceFingerPrint.findOne({ userDeviceFingerPrint: deviceFingerPrint });
 
-    if (isIPExist) {
+    if (isFingerPrintExist) {
       return res.status(StatusCode.ClientErrorConflict).json({
-        message: "Guest user for this IP already exist.",
+        message: "Guest user for this device finger print already exist.",
       });
     }
 
-    const response = await GuestIP.create({
-      guestUserIP: IP,
-    });
+    const response = await GuestDeviceFingerPrint.create({ userDeviceFingerPrint: deviceFingerPrint });
 
     if (!response) {
       throw new Error("DB opration failed");
