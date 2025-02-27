@@ -8,6 +8,6 @@ const guestDeviceFingerPrintSchema = new mongoose.Schema(
    }
 );
 
-const GuestDeviceFingerPrint = mongoose.model('GuestIP', guestDeviceFingerPrintSchema);
+const GuestDeviceFingerPrint = mongoose.model('GuestDeviceFingerPrint', guestDeviceFingerPrintSchema);
 
 export default GuestDeviceFingerPrint;
