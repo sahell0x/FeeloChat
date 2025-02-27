@@ -81,7 +81,7 @@ function SelectedChatProfile({ selectedChatData }) {
         open={isProfilePhotoDialogOpend}
         onOpenChange={setIsProfilePhotoDialogOpend}
       >
-        <DialogOverlay className="fixed inset-0 bg-black/50" />
+        <DialogOverlay className="fixed inset-0" />
         <DialogContent
           className="border-none rounded-full bg-transparent p-0 flex items-center justify-center h-[200px] w-[200px]"
           hideCloseButton={true}
