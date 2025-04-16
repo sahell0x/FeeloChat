@@ -61,12 +61,12 @@ function SelectedChatProfile({ selectedChatData }) {
         </TooltipProvider>
 
         <div className="flex flex-col">
-          <h3 className="text-lg font-semibold text-white">
+          <h3 className="text-lg font-semibold text-white truncate">
             {selectedChatData?.firstName
               ? selectedChatData?.firstName + " " + selectedChatData?.lastName
               : "User"}
           </h3>
-          <p className="text-sm text-gray-400">{selectedChatData?.email}</p>
+          <p className="text-sm text-gray-400 truncate">{selectedChatData?.email}</p>
         </div>
       </div>
       <Circle
